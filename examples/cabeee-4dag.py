@@ -35,6 +35,7 @@ from minindn.helpers.ndn_routing_helper import NdnRoutingHelper
 import argparse
 from minindn.apps.nlsr import Nlsr
 from minindn.helpers.ip_routing_helper import IPRoutingHelper
+from minindn.helpers.merge_nfd_logs import MergeNFDLogs
 
 PREFIX = "/example"
 
@@ -47,6 +48,7 @@ def run():
     Minindn.cleanUp()
     Minindn.verifyDependencies()
 
+    MergeNFDLogs.deleteAllLogs()
 
     # the following parser came from static_routing_experiment.py
     parser = argparse.ArgumentParser()
@@ -95,7 +97,7 @@ def run():
         # set up routes manually. The important bit to note here is the use of the Nfdc command
         info('Setting up routes manually in NFD\n')
         #links = {"sensor":["rtr1"], "rtr1":["rtr2"], "rtr2":["rtr3"], "rtr3":["orch"], "orch":["user"]} # routes are directional! This is the wrong direction.
-        links = {"user":["orch"], "orch":["rtr-3"], "rtr-3":["rtr-2"], "rtr-2":["rtr-1"], "rtr-1":["sensor"]}
+        links = {"user":["orch"], "orch":["rtr3"], "rtr3":["rtr2"], "rtr2":["rtr1"], "rtr1":["sensor"]}
         for first in links:
             for second in links[first]:
                 host1 = ndn.net[first]
@@ -115,23 +117,23 @@ def run():
         grh.calculateNPossibleRoutes()
         #PREFIX is advertised from node A, it should be reachable from all other nodes.
         routesFromSensor = ndn.net['sensor'].cmd("nfdc route | grep -v '/localhost/nfd'")
-        if '/ndn/rtr-1-site/rtr-1' not in routesFromSensor or \
-           '/ndn/rtr-2-site/rtr-2' not in routesFromSensor or \
-           '/ndn/rtr-3-site/rtr-3' not in routesFromSensor or \
+        if '/ndn/rtr1-site/rtr1' not in routesFromSensor or \
+           '/ndn/rtr2-site/rtr2' not in routesFromSensor or \
+           '/ndn/rtr3-site/rtr3' not in routesFromSensor or \
            '/ndn/orch-site/orch' not in routesFromSensor or \
            '/ndn/user-site/user' not in routesFromSensor:
             info("Route addition failed\n")
-        routesToPrefix = ndn.net['rtr-1'].cmd("nfdc fib | grep '/example'")
+        routesToPrefix = ndn.net['rtr1'].cmd("nfdc fib | grep '/example'")
         if '/example' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['rtr-2'].cmd("nfdc fib | grep '/example'")
+        routesToPrefix = ndn.net['rtr2'].cmd("nfdc fib | grep '/example'")
         if '/example' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['rtr-3'].cmd("nfdc fib | grep '/example'")
+        routesToPrefix = ndn.net['rtr3'].cmd("nfdc fib | grep '/example'")
         if '/example' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
@@ -175,7 +177,8 @@ def run():
     ping1.wait()
     printOutput(ping1.stdout.read())
 
-    interface = ndn.net["rtr-3"].connectionsTo(ndn.net["rtr-2"])[0][0]
+    '''
+    interface = ndn.net["rtr3"].connectionsTo(ndn.net["rtr2"])[0][0]
     info("Failing link\n") # failing link by setting link loss to 100%
     interface.config(delay="10ms", bw=10, loss=100)
     info ("\n starting ping2 client \n")
@@ -185,6 +188,10 @@ def run():
     printOutput(ping2.stdout.read())
 
     interface.config(delay="10ms", bw=10, loss=0) # bringing back the link
+    '''
+
+    # concatenate every node's log/nfd.log file to a single one. Keep timestamp, add node name. Sort by timestamp!
+    MergeNFDLogs.mergeAllLogs()
 
     info("\nExperiment Completed!\n")
     MiniNDNCLI(ndn.net)
