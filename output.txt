@@ -1,220 +1,0 @@
-Using topology file topologies/cabeee-3node.conf
-*** Creating network
-*** Adding controller
-*** Adding hosts:
-orch rtr-1 rtr-2 rtr-3 sensor user 
-*** Adding switches:
-
-*** Adding links:
-(0ms delay) (0ms delay) (orch, user) (1ms delay) (1ms delay) (rtr-1, rtr-2) (1ms delay) (1ms delay) (rtr-2, rtr-3) (1ms delay) (1ms delay) (rtr-3, orch) (1ms delay) (1ms delay) (sensor, rtr-1) 
-*** Configuring hosts
-orch rtr-1 rtr-2 rtr-3 sensor user 
-*** Starting controller
-c0 
-*** Starting 0 switches
-
-Configuring NFD
-Adding static routes to NFD
-Route computation completed
-Creating faces and adding routes to FIB
-[Parallel(n_jobs=-1)]: Using backend ThreadingBackend with 8 concurrent workers.
-[Parallel(n_jobs=-1)]: Done   6 out of   6 | elapsed:    0.1s finished
-Processed all the routes to NFD
-Route addition to NFD completed
-Starting pings...
-PING /example
-content from /example: seq=4655819142105769180 time=19.1639 ms
-content from /example: seq=4655819142105769181 time=13.3476 ms
-content from /example: seq=4655819142105769182 time=13.6483 ms
-content from /example: seq=4655819142105769183 time=13.4828 ms
-content from /example: seq=4655819142105769184 time=13.575 ms
-
---- /example ping statistics ---
-5 packets transmitted, 5 received, 0 nacked, 0% lost, 0% nacked, time 73.2176 ms
-rtt min/avg/max/mdev = 13.3476/14.6435/19.1639/2.26243 ms
-
-Failing link
-(10.00Mbit 10ms delay 100.00000% loss) 
- starting ping2 client 
-PING /example
-timeout from /example: seq=10925190496957244169
-timeout from /example: seq=10925190496957244170
-timeout from /example: seq=10925190496957244171
-timeout from /example: seq=10925190496957244172
-timeout from /example: seq=10925190496957244173
-
---- /example ping statistics ---
-5 packets transmitted, 0 received, 0 nacked, 100% lost, 0% nacked, time 0 ms
-
-(10.00Mbit 10ms delay 0.00000% loss) 
-Experiment Completed!
-*** Starting CLI:
-mini-ndn> *** Unknown command: ls
-mini-ndn> *** Unknown command: dir
-mini-ndn> *** Unknown command: pw
-mini-ndn> *** Unknown command: pwd
-mini-ndn> *** Unknown command: a ls
-mini-ndn> log  ndnpingserver.log	nfd.conf  nlsr.conf
-mini-ndn> *** Unknown command: ssh sensor
-mini-ndn> more: stat of nd failed: No such file or directory
-mini-ndn> PING SERVER /example
-mini-ndn> *** Unknown command: [A[B
-mini-ndn> 
-*** log: directory ***
-
-mini-ndn> nfd.log  nlsr.conf  nlsr.log  nlsrSeqNo.txt
-mini-ndn> NFD version 22.12-67-ge1dc79be starting
-Built with GNU C++ version 9.4.0, with GNU libstdc++ version 20210601, with Boos
-t version 1.71.0, with libpcap version 1.9.1 (with TPACKET_V3), without WebSocke
-t++, with ndn-cxx version 0.8.1-87-gd6a8644d
-1715273190.964020 DEBUG: [nfd.NullTransport] [id=0,local=null://,remote=null://]
- Creating transport
-1715273190.964061  INFO: [nfd.FaceTable] Added face id=255 remote=null:// local=
-null://
-1715273190.964074 DEBUG: [nfd.NullTransport] [id=0,local=contentstore://,remote=
-contentstore://] Creating transport
-1715273190.964081  INFO: [nfd.FaceTable] Added face id=254 remote=contentstore:/
-/ local=contentstore://
-1715273190.964110 DEBUG: [nfd.ContentStore] set-policy lru
-1715273190.964119  INFO: [nfd.CsPolicy] setLimit 10
-1715273190.964189 DEBUG: [nfd.BestRouteStrategy] RetxSuppressionExponential init
-ial-interval=10 max-interval=250 multiplier=2
-1715273190.964214 DEBUG: [nfd.Strategy] create /localhost/nfd/strategy/best-rout
-e/v=5 found=/localhost/nfd/strategy/best-route/v=5 created=/localhost/nfd/strate
-gy/best-route/v=5
-1715273190.964238  INFO: [nfd.StrategyChoice] setDefaultStrategy /localhost/nfd/
-strategy/best-route/v=5
-1715273190.964261 DEBUG: [nfd.InternalForwarderTransport] [id=0,local=internal:/
-/,remote=internal://] Creating transport
-[7m--More--(0%)[27m1715273190.964282 DEBUG: [nfd.InternalClientTransport] connectToForwarder 0x55a0
-[7m--More--(0%)[27m2f188500[K
-[7m--More--(0%)[27m1715273190.964357  INFO: [nfd.FaceTable] Added face id=1 remote=internal:// loca
-[7m--More--(1%)[27ml=internal://
-[7m--More--(1%)[27m1715273190.964936  WARN: [nfd.CommandAuthenticator] 'certfile any' is intended f
-[7m--More--(1%)[27mor demo purposes only and SHOULD NOT be used in production environments
-[7m--More--(1%)[27m1715273190.965210 DEBUG: [nfd.BestRouteStrategy] RetxSuppressionExponential init
-[7m--More--(1%)[27mial-interval=10 max-interval=250 multiplier=2
-[7m--More--(1%)[27m1715273190.965230 DEBUG: [nfd.Strategy] create /localhost/nfd/strategy/best-rout
-[7m--More--(1%)[27me found=/localhost/nfd/strategy/best-route/v=5 created=/localhost/nfd/strategy/b
-[7m--More--(1%)[27mest-route/v=5
-[7m--More--(1%)[27m1715273190.965255 DEBUG: [nfd.MulticastStrategy] RetxSuppressionExponential init
-[7m--More--(1%)[27mial-interval=10 max-interval=250 multiplier=2
-[7m--More--(1%)[27m1715273190.965261 DEBUG: [nfd.Strategy] create /localhost/nfd/strategy/multicast
-[7m--More--(1%)[27m found=/localhost/nfd/strategy/multicast/v=5 created=/localhost/nfd/strategy/mul
-[7m--More--(1%)[27mticast/v=5[K
-[7m--More--(1%)[27m1715273190.965288  INFO: [nfd.StrategyChoice] changeStrategy(/ndn/broadcast) /lo
-[7m--More--(1%)[27mcalhost/nfd/strategy/best-route/v=5 -> /localhost/nfd/strategy/multicast/v=5
-[7m--More--(1%)[27m1715273190.965314 DEBUG: [nfd.MulticastStrategy] RetxSuppressionExponential init
-[7m--More--(1%)[27mial-interval=10 max-interval=250 multiplier=2
-[7m--More--(1%)[27m1715273190.965320 DEBUG: [nfd.Strategy] create /localhost/nfd/strategy/multicast
-[7m--More--(1%)[27m found=/localhost/nfd/strategy/multicast/v=5 created=/localhost/nfd/strategy/mul
-[7m--More--(1%)[27mticast/v=5[K
-[7m--More--(1%)[27m1715273190.965337  INFO: [nfd.StrategyChoice] changeStrategy(/localhost) /localh
-[7m--More--(1%)[27most/nfd/strategy/best-route/v=5 -> /localhost/nfd/strategy/multicast/v=5
-[7m--More--(2%)[27m1715273190.965367 DEBUG: [nfd.BestRouteStrategy] RetxSuppressionExponential init
-[7m--More--(2%)[27mial-interval=10 max-interval=250 multiplier=2
-[7m--More--(2%)[27m1715273190.965373 DEBUG: [nfd.Strategy] create /localhost/nfd/strategy/best-rout
-[7m--More--(2%)[27me found=/localhost/nfd/strategy/best-route/v=5 created=/localhost/nfd/strategy/b
-[7m--More--(2%)[27mest-route/v=5
-[7m--More--(2%)[27m1715273190.965391  INFO: [nfd.StrategyChoice] changeStrategy(/localhost/nfd) /lo
-[7m--More--(2%)[27mcalhost/nfd/strategy/multicast/v=5 -> /localhost/nfd/strategy/best-route/v=5
-[7m--More--(2%)[27m1715273190.965403  INFO: [nfd.CsPolicy] setLimit 65536
-[7m--More--(2%)[27m1715273190.965406 DEBUG: [nfd.ContentStore] set-policy lru
-[7m--More--(2%)[27m1715273190.965410  INFO: [nfd.CsPolicy] setLimit 65536
-[7m--More--(2%)[27m1715273190.965432  INFO: [nfd.EthernetFactory] enabling multicast on 01:00:5e:00
-[7m--More--(2%)[27m:17:aa[K
-[7m--More--(2%)[27m1715273190.965474  INFO: [nfd.TcpChannel] [tcp4://0.0.0.0:6363] Creating channel
-[7m--More--(2%)[27m1715273190.965527 DEBUG: [nfd.TcpChannel] [tcp4://0.0.0.0:6363] Started listenin
-[7m--More--(2%)[27mg[K
-[7m--More--(2%)[27m1715273190.965540  INFO: [nfd.TcpChannel] [tcp6://[::]:6363] Creating channel
-[7m--More--(2%)[27m1715273190.965583 DEBUG: [nfd.TcpChannel] [tcp6://[::]:6363] Started listening
-[7m--More--(2%)[27m1715273190.965635  INFO: [nfd.UdpChannel] [udp4://0.0.0.0:6363] Creating channel
-[7m--More--(2%)[27m1715273190.965670 DEBUG: [nfd.UdpChannel] [udp4://0.0.0.0:6363] Started listenin
-[7m--More--(2%)[27mg[K
-[7m--More--(2%)[27m1715273190.965688  INFO: [nfd.UdpChannel] [udp6://[::]:6363] Creating channel
-[7m--More--(2%)[27m1715273190.965719 DEBUG: [nfd.UdpChannel] [udp6://[::]:6363] Started listening
-[7m--More--(2%)[27m1715273190.965728  INFO: [nfd.UdpFactory] enabling multicast on 224.0.23.170:563
-[7m--More--(3%)[27m63[K
-[7m--More--(3%)[27m1715273190.965744  INFO: [nfd.UdpFactory] enabling multicast on [ff02::1234]:563
-[7m--More--(3%)[27m63[K
-[7m--More--(3%)[27m1715273190.965810  INFO: [nfd.UnixStreamChannel] [unix:///run/nfd/sensor.sock] C
-[7m--More--(3%)[27mreating channel
-[7m--More--(3%)[27m1715273190.965851 DEBUG: [nfd.UnixStreamChannel] [unix:///run/nfd/sensor.sock] R
-[7m--More--(3%)[27memoving stale socket file
-[7m--More--(3%)[27m1715273190.965927 DEBUG: [nfd.UnixStreamChannel] [unix:///run/nfd/sensor.sock] S
-[7m--More--(3%)[27mtarted listening
-[7m--More--(3%)[27m1715273190.965940 DEBUG: [nfd.NetdevBound] processConfig: processed 0 rules
-[7m--More--(3%)[27m1715273190.965953 DEBUG: [nfd.CommandAuthenticator] resetting authorizations
-[7m--More--(3%)[27m1715273190.965997  WARN: [nfd.CommandAuthenticator] 'certfile any' is intended f
-[7m--More--(3%)[27mor demo purposes only and SHOULD NOT be used in production environments
-[7m--More--(3%)[27m1715273190.966014  INFO: [nfd.CommandAuthenticator] authorize module=faces signe
-[7m--More--(3%)[27mr=any[K
-[7m--More--(3%)[27m1715273190.966020  INFO: [nfd.CommandAuthenticator] authorize module=fib signer=
-[7m--More--(3%)[27many[K
-[7m--More--(3%)[27m1715273190.966024  INFO: [nfd.CommandAuthenticator] authorize module=cs signer=a
-[7m--More--(3%)[27mny[K
-[7m--More--(3%)[27m1715273190.966029  INFO: [nfd.CommandAuthenticator] authorize module=strategy-ch
-[7m--More--(3%)[27moice signer=any
-[7m--More--(3%)[27m1715273190.966620 DEBUG: [nfd.EthernetFactory] Not creating channel on lo: incom
-[7m--More--(3%)[27mpatible netif type
-[7m--More--(3%)[27m1715273190.966643 DEBUG: [nfd.EthernetFactory] Not creating multicast face on lo
-[7m--More--(3%)[27m: incompatible netif type
-[7m--More--(3%)[27m1715273190.966648 DEBUG: [nfd.UdpFactory] Not creating multicast faces on lo: ne
-[7m--More--(4%)[27mtif is loopback
-[7m--More--(4%)[27m1715273190.966725  INFO: [nfd.EthernetChannel] [dev://sensor-eth0] Creating chan
-[7m--More--(4%)[27mnel[K
-[7m--More--(4%)[27m1715273190.968453 DEBUG: [nfd.RibService] Enabling automatic prefix propagation
-[7m--More--(4%)[27m1715273190.971461  INFO: [nfd.RibManager] Start monitoring face create/destroy e
-[7m--More--(4%)[27mvents[K
-[7m--More--(4%)[27m1715273191.014502 DEBUG: [nfd.EthernetChannel] [dev://sensor-eth0] Started liste
-[7m--More--(4%)[27mning[K
-[7m--More--(4%)[27m1715273191.014529 DEBUG: [nfd.EthernetFactory] Creating multicast face on sensor
-[7m--More--(4%)[27m-eth0[K
-[7m--More--(4%)[27m1715273191.058599 DEBUG: [nfd.MulticastEthernetTransport] [id=0,local=dev://sens
-[7m--More--(4%)[27mor-eth0,remote=ether://[01:00:5e:00:17:aa]] Creating transport
-[7m--More--(4%)[27m1715273191.059165  INFO: [nfd.FaceTable] Added face id=256 remote=ether://[01:00
-[7m--More--(4%)[27m:5e:00:17:aa] local=dev://sensor-eth0
-[7m--More--(4%)[27m1715273191.061151 DEBUG: [nfd.UdpFactory] Not creating multicast faces on sensor
-[7m--More--(4%)[27m-eth0: no viable IP address
-[7m--More--(4%)[27m1715273191.061434 DEBUG: [nfd.UnixStreamTransport] [id=0,local=unix:///run/nfd/s
-[7m--More--(4%)[27mensor.sock,remote=fd://26] Creating transport
-[7m--More--(4%)[27m1715273191.061457  INFO: [nfd.FaceTable] Added face id=257 remote=fd://26 local=
-[7m--More--(4%)[27munix:///run/nfd/sensor.sock
-[7m--More--(4%)[27m1715273191.061807 DEBUG: [nfd.Forwarder] onIncomingData in=1 data=/localhost/nfd
-[7m--More--(4%)[27m/faces/events/seq=0
-[7m--More--(4%)[27m1715273191.061847 DEBUG: [nfd.Forwarder] onDataUnsolicited in=1 data=/localhost/
-[7m--More--(4%)[27mnfd/faces/events/seq=0 decision=drop
-[7m--More--(4%)[27m1715273191.061881  INFO: [nfd.Forwarder]      CABEEE: onIncomingInterest in=257 
-[7m--More--(4%)[27minterest=/localhost/nfd/fib/add-nexthop/h%1A%07%15%08%09localhost%08%03nfd%08%03
-[7m--More--(5%)[27mribi%01%00/params-sha256=d90b3690bd331374c1a33b42a3d6cee284f9623ce9c5a5033267d3d
-[7m--More--(5%)[27m8465eee67 nonce=3284fc70
-[7m--More--(5%)[27m1715273191.061906 DEBUG: [nfd.Forwarder]      CABEEE: onIncomingInterest in=257 
-[7m--More--(5%)[27minterest=/localhost/nfd/fib/add-nexthop/h%1A%07%15%08%09localhost%08%03nfd%08%03
-[7m--More--(5%)[27mribi%01%00/params-sha256=d90b3690bd331374c1a33b42a3d6cee284f9623ce9c5a5033267d3d
-[7m--More--(5%)[27m8465eee67 nonce=3284fc70
-[7m--More--(5%)[27m1715273191.061933 DEBUG: [nfd.Forwarder] onIncomingInterest in=257 interest=/loc
-[7m--More--(5%)[27malhost/nfd/fib/add-nexthop/h%1A%07%15%08%09localhost%08%03nfd%08%03ribi%01%00/pa
-[7m--More--(5%)[27mrams-sha256=d90b3690bd331374c1a33b42a3d6cee284f9623ce9c5a5033267d3d8465eee67 non
-[7m--More--(5%)[27mce=3284fc70[K
-[7m--More--(5%)[27m1715273191.061968 DEBUG: [nfd.ContentStore] find /localhost/nfd/fib/add-nexthop/
-[7m--More--(5%)[27m[Kmini-ndn> *** Unknown command: [A[A[B[B
-mini-ndn> *** Unknown command: s
-mini-ndn> *** Unknown command: rtr-2 more log/nfd.log
-mini-ndn> *** Unknown command: rtf-
-mini-ndn> *** Unknown command: rtr-2 ls /log
-mini-ndn> *** Unknown command: rtr-2 ls log
-mini-ndn> *** Unknown command: ls
-mini-ndn> log  ndnpingserver.log	nfd.conf  nlsr.conf
-mini-ndn> *** Unknown command: rtr-2 ls
-mini-ndn> log  nfd.conf  nlsr.conf
-mini-ndn> *** Unknown command: rtr-2 ls
-mini-ndn> *** Unknown command: rtr2 ls
-mini-ndn> *** Stopping 1 controllers
-c0 
-*** Stopping 5 links
-.....
-*** Stopping 0 switches
-
-*** Stopping 6 hosts
-orch rtr-1 rtr-2 rtr-3 sensor user 
-*** Done
