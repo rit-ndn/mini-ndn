@@ -75,7 +75,7 @@ def run():
     '''
 
     ndn = Minindn(parser=parser, topoFile='topologies/cabeee-3node.conf')
-    #ndn = Minindn(topoFile='topologies/cabeee-3node-slow.conf')
+    #ndn = Minindn(parser=parser, topoFile='topologies/cabeee-3node-slow.conf')
     #ndn = Minindn(topoFile='topologies/cabeee-default-topology.conf')
     ndn.start()
 
@@ -153,8 +153,8 @@ def run():
         # NOTE: this will only work if we send pings based on IP address (as done in
         # dl/mininet/mininet/net.py ping function)
         info('Adding IP routes to NFD\n')
-        info('Starting NFD on nodes\n')
-        nfds = AppManager(ndn, ndn.net.hosts, Nfd)
+        #info('Starting NFD on nodes\n')
+        #nfds = AppManager(ndn, ndn.net.hosts, Nfd)
         info('Starting NLSR on nodes\n')
         nlsrs = AppManager(ndn, ndn.net.hosts, Nlsr)
 
