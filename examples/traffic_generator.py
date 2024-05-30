@@ -39,7 +39,9 @@ from minindn.apps.app_manager import AppManager
 from minindn.apps.nfd import Nfd
 from minindn.apps.nlsr import Nlsr
 from minindn.util import copyExistentFile
-from examples.nlsr.nlsr_common import getParser
+#from examples.nlsr.nlsr_common import getParser
+from nlsr.nlsr_common import getParser
+#from nlsr_common import getParser
 
 def trafficServer(node, serverConfFile):
     """
