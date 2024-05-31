@@ -118,7 +118,7 @@ class MergeNFDLogs(object):
     
         lines = MergeNFDLogs.read_lines_from_directory(directory_path, target_filename)
         MergeNFDLogs.write_sorted_lines_to_file(lines, output_file_path)
-        print(f"Lines from {directory_path} have been merged and sorted into {output_file_path}")
+        print(f"Lines from {directory_path}/<all nodes>/log/nfd.log have been merged and sorted into {output_file_path}")
 
 
         return None
