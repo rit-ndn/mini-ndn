@@ -41,18 +41,10 @@ from minindn.util import copyExistentFile
 
 from time import sleep
 
-
-
 import sys
-import logging
-from ndn.utils import timestamp
-from ndn.app import NDNApp
-from ndn.encoding import Name, Component
 
 
 PREFIX = "/interCACHE"
-#SEGMENT_SIZE = 4400
-SEGMENT_SIZE = 2
 
 
 def run():
