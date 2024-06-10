@@ -19,6 +19,7 @@ from typing import Optional
 from ndn.app import NDNApp
 from ndn.encoding import Name, InterestParam, BinaryStr, FormalName, MetaInfo
 import logging
+import sys
 
 
 logging.basicConfig(format='[{asctime}]{levelname}:{message}',
@@ -30,10 +31,11 @@ logging.basicConfig(format='[{asctime}]{levelname}:{message}',
 app = NDNApp()
 
 
-@app.route('/example/testApp')
+PREFIX = sys.argv[1]
+@app.route(PREFIX)
 def on_interest(name: FormalName, param: InterestParam, _app_param: Optional[BinaryStr]):
     print(f'>> I: {Name.to_str(name)}, {param}')
-    content = "Hello, world!".encode()
+    content = "cabeee says Hello, world!".encode()
     app.put_data(name, content=content, freshness_period=10000)
     print(f'<< D: {Name.to_str(name)}')
     print(MetaInfo(freshness_period=10000))

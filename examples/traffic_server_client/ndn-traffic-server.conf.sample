@@ -1,0 +1,48 @@
+#
+# THIS IS A SAMPLE SERVER DATA TRAFFIC CONFIGURATION FILE
+#
+# * TO BE USED TO CONFIGURE RESPONSE TO INTERESTS
+# * MULTIPLE SERVER PREFIXES CAN BE CONFIGURED FOR BEING HANDLED
+# * EVERY INDIVIDUAL PATTERN DESCRIPTION MUST BE SEPARATED BY ONE
+#   OR MORE '#' CHARACTERS FOR THE TOOL TO DISTINGUISH THEM
+# * THE FOLLOWING PARAMETERS MAY BE ADDED FOR EVERY TRAFFIC PATTERN
+# * 'Mandatory' ARE PARAMETERS THAT EVERY PATTERN MUST HAVE IN ORDER
+#   TO BE CONSIDERED VALID
+# * 'Boolean' ACCEPTS EITHER 0/false/no/off OR 1/true/yes/on AS VALUE
+# * 'NNI' STANDS FOR NON-NEGATIVE INTEGER
+# * RANGE OF POSSIBLE VALUES IS SPECIFIED IN []
+#
+
+# (Mandatory)
+#Name=NDN Name
+#
+# (Optional)
+#ContentDelay=Milliseconds [>=0]
+#FreshnessPeriod=Milliseconds [>=0]
+#ContentType=NNI [>=0]
+#ContentBytes=NNI [>0]
+#Content=String
+#SigningInfo=String [examples below]
+
+##########
+# EXAMPLES
+##########
+Name=/interCACHE/A
+Content=AAAAAAAA
+##########
+Name=/interCACHE/B
+Content=BBBBBBBB
+#SigningInfo=id:/my-identity
+##########
+Name=/interCACHE/C
+Content=CCCCCCCC
+#SigningInfo=key:/my-identity/ksk-1450757659736
+##########
+Name=/interCACHE/D
+Content=DDDDDDDD
+#SigningInfo=cert:/my-identity/KEY/3%F342%9C%E0R%CE/self/%FD%00%00%01%5EE%92%A8%2A
+##########
+Name=/interCACHE/E
+Content=EEEEEEEE
+#SigningInfo=id:/localhost/identity/digest-sha256
+##########

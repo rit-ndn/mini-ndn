@@ -1,0 +1,42 @@
+#
+# THIS IS A SAMPLE CLIENT INTEREST TRAFFIC CONFIGURATION FILE
+#
+# * TO BE USED TO GENERATE INTEREST MESSAGES BASED ON A PROBABILITY
+#   PATTERN
+# * EVERY INDIVIDUAL PATTERN DESCRIPTION MUST BE SEPARATED BY ONE
+#   OR MORE '#' CHARACTERS FOR THE TOOL TO DISTINGUISH THEM
+# * THE FOLLOWING PARAMETERS MAY BE ADDED FOR EVERY TRAFFIC PATTERN
+# * 'Mandatory' ARE PARAMETERS THAT EVERY PATTERN MUST HAVE IN ORDER
+#   TO BE CONSIDERED VALID
+# * 'Boolean' ACCEPTS EITHER 0/false/no/off OR 1/true/yes/on AS VALUE
+# * 'NNI' STANDS FOR NON-NEGATIVE INTEGER
+# * RANGE OF POSSIBLE VALUES IS SPECIFIED IN []
+# * PLEASE ENSURE THAT THE SUM OF 'TrafficPercentage' FOR ALL DECLARED
+#   PATTERNS DOES NOT EXCEED 100 IN ORDER TO MAINTAIN CORRECT BEHAVIOR
+#
+
+# (Mandatory)
+#TrafficPercentage=Float [0-100]
+#Name=NDN Name
+#
+# (Optional)
+#NameAppendBytes=NNI [>0]
+#NameAppendSequenceNumber=NNI [>=0]
+#CanBePrefix=Boolean
+#MustBeFresh=Boolean
+#NonceDuplicationPercentage=NNI [0-100]
+#InterestLifetime=Milliseconds [>=0]
+#NextHopFaceId=NNI [>0]
+#ExpectedContent=String
+
+##########
+# EXAMPLES
+##########
+TrafficPercentage=50
+Name=/interCACHE/A
+ExpectedContent=AAAAAAAA
+##########
+TrafficPercentage=50
+Name=/interCACHE/B
+ExpectedContent=BBBBBBBB
+##########

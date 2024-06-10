@@ -30,6 +30,7 @@ app = NDNApp()
 
 async def main():
     cnt = 0
+    print(f'Fetching segments!')
     async for seg in segment_fetcher(app, sys.argv[1]):
         print(bytes(seg).decode(), end='')
         cnt += 1
