@@ -185,35 +185,34 @@ def run():
 
 
 
-    #TODO: next try doing a simple example as in examples/chunks.py
-    #      this might be the closest to what I did in ndnSIM, as far as generating a single interest at a time
-    #      and adding the application-parameters. The data in response can be sent via a file. Perhaps there is a better way (without having to create a file?)
-
-
-
 
 
     # SET UP THE PRODUCER
+    info('Starting Producer App\n')
 
     # choice 1: (runs in the background so that it is non-blocking)
-    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee_producer {} > cabeee_producer.log &'.format(PREFIX)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee_producer > cabeee_producer.log &'
+    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-producer {} > cabeee_producer.log &'.format(PREFIX)
+    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-producer > cabeee_producer.log &'
     producer  = ndn.net['sensor']
     producer.cmd(cmd)
 
 
-    sleep(10)
+    sleep(1)
 
 
     # SET UP THE CONSUMER
+    info('Starting Consumer App\n')
 
-    #cmd = '/home/cabeee/mini-ndn/examples/apps/dist/cabeee_consumer {} > cabeee_consumer.log &'.format(PREFIX)
-    cmd = '/home/cabeee/mini-ndn/examples/apps/dist/cabeee_consumer-with-timer > cabeee_consumer.log &'
+    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-consumer {} > cabeee_consumer.log &'.format(PREFIX)
+    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-consumer > cabeee_consumer.log &'
+    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-consumer > cabeee_consumer.log'
+    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-consumer &'
+    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-consumer'
     consumer  = ndn.net['user']
     consumer.cmd(cmd)
 
 
-    sleep(10)
+    sleep(1)
 
 
 
