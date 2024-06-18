@@ -44,7 +44,7 @@ from time import sleep
 import sys
 
 
-PREFIX = "/interCACHE"
+PREFIX = "/interCACHE/testApp/randomData"
 
 
 def run():
@@ -191,8 +191,8 @@ def run():
     info('Starting Producer App\n')
 
     # choice 1: (runs in the background so that it is non-blocking)
-    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-producer {} > cabeee_producer.log &'.format(PREFIX)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-producer > cabeee_producer.log &'
+    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-producer {} > cabeee_producer.log &'.format(PREFIX)
+    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-producer > cabeee_producer.log &'
     producer  = ndn.net['sensor']
     producer.cmd(cmd)
 
@@ -203,8 +203,8 @@ def run():
     # SET UP THE CONSUMER
     info('Starting Consumer App\n')
 
-    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-consumer {} > cabeee_consumer.log &'.format(PREFIX)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-consumer > cabeee_consumer.log &'
+    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-consumer {} > cabeee_consumer.log &'.format(PREFIX)
+    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-consumer > cabeee_consumer.log &'
     #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-consumer > cabeee_consumer.log'
     #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-consumer &'
     #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-consumer'
