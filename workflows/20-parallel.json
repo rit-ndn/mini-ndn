@@ -1,0 +1,88 @@
+{	"dag": {
+		"/sensor": {
+			"/serviceP1": 0,
+			"/serviceP2": 0,
+			"/serviceP3": 0,
+			"/serviceP4": 0,
+			"/serviceP5": 0,
+			"/serviceP6": 0,
+			"/serviceP7": 0,
+			"/serviceP8": 0,
+			"/serviceP9": 0,
+			"/serviceP10": 0,
+			"/serviceP11": 0,
+			"/serviceP12": 0,
+			"/serviceP13": 0,
+			"/serviceP14": 0,
+			"/serviceP15": 0,
+			"/serviceP16": 0,
+			"/serviceP17": 0,
+			"/serviceP18": 0,
+			"/serviceP19": 0,
+			"/serviceP20": 0
+		},
+		"/serviceP1": {
+			"/serviceP21": 0
+		},
+		"/serviceP2": {
+			"/serviceP21": 1
+		},
+		"/serviceP3": {
+			"/serviceP21": 2
+		},
+		"/serviceP4": {
+			"/serviceP21": 3
+		},
+		"/serviceP5": {
+			"/serviceP21": 4
+		},
+		"/serviceP6": {
+			"/serviceP21": 5
+		},
+		"/serviceP7": {
+			"/serviceP21": 6
+		},
+		"/serviceP8": {
+			"/serviceP21": 7
+		},
+		"/serviceP9": {
+			"/serviceP21": 8
+		},
+		"/serviceP10": {
+			"/serviceP21": 9
+		},
+		"/serviceP11": {
+			"/serviceP21": 10
+		},
+		"/serviceP12": {
+			"/serviceP21": 11
+		},
+		"/serviceP13": {
+			"/serviceP21": 12
+		},
+		"/serviceP14": {
+			"/serviceP21": 13
+		},
+		"/serviceP15": {
+			"/serviceP21": 14
+		},
+		"/serviceP16": {
+			"/serviceP21": 15
+		},
+		"/serviceP17": {
+			"/serviceP21": 16
+		},
+		"/serviceP18": {
+			"/serviceP21": 17
+		},
+		"/serviceP19": {
+			"/serviceP21": 18
+		},
+		"/serviceP20": {
+			"/serviceP21": 19
+		},
+		"/serviceP21": {
+			"/consumer": 0
+		}
+	}
+}

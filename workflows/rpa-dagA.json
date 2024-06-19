@@ -1,0 +1,19 @@
+{	"dag": {
+		"/sensor": {
+			"/service1/A": 0
+		},
+		"/service1/A": {
+			"/service2/A": 0,
+			"/service3/A": 0
+		},
+		"/service2/A": {
+			"/service4/A": 0
+		},
+		"/service3/A": {
+			"/service4/A": 1
+		},
+		"/service4/A": {
+			"/consumer": 0
+		}
+	}
+}

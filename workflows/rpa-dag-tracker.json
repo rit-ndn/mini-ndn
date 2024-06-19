@@ -1,0 +1,32 @@
+{"tracker": {
+		"/service1": {
+			"root": 1,
+			"interestGenerated": 0,
+			"inputsRxed": {
+				"sensor": 0
+			}
+		},
+		"/service2": {
+			"root": 0,
+			"interestGenerated": 0,
+			"inputsRxed": {
+				"/service1": 0
+			}
+		},
+		"/service3": {
+			"root": 0,
+			"interestGenerated": 0,
+			"inputsRxed": {
+				"/service1": 0
+			}
+		},
+		"/service4": {
+			"root": 0,
+			"interestGenerated": 0,
+			"inputsRxed": {
+				"/service2": 0,
+				"/service3": 0
+			}
+		}
+	}
+}
