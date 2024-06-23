@@ -127,10 +127,10 @@ def run():
         grh = NdnRoutingHelper(ndn.net, ndn.args.faceType, ndn.args.routingType)
         # For all host, pass ndn.net.hosts or a list, [ndn.net['a'], ..] or [ndn.net.hosts[0],.]
         grh.addOrigin([ndn.net['sensor']], [PREFIX + "/sensor"])
+        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/service1"])
         grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/service2"])
         grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service3"])
         grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service4"])
-        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/service1"])
         grh.calculateNPossibleRoutes()
 
         ''' 
@@ -213,7 +213,9 @@ def run():
 
 
     # SET UP THE FORWARDERS
-    # TODO: run the cabeee-dag-forwarder-app application on all router nodes
+    # run the cabeee-dag-forwarder-app application on all router nodes
+    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service1.log &'.format(PREFIX, "/service1")
+    ndn.net['rtr3'].cmd(cmd)
     cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service2.log &'.format(PREFIX, "/service2")
     ndn.net['rtr1'].cmd(cmd)
     cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service3.log &'.format(PREFIX, "/service3")
@@ -221,8 +223,6 @@ def run():
     sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
     cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service4.log &'.format(PREFIX, "/service4")
     ndn.net['rtr2'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service1.log &'.format(PREFIX, "/service1")
-    ndn.net['rtr3'].cmd(cmd)
 
 
     # SET UP THE CONSUMER
