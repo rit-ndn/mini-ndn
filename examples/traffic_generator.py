@@ -42,6 +42,7 @@ from minindn.util import copyExistentFile
 #from examples.nlsr.nlsr_common import getParser
 from nlsr.nlsr_common import getParser
 #from nlsr_common import getParser
+from minindn.helpers.merge_nfd_logs import MergeNFDLogs
 
 def trafficServer(node, serverConfFile):
     """
@@ -54,12 +55,14 @@ def trafficServer(node, serverConfFile):
     cmd = 'ndn-traffic-server -c {} {} &> traffic-server.log &'.format(10, serverConfFile)
     node.cmd(cmd)
     sleep(10)
+    #sleep(1)
 
     # The server configuration file uses /example prefix to advertise its service
     # thus, server needs to advertise this prefix for the client to reach it
     serverPrefix = "/example"
     server.cmd('nlsrc advertise {}'.format(serverPrefix))
     sleep(5) # sleep for routing convergence
+    #sleep(1) # sleep for routing convergence
 
 def trafficClient(node, clientConfFile):
     """
@@ -73,7 +76,10 @@ def trafficClient(node, clientConfFile):
     node.cmd(cmd)
 
 if __name__ == '__main__':
-    setLogLevel('info')
+    #setLogLevel('info')
+    setLogLevel('debug')
+
+    MergeNFDLogs.deleteAllLogs()
 
     # Traffic generator configuration files. For this example, we are using default conf files.
     # More details on configuration files here: https://github.com/named-data/ndn-traffic-generator
@@ -88,6 +94,7 @@ if __name__ == '__main__':
     nfds = AppManager(ndn, ndn.net.hosts, Nfd)
     nlsrs = AppManager(ndn, ndn.net.hosts, Nlsr)
     sleep(90)
+    #sleep(1)
 
     # Default topology is used in this experiment "/topologies/default-topology.conf"
     # lets make node "a" as a traffic-server node, and node "c" as a traffic-client node
@@ -102,6 +109,8 @@ if __name__ == '__main__':
     trafficServer(server, serverConf)
     trafficClient(client, clientConf)
     # default location for the results: /tmp/minindn/
+
+    MergeNFDLogs.mergeAllLogs()
 
     MiniNDNCLI(ndn.net)
     ndn.stop()
