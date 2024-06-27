@@ -46,6 +46,7 @@ import sys
 
 PREFIX = "/interCACHE"
 WORKFLOW = "/home/cabeee/mini-ndn/workflows/20-parallel.json"
+TOPOLOGY = "topologies/cabeee-20node-parallel.conf"
 
 
 def run():
@@ -68,7 +69,7 @@ def run():
         # OPTION 0
         # set up routes manually. The important bit to note here is the use of the Nfdc command
 
-        ndn = Minindn(topoFile='topologies/cabeee-20node-parallel.conf')
+        ndn = Minindn(topoFile=TOPOLOGY)
         ndn.start()
 
         info('Setting up routes manually in NFD\n')
@@ -129,7 +130,7 @@ def run():
         # OPTION 1
         # set up routes using Link State Routing (NLSR).
 
-        ndn = Minindn(topoFile='topologies/cabeee-20node-parallel.conf')
+        ndn = Minindn(topoFile=TOPOLOGY)
         ndn.start()
 
         info('Adding IP routes to NFD\n')
@@ -152,7 +153,7 @@ def run():
                             help='''Choose routing type, dry = link-state is used
                                     but hr is calculated for comparision.''')
 
-        ndn = Minindn(parser=parser, topoFile='topologies/cabeee-20node-parallel.conf')
+        ndn = Minindn(parser=parser, topoFile=TOPOLOGY)
         ndn.start()
 
         # configure and start nfd on each node
@@ -224,7 +225,7 @@ def run():
         # OPTION 3
         # use IP routing as used in ip_rounting_experiment.py
 
-        ndn = Minindn(topoFile='topologies/cabeee-20node-parallel.conf')
+        ndn = Minindn(topoFile=TOPOLOGY)
         ndn.start()
 
         # NOTE: this method is also used in traffic_generator.py, pcap_logging_experiment.py, and consumer-producer.py
