@@ -235,7 +235,8 @@ def run():
 
 
     # SET UP THE CONSUMER2
-    info('Starting Consumer2 App\n')
+    info('Starting Consumer2 App (after waiting one second for RIB updates to finish propagating)\n')
+    sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
 
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
     cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer2 {} {} {} > cabeee_consumer2.log &'.format(PREFIX, WORKFLOW, 0)
