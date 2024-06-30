@@ -223,8 +223,8 @@ def run():
     sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
     cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service4.log &'.format(PREFIX, "/service4")
     ndn.net['rtr2'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service5.log &'.format(PREFIX, "/service5")
     sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service5.log &'.format(PREFIX, "/service5")
     ndn.net['rtr3'].cmd(cmd)
     cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service6.log &'.format(PREFIX, "/service6")
     ndn.net['rtr1'].cmd(cmd)
@@ -238,7 +238,6 @@ def run():
     # SET UP THE CONSUMER
     info('Starting Consumer App (after waiting one second for RIB updates to finish propagating)\n')
     sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
-
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
     cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW1, 0)
     #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer > cabeee_consumer.log &'
@@ -256,7 +255,6 @@ def run():
     # SET UP THE CONSUMER2
     info('Starting Consumer2 App (after waiting one second for RIB updates to finish propagating)\n')
     sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
-
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
     cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer2 {} {} {} > cabeee_consumer2.log &'.format(PREFIX, WORKFLOW2, 0)
     #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer2 > cabeee_consumer2.log &'
