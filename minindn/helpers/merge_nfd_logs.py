@@ -102,6 +102,15 @@ class MergeNFDLogs(object):
         with open(output_file_path, 'w', encoding='utf-8') as output_file:
             output_file.writelines(sorted_lines)
 
+    @staticmethod
+    def count_specific_lines(output_file_path, keyword1, keyword2):
+        count = 0
+        with open(output_file_path, 'r', encoding='utf-8') as file:
+            for line in file:
+                if keyword1 in line and keyword2 in line:
+                    count += 1
+        return count
+
     #@staticmethod
     def mergeAllLogs():
         """This will merge all the logs found in /tmp/minindn/ and sort them by timestamp
@@ -119,6 +128,17 @@ class MergeNFDLogs(object):
         lines = MergeNFDLogs.read_lines_from_directory(directory_path, target_filename)
         MergeNFDLogs.write_sorted_lines_to_file(lines, output_file_path)
         print(f"Lines from {directory_path}/<all nodes>/log/nfd.log have been merged and sorted into {output_file_path}")
+
+        # Count interest packets
+        keyword1 = 'CABEEE'
+        keyword2 = 'onIncomingInterest'
+        count = MergeNFDLogs.count_specific_lines(output_file_path, keyword1, keyword2)
+        print(f"\nNumber of generated interest packets by applications (onIncomingInterest to each node from applications): {count} interests\n")
+        # Count data packets
+        keyword1 = 'CABEEE'
+        keyword2 = 'onOutgoingData'
+        count = MergeNFDLogs.count_specific_lines(output_file_path, keyword1, keyword2)
+        print(f"Number of received data packets by applications (onOutgoingData from each node to applications): {count} data\n")
 
 
         return None
