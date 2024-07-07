@@ -109,6 +109,8 @@ class MergeNFDLogs(object):
             for line in file:
                 if keyword1 in line and keyword2 in line:
                     count += 1
+                if "serviceOrchestration/reset" in line:
+                    count = 0
         return count
 
     #@staticmethod
