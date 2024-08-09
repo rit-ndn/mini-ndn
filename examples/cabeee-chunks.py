@@ -57,6 +57,7 @@ def sendFile(node, prefix, file):
     """
     info ("File published:", file)
     cmd = 'ndnputchunks {}/{} < {} > putchunks.log 2>&1 &'.format(prefix, "fname", file)
+    #cmd = 'ndnputchunks -s 2 {}/{} < {} > putchunks.log 2>&1 &'.format(prefix, "fname", file) # set the max segment size to 2 bytes
     node.cmd(cmd)
     # Sleep for appropriate time based on the file size
     sleep(5)
@@ -85,7 +86,7 @@ def run():
     There are multiple ways of setting up routes in Mini-NDN
     refer: https://minindn.memphis.edu/experiment.html#routing-options
     """
-    routeOption = 3
+    routeOption = 2
 
 
     if routeOption == 0:
@@ -210,7 +211,7 @@ def run():
 
 
 
-    #TODO: next try doing a simple example as in examples/chunks.py
+    # next try doing a simple example as in examples/chunks.py
     #      this might be the closest to what I did in ndnSIM, as far as generating a single interest at a time
     #      and adding the application-parameters. The data in response can be sent via a file. Perhaps there is a better way (without having to create a file?)
 
