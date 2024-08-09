@@ -49,5 +49,8 @@ sudo python examples/cabeee-4dag.py
 
 
 
+# other examples
+#sudo python examples/cabeee-chunks.py
 
-
+# show the consumer log (so we can see the final answer and the service latency)
+cat /tmp/minindn/user/cabeee_consumer.log
