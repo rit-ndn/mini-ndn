@@ -131,16 +131,27 @@ class MergeNFDLogs(object):
         MergeNFDLogs.write_sorted_lines_to_file(lines, output_file_path)
         print(f"Lines from {directory_path}/<all nodes>/log/nfd.log have been merged and sorted into {output_file_path}")
 
-        # Count interest packets
+        # Count interest packets coming from application face
         keyword1 = 'CABEEE'
-        keyword2 = 'onIncomingInterest'
+        keyword2 = 'onIncomingInterestFromApp'
         count = MergeNFDLogs.count_specific_lines(output_file_path, keyword1, keyword2)
-        print(f"\nNumber of generated interest packets by applications (onIncomingInterest to each node from applications): {count} interests\n")
-        # Count data packets
+        print(f"\nNumber of generated interest packets by applications (onIncomingInterest to each NFD node from applications): {count} interests\n")
+        # Count data packets going to application face
         keyword1 = 'CABEEE'
-        keyword2 = 'onOutgoingData'
+        keyword2 = 'onOutgoingDataToApp'
         count = MergeNFDLogs.count_specific_lines(output_file_path, keyword1, keyword2)
-        print(f"Number of received data packets by applications (onOutgoingData from each node to applications): {count} data\n")
+        print(f"Number of received data packets by applications (onOutgoingData from each NFD node to applications): {count} data\n")
+
+        # Count interest packets coming from any face
+        keyword1 = 'CABEEE'
+        keyword2 = 'onIncomingInterestFromFace'
+        count = MergeNFDLogs.count_specific_lines(output_file_path, keyword1, keyword2)
+        print(f"\nNumber of interest packets into NFD from a physical face (onIncomingInterest to each NFD node from a physical face): {count} interests\n")
+        # Count data packets going to any face
+        keyword1 = 'CABEEE'
+        keyword2 = 'onOutgoingDataToFace'
+        count = MergeNFDLogs.count_specific_lines(output_file_path, keyword1, keyword2)
+        print(f"Number of data packets leaving NFD on a physical face (onOutgoingData from each NFD node to a physical face): {count} data\n")
 
 
         return None
