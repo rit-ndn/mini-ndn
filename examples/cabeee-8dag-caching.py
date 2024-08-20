@@ -251,6 +251,12 @@ def run():
 
     sleep(2) # give enough time for the consumer to receive the final service result, so that everything is cached before starting the second consumer.
 
+    #FOR SECOND CONSUMER - we need to generate an interest that gets logged so that the packet counter script will reset the counters (consumer 1 packets should not be counted)
+    # for this, we need a new app to generate this interest
+    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-orchestratorA-reset-app {} {} > cabeee_orchestratorA-reset.log &'.format(PREFIX, "/serviceOrchestration/reset")
+    ndn.net['user'].cmd(cmd)
+
+    sleep(1)
 
     # SET UP THE CONSUMER2
     info('Starting Consumer2 App (after waiting one second for RIB updates to finish propagating)\n')
@@ -274,7 +280,7 @@ def run():
 
 
     info("\nExperiment Completed!\n")
-    MiniNDNCLI(ndn.net)
+    #MiniNDNCLI(ndn.net)
     ndn.stop()
 
     # concatenate every node's log/nfd.log file to a single one. Keep timestamp, add node name. Sort by timestamp!

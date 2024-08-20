@@ -14,7 +14,7 @@ clear
 # 4 DAG
 #sudo python examples/cabeee-4dag-orchestratorA.py
 #sudo python examples/cabeee-4dag-orchestratorB.py
-sudo python examples/cabeee-4dag.py
+#sudo python examples/cabeee-4dag.py
 
 # 20 Linear
 #sudo python examples/cabeee-20node-linear-orchestratorA.py
@@ -29,9 +29,9 @@ sudo python examples/cabeee-4dag.py
 
 
 # 20 Sensor (Parallel)
-#sudo python examples/cabeee-20sensro-parallel-orchestratorA.py
-#sudo python examples/cabeee-20sensro-parallel-orchestratorB.py
-#sudo python examples/cabeee-20sensro-parallel.py
+#sudo python examples/cabeee-20sensor-parallel-orchestratorA.py
+sudo python examples/cabeee-20sensor-parallel-orchestratorB.py
+#sudo python examples/cabeee-20sensor-parallel.py
 
 
 # 8 DAG
@@ -54,3 +54,4 @@ sudo python examples/cabeee-4dag.py
 
 # show the consumer log (so we can see the final answer and the service latency)
 cat /tmp/minindn/user/cabeee_consumer.log
+#cat /tmp/minindn/user/cabeee_consumer2.log

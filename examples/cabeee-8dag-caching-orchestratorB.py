@@ -252,8 +252,8 @@ def run():
 
 
     #FOR SECOND CONSUMER - we need a new Orchestrator app, because of the tracker data structures. OR we could simply reset the tracker once we generate the last data packet to the consumer.
-    #TODO: create a new app that generates a special interest, which when delivered to the orchestrator, will reset the tracker data structure.
-    #TODO: I'll need to create a new name so that the orchestrator listens to it. Something like: "/interCACHE/serviceOrchestration/resetDataStructures"
+    # we create a new app that generates a special interest, which when delivered to the orchestrator, will reset the tracker data structure.
+    # this is a new name so that the orchestrator listens to it: "/interCACHE/serviceOrchestration/reset"
     #TODO: eventually, we should have a single orchestrator that creates a NEW data structure (or append to the existing one) for each workflow received from a consumer.
     # RESET THE ORCHESTRATOR
     # run the cabeee-dag-orchestratorA-reset-app application on the orchestrator node
@@ -280,7 +280,7 @@ def run():
 
 
     info("\nExperiment Completed!\n")
-    MiniNDNCLI(ndn.net)
+    #MiniNDNCLI(ndn.net)
     ndn.stop()
 
     # concatenate every node's log/nfd.log file to a single one. Keep timestamp, add node name. Sort by timestamp!

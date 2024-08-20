@@ -296,7 +296,7 @@ def run():
     consumer.cmd(cmd)
 
 
-    sleep(1)
+    sleep(3)
 
 
 
@@ -305,7 +305,7 @@ def run():
 
 
     info("\nExperiment Completed!\n")
-    MiniNDNCLI(ndn.net)
+    #MiniNDNCLI(ndn.net)
     ndn.stop()
 
     # concatenate every node's log/nfd.log file to a single one. Keep timestamp, add node name. Sort by timestamp!
