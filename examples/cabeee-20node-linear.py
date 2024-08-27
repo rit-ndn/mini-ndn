@@ -93,8 +93,7 @@ def run():
                     "rtr17":["rtr18"],
                     "rtr18":["rtr19"],
                     "rtr19":["rtr20"],
-                    "rtr20":["orch"],
-                    "orch":["user"]}
+                    "rtr20":["user"]}
         for first in links:
             for second in links[first]:
                 host1 = ndn.net[first]

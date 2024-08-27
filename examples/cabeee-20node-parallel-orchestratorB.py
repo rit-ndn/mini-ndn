@@ -112,8 +112,9 @@ def run():
                     "rtr18":["rtr21"],
                     "rtr19":["rtr21"],
                     "rtr20":["rtr21"],
-                    "rtr21":["orch"],
-                    "orch":["user"]}
+                    #"rtr21":["orch"],
+                    "rtr21":["user"]}
+                    #"orch":["user"]}
         for first in links:
             for second in links[first]:
                 host1 = ndn.net[first]
@@ -184,7 +185,8 @@ def run():
         grh.addOrigin([ndn.net['rtr19']], [PREFIX + "/serviceP19"])
         grh.addOrigin([ndn.net['rtr20']], [PREFIX + "/serviceP20"])
         grh.addOrigin([ndn.net['rtr21']], [PREFIX + "/serviceP21"])
-        grh.addOrigin([ndn.net['orch']], [PREFIX + "/serviceOrchestration"])
+        #grh.addOrigin([ndn.net['orch']], [PREFIX + "/serviceOrchestration"])
+        grh.addOrigin([ndn.net['user']], [PREFIX + "/serviceOrchestration"])
         grh.calculateNPossibleRoutes() 
 
         ''' 
@@ -308,7 +310,8 @@ def run():
     # SET UP THE ORCHESTRATOR
     # run the cabeee-dag-orchestratorB-app application on all router nodes
     cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-orchestratorB-app {} {} > cabeee_orchestratorB.log &'.format(PREFIX, "/serviceOrchestration")
-    ndn.net['orch'].cmd(cmd)
+    #ndn.net['orch'].cmd(cmd)
+    ndn.net['user'].cmd(cmd)
 
     # SET UP THE CONSUMER
     info('Starting Consumer App (after waiting one second for RIB updates to finish propagating)\n')

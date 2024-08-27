@@ -76,7 +76,8 @@ def run():
 
         info('Setting up routes manually in NFD\n')
         #links = {"sensor":["rtr1"], "rtr1":["rtr2"], "rtr2":["rtr3"], "rtr3":["orch"], "orch":["user"]} # routes are directional! This is the wrong direction.
-        links = {"user":["orch"], "orch":["rtr3"], "rtr3":["rtr2"], "rtr2":["rtr1"], "rtr1":["sensor"]}
+        #links = {"user":["orch"], "orch":["rtr3"], "rtr3":["rtr2"], "rtr2":["rtr1"], "rtr1":["sensor"]}
+        links = {"user":["rtr3"], "rtr3":["rtr2"], "rtr2":["rtr1"], "rtr1":["sensor"]}
         for first in links:
             for second in links[first]:
                 host1 = ndn.net[first]
@@ -134,7 +135,8 @@ def run():
         grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/service6"])
         grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service7"])
         grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service8"])
-        grh.addOrigin([ndn.net['orch']], [PREFIX + "/serviceOrchestration"])
+        #grh.addOrigin([ndn.net['orch']], [PREFIX + "/serviceOrchestration"])
+        grh.addOrigin([ndn.net['user']], [PREFIX + "/serviceOrchestration"])
         grh.calculateNPossibleRoutes()
 
         ''' 
@@ -235,7 +237,8 @@ def run():
     # SET UP THE ORCHESTRATOR
     # run the cabeee-dag-orchestratorA-app application on the orchestrator node
     cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-orchestratorA-app {} {} > cabeee_orchestratorA.log &'.format(PREFIX, "/serviceOrchestration")
-    ndn.net['orch'].cmd(cmd)
+    #ndn.net['orch'].cmd(cmd)
+    ndn.net['user'].cmd(cmd)
 
 
     # SET UP THE CONSUMER
@@ -258,7 +261,8 @@ def run():
     # RESET THE ORCHESTRATOR
     # run the cabeee-dag-orchestratorA-reset-app application on the orchestrator node
     cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-orchestratorA-reset-app {} {} > cabeee_orchestratorA-reset.log &'.format(PREFIX, "/serviceOrchestration/reset")
-    ndn.net['orch'].cmd(cmd)
+    #ndn.net['orch'].cmd(cmd)
+    ndn.net['user'].cmd(cmd)
 
     sleep(1)
 

@@ -14,7 +14,7 @@ clear
 # 4 DAG
 #sudo python examples/cabeee-4dag-orchestratorA.py
 #sudo python examples/cabeee-4dag-orchestratorB.py
-#sudo python examples/cabeee-4dag.py
+sudo python examples/cabeee-4dag.py
 
 # 20 Linear
 #sudo python examples/cabeee-20node-linear-orchestratorA.py
@@ -30,7 +30,7 @@ clear
 
 # 20 Sensor (Parallel)
 #sudo python examples/cabeee-20sensor-parallel-orchestratorA.py
-sudo python examples/cabeee-20sensor-parallel-orchestratorB.py
+#sudo python examples/cabeee-20sensor-parallel-orchestratorB.py
 #sudo python examples/cabeee-20sensor-parallel.py
 
 
