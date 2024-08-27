@@ -33,6 +33,8 @@ cd ../NLSR
 ./waf
 sudo ./waf install
 
+sudo ldconfig
+
 # now we can run the emulator
 cd ../../
 #./dag_run.sh
