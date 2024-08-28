@@ -1,8 +1,8 @@
 #! /bin/bash
 
 
-#INSTALL_DIR=~
-INSTALL_DIR=/opt/ndn/
+INSTALL_DIR=~
+#INSTALL_DIR=/opt/ndn/
 
 cd $INSTALL_DIR
 
