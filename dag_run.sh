@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 
 #----- THIS ONLY NEEDS TO BE RUN ONCE --------------------
@@ -8,50 +8,42 @@
 #sudo ./waf install
 #---------------------------------------------------------
 
-
-clear
-
+script_dir="$MININDN_HOME/examples"
+scripts=(
 # 4 DAG
-#sudo python examples/cabeee-4dag-orchestratorA.py
-#sudo python examples/cabeee-4dag-orchestratorB.py
-sudo python examples/cabeee-4dag.py
-
+#       "cabeee-4dag-archestratorA.py"
+#       "cabeee-4dag-archestratorB.py"
+        "cabeee-4dag.py"
 # 20 Linear
-#sudo python examples/cabeee-20node-linear-orchestratorA.py
-#sudo python examples/cabeee-20node-linear-orchestratorB.py
-#sudo python examples/cabeee-20node-linear.py
-
-
+#       "cabeee-20node-linear-orchestratorA.py"
+#       "cabeee-20node-linear-orchestratorB.py"
+#       "cabeee-20node-linear.py"
 # 20 Parallel
-#sudo python examples/cabeee-20node-parallel-orchestratorA.py
-#sudo python examples/cabeee-20node-parallel-orchestratorB.py
-#sudo python examples/cabeee-20node-parallel.py
-
-
+#       "cabeee-20node-parallel-orchestratorA.py"
+#       "cabeee-20node-parallel-orchestratorB.py"
+#       "cabeee-20node-parallel.py"
 # 20 Sensor (Parallel)
-#sudo python examples/cabeee-20sensor-parallel-orchestratorA.py
-#sudo python examples/cabeee-20sensor-parallel-orchestratorB.py
-#sudo python examples/cabeee-20sensor-parallel.py
-
-
+#       "cabeee-20sensor-parallel-orchestratorA.py"
+#       "cabeee-20sensor-parallel-orchestratorB.py"
+#       "cabeee-20sensor-parallel.py"
 # 8 DAG
-#sudo python examples/cabeee-8dag-orchestratorA.py
-#sudo python examples/cabeee-8dag-orchestratorB.py
-#sudo python examples/cabeee-8dag.py
-
-
+#       "cabeee-8dag-orchestratorA.py"
+#       "cabeee-8dag-orchestratorB.py"
+#       "cabeee-8dag.py"
 # 8 DAG w/ caching
-#sudo python examples/cabeee-8dag-caching-orchestratorA.py
-#sudo python examples/cabeee-8dag-caching-orchestratorB.py
-#sudo python examples/cabeee-8dag-caching.py
-
-
-
-
-
+#       "cabeee-8dag-caching-orchestratorA.py"
+#       "cabeee-8dag-caching-orchestratorB.py"
+#       "cabeee-8dag-caching.py"
 # other examples
-#sudo python examples/cabeee-chunks.py
+#       "cabeee-chunks.py"
+        )
 
-# show the consumer log (so we can see the final answer and the service latency)
-cat /tmp/minindn/user/cabeee_consumer.log
-#cat /tmp/minindn/user/cabeee_consumer2.log
+#clear
+
+for script in "${scripts[@]}"
+do
+        sudo -E python "$script_dir/$script"
+	# show the consumer log (so we can see the final answer and the service latency)
+        cat /tmp/minindn/user/cabeee_consumer.log
+	#cat /tmp/minindn/user/cabeee_consumer2.log
+done
