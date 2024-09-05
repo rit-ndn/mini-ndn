@@ -46,18 +46,20 @@ consumer_log="/tmp/minindn/user/cabeee_consumer.log"
 csv_out="$MININDN_HOME/perf-results.csv"
 header="Example, Interest Packets Generated, Data Packets Generated, Interest Packets Transmitted, Data Packets Transmitted, Service Latency, Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
 
-cp "$csv_out" "$csv_out.bak"
-
 if [ ! -f "$csv_out" ]; then
 	echo "$header" > "$csv_out"
 elif ! grep -q -F "$header" "$csv_out"; then
-	echo "Overwriting csv..."
 	mv "$csv_out" "$csv_out.bak"
+	echo "Overwriting csv..."
 	echo "$header" > "$csv_out"
+else
+	cp "$csv_out" "$csv_out.bak"
 fi
 
 for script in "${scripts[@]}"
 do
+	echo "Example: $script"
+
 	now="$(date -Iseconds)"
 
 	minindn_hash="$(git -C "$MININDN_HOME" rev-parse HEAD)"
@@ -67,23 +69,24 @@ do
 
 	# these sed scripts depend on the order in which the logs are printed
 
-	# shellcheck disable=SC2024
-        sudo -E python "$script_dir/$script" > "$example_log"
-	packets=$(sed -n \
+	echo "Running..."
+	packets=$( \
+		sudo -E python "$script_dir/$script" |& tee "$example_log" | sed -n \
 		-e 's/^Interest Packets Generated: \([0-9]*\) interests$/\1,/p' \
 		-e 's/^Data Packets Generated: \([0-9]*\) data$/\1,/p' \
 		-e 's/^Interest Packets Transmitted: \([0-9]*\) interests$/\1,/p' \
 		-e 's/^Data Packets Transmitted: \([0-9]*\) data/\1,/p' \
-		"$example_log" \
 		| tr -d '\n' \
 	)
 
+	echo "Parsing logs..."
 	interest_gen="$(echo "$packets" | cut -d',' -f1)"
 	data_gen="$(echo "$packets" | cut -d',' -f2)"
 	interest_trans="$(echo "$packets" | cut -d',' -f3)"
 	data_trans="$(echo "$packets" | cut -d',' -f4)"
 
-	consumer_parse=$(sed -n \
+	consumer_parse=$( \
+		sed -n \
 		-e 's/^\s*The final answer is: \([0-9]*\)$/\1,/p' \
 		-e 's/^\s*Service Latency: \([0-9\.]*\) seconds.$/\1,/p' \
 		"$consumer_log" \
@@ -95,13 +98,15 @@ do
 
 	row="$script, $interest_gen, $data_gen, $interest_trans, $data_trans, $latency, $result, $now, $minindn_hash, $ndncxx_hash, $nfd_hash, $nlsr_hash"
 
-	# WARN: $script is NOT escaped, so don't use any fancy characters
-	# the dot in the file extension technically matches any character, but this shouldn't matter
-	# basically this is fragile, don't be weird with these strings
+	echo "Dumping to csv..."
 	line_num="$(grep -n -F "$script," "$csv_out" | cut -d: -f1 | head -1)"
 	if [ -n "$line_num" ]; then
 		sed --in-place -e "${line_num}c\\$row" "$csv_out"
 	else
 		echo "$row" >> "$csv_out"
 	fi
+
+	echo ""
 done
+
+echo "All examples ran"
