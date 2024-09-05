@@ -14,39 +14,39 @@ MININDN_HOME="$HOME/mini-ndn"
 script_dir="$MININDN_HOME/examples"
 scripts=(
 # 4 DAG
-#       "cabeee-4dag-archestratorA.py"
-#       "cabeee-4dag-archestratorB.py"
-        "cabeee-4dag.py"
+#"cabeee-4dag-orchestratorA.py"
+#"cabeee-4dag-orchestratorB.py"
+"cabeee-4dag.py"
 # 20 Linear
-#       "cabeee-20node-linear-orchestratorA.py"
-#       "cabeee-20node-linear-orchestratorB.py"
-#       "cabeee-20node-linear.py"
+#"cabeee-20node-linear-orchestratorA.py"
+#"cabeee-20node-linear-orchestratorB.py"
+#"cabeee-20node-linear.py"
 # 20 Parallel
-#       "cabeee-20node-parallel-orchestratorA.py"
-#       "cabeee-20node-parallel-orchestratorB.py"
-#       "cabeee-20node-parallel.py"
+#"cabeee-20node-parallel-orchestratorA.py"
+#"cabeee-20node-parallel-orchestratorB.py"
+#"cabeee-20node-parallel.py"
 # 20 Sensor (Parallel)
-#       "cabeee-20sensor-parallel-orchestratorA.py"
-#       "cabeee-20sensor-parallel-orchestratorB.py"
-#       "cabeee-20sensor-parallel.py"
+#"cabeee-20sensor-parallel-orchestratorA.py"
+#"cabeee-20sensor-parallel-orchestratorB.py"
+#"cabeee-20sensor-parallel.py"
 # 8 DAG
-#       "cabeee-8dag-orchestratorA.py"
-#       "cabeee-8dag-orchestratorB.py"
-#       "cabeee-8dag.py"
+#"cabeee-8dag-orchestratorA.py"
+#"cabeee-8dag-orchestratorB.py"
+#"cabeee-8dag.py"
 # 8 DAG w/ caching
-#       "cabeee-8dag-caching-orchestratorA.py"
-#       "cabeee-8dag-caching-orchestratorB.py"
-#       "cabeee-8dag-caching.py"
-# other examples
-#       "cabeee-chunks.py"
-        )
-
-#clear
+#"cabeee-8dag-caching-orchestratorA.py"
+#"cabeee-8dag-caching-orchestratorB.py"
+#"cabeee-8dag-caching.py"
+# Misc
+#"cabeee-chunks.py"
+)
 
 example_log="$MININDN_HOME/example.log"
 consumer_log="/tmp/minindn/user/cabeee_consumer.log"
 csv_out="$MININDN_HOME/perf-results.csv"
-header="Example, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit, Interest Packets Generated, Data Packets Generated, Interest Packets Transmitted, Data Packets Transmitted, Service Latency, Final Result"
+header="Example, Interest Packets Generated, Data Packets Generated, Interest Packets Transmitted, Data Packets Transmitted, Service Latency, Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
+
+cp "$csv_out" "$csv_out.bak"
 
 if [ ! -f "$csv_out" ]; then
 	echo "$header" > "$csv_out"
@@ -93,7 +93,7 @@ do
 	result="$(echo "$consumer_parse" | cut -d',' -f1)"
 	latency="$(echo "$consumer_parse" | cut -d',' -f2)"
 
-	row="$script, $now, $minindn_hash, $ndncxx_hash, $nfd_hash, $nlsr_hash, $interest_gen, $data_gen, $interest_trans, $data_trans, $latency, $result"
+	row="$script, $interest_gen, $data_gen, $interest_trans, $data_trans, $latency, $result, $now, $minindn_hash, $ndncxx_hash, $nfd_hash, $nlsr_hash"
 
 	# WARN: $script is NOT escaped, so don't use any fancy characters
 	# the dot in the file extension technically matches any character, but this shouldn't matter
