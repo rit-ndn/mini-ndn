@@ -40,16 +40,20 @@ from minindn.helpers.merge_nfd_logs import MergeNFDLogs
 from minindn.util import copyExistentFile
 
 from time import sleep
+from os import environ
 
 import sys
 
+USER_HOME = environ['HOME']
+MININDN_DIR = USER_HOME + '/mini-ndn'
 
 PREFIX = "/interCACHE"
-WORKFLOW1 = "/home/cabeee/mini-ndn/workflows/4dag.json"
-WORKFLOW2 = "/home/cabeee/mini-ndn/workflows/8dag.json"
-TOPOLOGY = "topologies/cabeee-3node.conf"
-#TOPOLOGY = "topologies/cabeee-3node-slow.conf"
 
+WORKFLOW1 = MININDN_DIR + '/workflows/4dag.json'
+WORKFLOW2 = MININDN_DIR + '/workflows/8dag.json'
+BIN_DIR = MININDN_DIR + '/dl/ndn-cxx/build/examples'
+TOPOLOGY = MININDN_DIR + '/topologies/cabeee-3node.conf'
+#TOPOLOGY = MININDN_DIR + '/topologies/cabeee-3node-slow.conf'
 
 def run():
     Minindn.cleanUp()
@@ -203,7 +207,7 @@ def run():
     info('Starting Producer App\n')
     # runs in the background so that it is non-blocking
     # App input is the service PREFIX
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor")
     producer = ndn.net['sensor']
     producer.cmd(cmd)
     
@@ -213,30 +217,30 @@ def run():
 
     # SET UP THE SERVICES
     # run the cabeee-dag-serviceA-app application on all router nodes
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service1.log &'.format(PREFIX, "/service1")
+    cmd = BIN_DIR + '/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service1.log &'.format(PREFIX, "/service1")
     ndn.net['rtr3'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service2.log &'.format(PREFIX, "/service2")
+    cmd = BIN_DIR + '/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service2.log &'.format(PREFIX, "/service2")
     ndn.net['rtr1'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service3.log &'.format(PREFIX, "/service3")
+    cmd = BIN_DIR + '/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service3.log &'.format(PREFIX, "/service3")
     ndn.net['rtr2'].cmd(cmd)
     sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service4.log &'.format(PREFIX, "/service4")
+    cmd = BIN_DIR + '/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service4.log &'.format(PREFIX, "/service4")
     ndn.net['rtr2'].cmd(cmd)
     sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service5.log &'.format(PREFIX, "/service5")
+    cmd = BIN_DIR + '/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service5.log &'.format(PREFIX, "/service5")
     ndn.net['rtr3'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service6.log &'.format(PREFIX, "/service6")
+    cmd = BIN_DIR + '/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service6.log &'.format(PREFIX, "/service6")
     ndn.net['rtr1'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service7.log &'.format(PREFIX, "/service7")
+    cmd = BIN_DIR + '/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service7.log &'.format(PREFIX, "/service7")
     ndn.net['rtr2'].cmd(cmd)
     sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service8.log &'.format(PREFIX, "/service8")
+    cmd = BIN_DIR + '/cabeee-dag-serviceA-app {} {} > cabeee_serviceA_service8.log &'.format(PREFIX, "/service8")
     ndn.net['rtr2'].cmd(cmd)
 
 
     # SET UP THE ORCHESTRATOR
     # run the cabeee-dag-orchestratorA-app application on the orchestrator node
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-orchestratorA-app {} {} > cabeee_orchestratorA.log &'.format(PREFIX, "/serviceOrchestration")
+    cmd = BIN_DIR + '/cabeee-dag-orchestratorA-app {} {} > cabeee_orchestratorA.log &'.format(PREFIX, "/serviceOrchestration")
     #ndn.net['orch'].cmd(cmd)
     ndn.net['user'].cmd(cmd)
 
@@ -245,7 +249,7 @@ def run():
     info('Starting Consumer App (after waiting one second for RIB updates to finish propagating)\n')
     sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW1, 1)
+    cmd = BIN_DIR + '/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW1, 1)
     consumer = ndn.net['user']
     consumer.cmd(cmd)
 
@@ -260,7 +264,7 @@ def run():
     #TODO: eventually, we should have a single orchestrator that creates a NEW data structure (or append to the existing one) for each workflow received from a consumer.
     # RESET THE ORCHESTRATOR
     # run the cabeee-dag-orchestratorA-reset-app application on the orchestrator node
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-orchestratorA-reset-app {} {} > cabeee_orchestratorA-reset.log &'.format(PREFIX, "/serviceOrchestration/reset")
+    cmd = BIN_DIR + '/cabeee-dag-orchestratorA-reset-app {} {} > cabeee_orchestratorA-reset.log &'.format(PREFIX, "/serviceOrchestration/reset")
     #ndn.net['orch'].cmd(cmd)
     ndn.net['user'].cmd(cmd)
 
@@ -270,7 +274,7 @@ def run():
     info('Starting Consumer2 App (after waiting one second for RIB updates to finish propagating)\n')
     sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer2 {} {} {} > cabeee_consumer2.log &'.format(PREFIX, WORKFLOW2, 1)
+    cmd = BIN_DIR + '/cabeee-custom-app-consumer2 {} {} {} > cabeee_consumer2.log &'.format(PREFIX, WORKFLOW2, 1)
     consumer2 = ndn.net['user']
     consumer2.cmd(cmd)
 
