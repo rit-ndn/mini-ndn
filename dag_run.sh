@@ -14,12 +14,13 @@ clear
 # 4 DAG
 #sudo python examples/cabeee-4dag-orchestratorA.py
 #sudo python examples/cabeee-4dag-orchestratorB.py
-sudo python examples/cabeee-4dag.py
+#sudo python examples/cabeee-4dag.py
 
 # 20 Linear
 #sudo python examples/cabeee-20node-linear-orchestratorA.py
 #sudo python examples/cabeee-20node-linear-orchestratorB.py
 #sudo python examples/cabeee-20node-linear.py
+sudo python examples/cabeee-20node-linear-reverse.py # used for initial testing of shortcutOPT
 
 
 # 20 Parallel
