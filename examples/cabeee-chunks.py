@@ -40,8 +40,15 @@ from minindn.helpers.merge_nfd_logs import MergeNFDLogs
 from minindn.util import copyExistentFile
 
 from time import sleep
+from os import environ
+
+USER_HOME = environ['HOME']
+MININDN_DIR = USER_HOME + '/mini-ndn'
 
 PREFIX = "/interCACHE"
+
+BIN_DIR = MININDN_DIR + '/dl/ndn-cxx/build/examples'
+TOPOLOGY_DIR = MININDN_DIR + '/topologies'
 
 def printOutput(output):
     _out = output.decode("utf-8").split("\n")

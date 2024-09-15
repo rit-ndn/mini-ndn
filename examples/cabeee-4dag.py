@@ -40,23 +40,28 @@ from minindn.helpers.merge_nfd_logs import MergeNFDLogs
 from minindn.util import copyExistentFile
 
 from time import sleep
+from os import environ
 
 import sys
 
-
 PREFIX = "/interCACHE"
-WORKFLOW = "/home/cabeee/mini-ndn/workflows/4dag.json"
-TOPOLOGY = "topologies/cabeee-3node.conf"
-#TOPOLOGY = "topologies/cabeee-3node-slow.conf"
 
+USER_HOME = environ['HOME']
+MININDN_DIR = USER_HOME + '/mini-ndn'
+WORKFLOW = MININDN_DIR + '/workflows/4dag.json'
+TOPOLOGY = MININDN_DIR + '/topologies/cabeee-3node.conf'
+#TOPOLOGY = MININDN_DIR + '/topologies/cabeee-3node-slow.conf'
+
+BIN_DIR = MININDN_DIR + '/dl/ndn-cxx/build/examples'
+FORWARDER_BIN = BIN_DIR + '/cabeee-dag-forwarder-app'
+PRODUCER_BIN = BIN_DIR + '/cabeee-custom-app-producer'
+CONSUMER_BIN = BIN_DIR + '/cabeee-custom-app-consumer'
 
 def run():
     Minindn.cleanUp()
     Minindn.verifyDependencies()
 
     MergeNFDLogs.deleteAllLogs()
-
-
 
 
     """
@@ -187,18 +192,14 @@ def run():
         sleep(90)
 
 
-
-
-
-
-
     # SET UP THE PRODUCER
     info('Starting Producer App\n')
+   
 
     # choice 1: (runs in the background so that it is non-blocking)
     # App input is the service PREFIX
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor")
-    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/service4")
+    cmd = PRODUCER_BIN + ' {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor")
+    #cmd = PRODUCER_BIN + ' {} {} > cabeee_producer.log &'.format(PREFIX, "/service4")
     producer = ndn.net['sensor']
     producer.cmd(cmd)
     
@@ -211,37 +212,31 @@ def run():
 
     # SET UP THE FORWARDERS
     # run the cabeee-dag-forwarder-app application on all router nodes
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service1.log &'.format(PREFIX, "/service1")
+    cmd = FORWARDER_BIN + ' {} {} > cabeee_forwarder_service1.log &'.format(PREFIX, "/service1")
     ndn.net['rtr3'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service2.log &'.format(PREFIX, "/service2")
+    cmd = FORWARDER_BIN + ' {} {} > cabeee_forwarder_service2.log &'.format(PREFIX, "/service2")
     ndn.net['rtr1'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service3.log &'.format(PREFIX, "/service3")
+    cmd = FORWARDER_BIN + ' {} {} > cabeee_forwarder_service3.log &'.format(PREFIX, "/service3")
     ndn.net['rtr2'].cmd(cmd)
     sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service4.log &'.format(PREFIX, "/service4")
+    cmd = FORWARDER_BIN + ' {} {} > cabeee_forwarder_service4.log &'.format(PREFIX, "/service4")
     ndn.net['rtr2'].cmd(cmd)
-
 
     # SET UP THE CONSUMER
     info('Starting Consumer App (after waiting one second for RIB updates to finish propagating)\n')
     sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
 
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW, 0)
-    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer > cabeee_consumer.log &'
-    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer > cabeee_consumer.log'
-    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer &'
-    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer'
+    cmd = CONSUMER_BIN + ' {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW, 0)
+    #cmd = CONSUMER_BIN + ' > cabeee_consumer.log &'
+    #cmd = CONSUMER_BIN + ' > cabeee_consumer.log'
+    #cmd = CONSUMER_BIN + ' &'
+    #cmd = CONSUMER_BIN + ''
     consumer = ndn.net['user']
     consumer.cmd(cmd)
 
 
     sleep(1)
-
-
-
-
-
 
 
     info("\nExperiment Completed!\n")

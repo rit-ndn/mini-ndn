@@ -40,14 +40,18 @@ from minindn.helpers.merge_nfd_logs import MergeNFDLogs
 from minindn.util import copyExistentFile
 
 from time import sleep
+from os import environ
 
 import sys
 
-
 PREFIX = "/orchB"
-WORKFLOW = "/home/cabeee/mini-ndn/workflows/20-sensor.json"
-TOPOLOGY = "topologies/cabeee-20sensor-parallel.conf"
 
+USER_HOME = environ['HOME']
+MININDN_DIR = USER_HOME + '/mini-ndn'
+WORKFLOW = MININDN_DIR + '/workflows/20-sensor.json'
+TOPOLOGY = MININDN_DIR + '/topologies/cabeee-20sensor-parallel.conf'
+
+BIN_DIR = MININDN_DIR + '/dl/ndn-cxx/build/examples'
 
 def run():
     Minindn.cleanUp()
@@ -272,64 +276,64 @@ def run():
     info('Starting Producer App\n')
     # runs in the background so that it is non-blocking
     # App input is the service PREFIX
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor1")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor1")
     producer = ndn.net['sensor1']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor2")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor2")
     producer = ndn.net['sensor2']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor3")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor3")
     producer = ndn.net['sensor3']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor4")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor4")
     producer = ndn.net['sensor4']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor5")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor5")
     producer = ndn.net['sensor5']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor6")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor6")
     producer = ndn.net['sensor6']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor7")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor7")
     producer = ndn.net['sensor7']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor8")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor8")
     producer = ndn.net['sensor8']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor9")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor9")
     producer = ndn.net['sensor9']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor10")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor10")
     producer = ndn.net['sensor10']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor11")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor11")
     producer = ndn.net['sensor11']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor12")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor12")
     producer = ndn.net['sensor12']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor13")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor13")
     producer = ndn.net['sensor13']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor14")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor14")
     producer = ndn.net['sensor14']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor15")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor15")
     producer = ndn.net['sensor15']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor16")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor16")
     producer = ndn.net['sensor16']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor17")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor17")
     producer = ndn.net['sensor17']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor18")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor18")
     producer = ndn.net['sensor18']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor19")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor19")
     producer = ndn.net['sensor19']
     producer.cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor20")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor20")
     producer = ndn.net['sensor20']
     producer.cmd(cmd)
     
@@ -339,53 +343,53 @@ def run():
 
     # SET UP THE SERVICES
     # run the cabeee-dag-serviceB-app application on all router nodes
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service1.log &'.format(PREFIX, "/serviceP1")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service1.log &'.format(PREFIX, "/serviceP1")
     ndn.net['rtr1'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service2.log &'.format(PREFIX, "/serviceP2")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service2.log &'.format(PREFIX, "/serviceP2")
     ndn.net['rtr2'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service3.log &'.format(PREFIX, "/serviceP3")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service3.log &'.format(PREFIX, "/serviceP3")
     ndn.net['rtr3'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service4.log &'.format(PREFIX, "/serviceP4")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service4.log &'.format(PREFIX, "/serviceP4")
     ndn.net['rtr4'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service5.log &'.format(PREFIX, "/serviceP5")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service5.log &'.format(PREFIX, "/serviceP5")
     ndn.net['rtr5'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service6.log &'.format(PREFIX, "/serviceP6")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service6.log &'.format(PREFIX, "/serviceP6")
     ndn.net['rtr6'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service7.log &'.format(PREFIX, "/serviceP7")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service7.log &'.format(PREFIX, "/serviceP7")
     ndn.net['rtr7'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service8.log &'.format(PREFIX, "/serviceP8")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service8.log &'.format(PREFIX, "/serviceP8")
     ndn.net['rtr8'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service9.log &'.format(PREFIX, "/serviceP9")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service9.log &'.format(PREFIX, "/serviceP9")
     ndn.net['rtr9'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service10.log &'.format(PREFIX, "/serviceP10")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service10.log &'.format(PREFIX, "/serviceP10")
     ndn.net['rtr10'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service11.log &'.format(PREFIX, "/serviceP11")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service11.log &'.format(PREFIX, "/serviceP11")
     ndn.net['rtr11'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service12.log &'.format(PREFIX, "/serviceP12")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service12.log &'.format(PREFIX, "/serviceP12")
     ndn.net['rtr12'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service13.log &'.format(PREFIX, "/serviceP13")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service13.log &'.format(PREFIX, "/serviceP13")
     ndn.net['rtr13'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service14.log &'.format(PREFIX, "/serviceP14")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service14.log &'.format(PREFIX, "/serviceP14")
     ndn.net['rtr14'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service15.log &'.format(PREFIX, "/serviceP15")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service15.log &'.format(PREFIX, "/serviceP15")
     ndn.net['rtr15'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service16.log &'.format(PREFIX, "/serviceP16")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service16.log &'.format(PREFIX, "/serviceP16")
     ndn.net['rtr16'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service17.log &'.format(PREFIX, "/serviceP17")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service17.log &'.format(PREFIX, "/serviceP17")
     ndn.net['rtr17'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service18.log &'.format(PREFIX, "/serviceP18")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service18.log &'.format(PREFIX, "/serviceP18")
     ndn.net['rtr18'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service19.log &'.format(PREFIX, "/serviceP19")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service19.log &'.format(PREFIX, "/serviceP19")
     ndn.net['rtr19'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service20.log &'.format(PREFIX, "/serviceP20")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service20.log &'.format(PREFIX, "/serviceP20")
     ndn.net['rtr20'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service21.log &'.format(PREFIX, "/serviceP21")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service21.log &'.format(PREFIX, "/serviceP21")
     ndn.net['rtr21'].cmd(cmd)
 
 
     # SET UP THE ORCHESTRATOR
     # run the cabeee-dag-orchestratorB-app application on all router nodes
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-orchestratorB-app {} {} > cabeee_orchestratorB.log &'.format(PREFIX, "/serviceOrchestration")
+    cmd = BIN_DIR + '/cabeee-dag-orchestratorB-app {} {} > cabeee_orchestratorB.log &'.format(PREFIX, "/serviceOrchestration")
     #ndn.net['orch'].cmd(cmd)
     ndn.net['user'].cmd(cmd)
 
@@ -393,7 +397,7 @@ def run():
     info('Starting Consumer App (after waiting one second for RIB updates to finish propagating)\n')
     sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW, 2)
+    cmd = BIN_DIR + '/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW, 2)
     consumer = ndn.net['user']
     consumer.cmd(cmd)
 

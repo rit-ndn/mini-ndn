@@ -40,14 +40,18 @@ from minindn.helpers.merge_nfd_logs import MergeNFDLogs
 from minindn.util import copyExistentFile
 
 from time import sleep
+from os import environ
 
 import sys
 
-
 PREFIX = "/interCACHE"
-WORKFLOW = "/home/cabeee/mini-ndn/workflows/20-linear.json"
-TOPOLOGY = "topologies/cabeee-20node-linear.conf"
 
+USER_HOME = environ['HOME']
+MININDN_DIR = USER_HOME + '/mini-ndn'
+WORKFLOW = MININDN_DIR + '/workflows/20-linear.json'
+TOPOLOGY = MININDN_DIR + '/topologies/cabeee-20node-linear.conf'
+
+BIN_DIR = MININDN_DIR + '/dl/ndn-cxx/build/examples'
 
 def run():
     Minindn.cleanUp()
@@ -230,12 +234,12 @@ def run():
 
     # choice 1: (runs in the background so that it is non-blocking)
     # App input is the service PREFIX
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor")
     producer = ndn.net['sensor']
     producer.cmd(cmd)
     
     # or one-liner
-    #ndn.net['sensor'].cmd("/home/cabeee/mini-ndn/examples/apps/dist/cabeee-custom-app-producer")
+    #ndn.net['sensor'].cmd(MININDN_HOME + "/examples/apps/dist/cabeee-custom-app-producer")
 
 
     sleep(1)
@@ -243,45 +247,45 @@ def run():
 
     # SET UP THE FORWARDERS
     # run the cabeee-dag-forwarder-app application on all router nodes
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service1.log &'.format(PREFIX, "/serviceL1")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service1.log &'.format(PREFIX, "/serviceL1")
     ndn.net['rtr1'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service2.log &'.format(PREFIX, "/serviceL2")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service2.log &'.format(PREFIX, "/serviceL2")
     ndn.net['rtr2'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service3.log &'.format(PREFIX, "/serviceL3")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service3.log &'.format(PREFIX, "/serviceL3")
     ndn.net['rtr3'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service4.log &'.format(PREFIX, "/serviceL4")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service4.log &'.format(PREFIX, "/serviceL4")
     ndn.net['rtr4'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service5.log &'.format(PREFIX, "/serviceL5")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service5.log &'.format(PREFIX, "/serviceL5")
     ndn.net['rtr5'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service6.log &'.format(PREFIX, "/serviceL6")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service6.log &'.format(PREFIX, "/serviceL6")
     ndn.net['rtr6'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service7.log &'.format(PREFIX, "/serviceL7")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service7.log &'.format(PREFIX, "/serviceL7")
     ndn.net['rtr7'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service8.log &'.format(PREFIX, "/serviceL8")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service8.log &'.format(PREFIX, "/serviceL8")
     ndn.net['rtr8'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service9.log &'.format(PREFIX, "/serviceL9")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service9.log &'.format(PREFIX, "/serviceL9")
     ndn.net['rtr9'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service10.log &'.format(PREFIX, "/serviceL10")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service10.log &'.format(PREFIX, "/serviceL10")
     ndn.net['rtr10'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service11.log &'.format(PREFIX, "/serviceL11")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service11.log &'.format(PREFIX, "/serviceL11")
     ndn.net['rtr11'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service12.log &'.format(PREFIX, "/serviceL12")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service12.log &'.format(PREFIX, "/serviceL12")
     ndn.net['rtr12'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service13.log &'.format(PREFIX, "/serviceL13")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service13.log &'.format(PREFIX, "/serviceL13")
     ndn.net['rtr13'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service14.log &'.format(PREFIX, "/serviceL14")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service14.log &'.format(PREFIX, "/serviceL14")
     ndn.net['rtr14'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service15.log &'.format(PREFIX, "/serviceL15")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service15.log &'.format(PREFIX, "/serviceL15")
     ndn.net['rtr15'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service16.log &'.format(PREFIX, "/serviceL16")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service16.log &'.format(PREFIX, "/serviceL16")
     ndn.net['rtr16'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service17.log &'.format(PREFIX, "/serviceL17")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service17.log &'.format(PREFIX, "/serviceL17")
     ndn.net['rtr17'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service18.log &'.format(PREFIX, "/serviceL18")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service18.log &'.format(PREFIX, "/serviceL18")
     ndn.net['rtr18'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service19.log &'.format(PREFIX, "/serviceL19")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service19.log &'.format(PREFIX, "/serviceL19")
     ndn.net['rtr19'].cmd(cmd)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service20.log &'.format(PREFIX, "/serviceL20")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service20.log &'.format(PREFIX, "/serviceL20")
     ndn.net['rtr20'].cmd(cmd)
 
 
@@ -289,11 +293,11 @@ def run():
     info('Starting Consumer App (after waiting one second for RIB updates to finish propagating)\n')
     sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
-    cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW, 0)
-    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer > cabeee_consumer.log &'
-    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer > cabeee_consumer.log'
-    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer &'
-    #cmd = '/home/cabeee/mini-ndn/dl/ndn-cxx/build/examples/cabeee-custom-app-consumer'
+    cmd = BIN_DIR + '/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW, 0)
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer > cabeee_consumer.log &'
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer > cabeee_consumer.log'
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer &'
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer'
     consumer = ndn.net['user']
     consumer.cmd(cmd)
 
