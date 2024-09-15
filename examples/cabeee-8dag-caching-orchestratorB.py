@@ -44,7 +44,7 @@ from time import sleep
 import sys
 
 
-PREFIX = "/interCACHE"
+PREFIX = "/orchB"
 WORKFLOW1 = "/home/cabeee/mini-ndn/workflows/4dag.json"
 WORKFLOW2 = "/home/cabeee/mini-ndn/workflows/8dag.json"
 TOPOLOGY = "topologies/cabeee-3node.conf"
@@ -148,23 +148,23 @@ def run():
            '/ndn/orch-site/orch' not in routesFromSensor or \
            '/ndn/user-site/user' not in routesFromSensor:
             info("Route addition failed\n")
-        routesToPrefix = ndn.net['rtr1'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr1'].cmd("nfdc fib | grep '/orchB'")
+        if '/orchB' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['rtr2'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr2'].cmd("nfdc fib | grep '/orchB'")
+        if '/orchB' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['rtr3'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr3'].cmd("nfdc fib | grep '/orchB'")
+        if '/orchB' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['orch'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['orch'].cmd("nfdc fib | grep '/orchB'")
+        if '/orchB' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
@@ -256,7 +256,7 @@ def run():
 
     #FOR SECOND CONSUMER - we need a new Orchestrator app, because of the tracker data structures. OR we could simply reset the tracker once we generate the last data packet to the consumer.
     # we create a new app that generates a special interest, which when delivered to the orchestrator, will reset the tracker data structure.
-    # this is a new name so that the orchestrator listens to it: "/interCACHE/serviceOrchestration/reset"
+    # this is a new name so that the orchestrator listens to it: "/orchB/serviceOrchestration/reset"
     #TODO: eventually, we should have a single orchestrator that creates a NEW data structure (or append to the existing one) for each workflow received from a consumer.
     # RESET THE ORCHESTRATOR
     # run the cabeee-dag-orchestratorA-reset-app application on the orchestrator node
