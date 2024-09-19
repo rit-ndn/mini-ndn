@@ -16,19 +16,7 @@ scripts=(
 # 4 DAG
 #"cabeee-4dag-orchestratorA.py"
 #"cabeee-4dag-orchestratorB.py"
-"cabeee-4dag.py"
-# 20 Linear
-#"cabeee-20node-linear-orchestratorA.py"
-#"cabeee-20node-linear-orchestratorB.py"
-#"cabeee-20node-linear.py"
-# 20 Parallel
-#"cabeee-20node-parallel-orchestratorA.py"
-#"cabeee-20node-parallel-orchestratorB.py"
-#"cabeee-20node-parallel.py"
-# 20 Sensor (Parallel)
-#"cabeee-20sensor-parallel-orchestratorA.py"
-#"cabeee-20sensor-parallel-orchestratorB.py"
-#"cabeee-20sensor-parallel.py"
+#"cabeee-4dag.py"
 # 8 DAG
 #"cabeee-8dag-orchestratorA.py"
 #"cabeee-8dag-orchestratorB.py"
@@ -37,13 +25,29 @@ scripts=(
 #"cabeee-8dag-caching-orchestratorA.py"
 #"cabeee-8dag-caching-orchestratorB.py"
 #"cabeee-8dag-caching.py"
+# 20 Parallel
+#"cabeee-20node-parallel-orchestratorA.py"
+#"cabeee-20node-parallel-orchestratorB.py"
+#"cabeee-20node-parallel.py"
+# 20 Sensor (Parallel)
+#"cabeee-20sensor-parallel-orchestratorA.py"
+#"cabeee-20sensor-parallel-orchestratorB.py"
+#"cabeee-20sensor-parallel.py"
+# 20-Node Linear
+#"cabeee-20node-linear-orchestratorA.py"
+#"cabeee-20node-linear-orchestratorB.py"
+#"cabeee-20node-linear.py"
+# 20 Linear (new hosting using 3node topology)
+"cabeee-20linear-orchestratorA.py"
+"cabeee-20linear-orchestratorB.py"
+"cabeee-20linear.py"
 # Misc
 #"cabeee-chunks.py"
 )
 
 example_log="$MININDN_HOME/example.log"
 consumer_log="/tmp/minindn/user/cabeee_consumer.log"
-csv_out="$MININDN_HOME/perf-results.csv"
+csv_out="$MININDN_HOME/perf-results-emulation.csv"
 header="Example, Interest Packets Generated, Data Packets Generated, Interest Packets Transmitted, Data Packets Transmitted, Service Latency, Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
 
 if [ ! -f "$csv_out" ]; then

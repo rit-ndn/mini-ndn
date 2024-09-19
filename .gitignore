@@ -16,3 +16,9 @@ dl
 
 # Vagrant
 .vagrant
+
+*.spec
+*.vim
+mergedLog*
+*.csv
+*.bak
