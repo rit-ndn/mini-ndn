@@ -44,7 +44,7 @@ from os import environ
 
 import sys
 
-PREFIX = "/interCACHE"
+PREFIX = "/nescoSCOPT" # use the shortcutOPT which parallelizes the workflow if nodes host upstream services
 
 USER_HOME = environ['HOME']
 MININDN_DIR = USER_HOME + '/mini-ndn'
@@ -146,23 +146,23 @@ def run():
            '/ndn/orch-site/orch' not in routesFromSensor or \
            '/ndn/user-site/user' not in routesFromSensor:
             info("Route addition failed\n")
-        routesToPrefix = ndn.net['rtr1'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr1'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['rtr2'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr2'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['rtr3'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr3'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['orch'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['orch'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)

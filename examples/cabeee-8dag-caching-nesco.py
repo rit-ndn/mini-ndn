@@ -44,11 +44,12 @@ from os import environ
 
 import sys
 
-PREFIX = "/interCACHE"
+PREFIX = "/nesco"
 
 USER_HOME = environ['HOME']
 MININDN_DIR = USER_HOME + '/mini-ndn'
-WORKFLOW = MININDN_DIR + '/workflows/8dag.json'
+WORKFLOW1 = MININDN_DIR + '/workflows/4dag.json'
+WORKFLOW2 = MININDN_DIR + '/workflows/8dag.json'
 TOPOLOGY = MININDN_DIR + '/topologies/cabeee-3node.conf'
 #TOPOLOGY = MININDN_DIR + '/topologies/cabeee-3node-slow.conf'
 
@@ -148,23 +149,23 @@ def run():
            '/ndn/orch-site/orch' not in routesFromSensor or \
            '/ndn/user-site/user' not in routesFromSensor:
             info("Route addition failed\n")
-        routesToPrefix = ndn.net['rtr1'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr1'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['rtr2'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr2'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['rtr3'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr3'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['orch'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['orch'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
@@ -238,11 +239,34 @@ def run():
     ndn.net['rtr2'].cmd(cmd)
 
 
+    # SET UP THE CONSUMER
+    info('Starting Consumer App (after waiting one second for RIB updates to finish propagating)\n')
+    sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
+    # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
+    cmd = BIN_DIR + '/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW1, 0)
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer > cabeee_consumer.log &'
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer > cabeee_consumer.log'
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer &'
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer'
+    consumer = ndn.net['user']
+    consumer.cmd(cmd)
+
+
+
+    sleep(2) # give enough time for the consumer to receive the final service result, so that everything is cached before starting the second consumer.
+
+    #FOR SECOND CONSUMER - we need to generate an interest that gets logged so that the packet counter script will reset the counters (consumer 1 packets should not be counted)
+    # for this, we need a new app to generate this interest
+    cmd = BIN_DIR + '/cabeee-dag-orchestratorA-reset-app {} {} > cabeee_orchestratorA-reset.log &'.format(PREFIX, "/serviceOrchestration/reset")
+    ndn.net['user'].cmd(cmd)
+
+    sleep(1)
+
     # SET UP THE CONSUMER2
     info('Starting Consumer2 App (after waiting one second for RIB updates to finish propagating)\n')
     sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
-    cmd = BIN_DIR + '/cabeee-custom-app-consumer2 {} {} {} > cabeee_consumer2.log &'.format(PREFIX, WORKFLOW, 0)
+    cmd = BIN_DIR + '/cabeee-custom-app-consumer2 {} {} {} > cabeee_consumer2.log &'.format(PREFIX, WORKFLOW2, 0)
     #cmd = BIN_DIR + '/cabeee-custom-app-consumer2 > cabeee_consumer2.log &'
     #cmd = BIN_DIR + '/cabeee-custom-app-consumer2 > cabeee_consumer2.log'
     #cmd = BIN_DIR + '/cabeee-custom-app-consumer2 &'

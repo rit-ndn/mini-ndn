@@ -44,14 +44,12 @@ from os import environ
 
 import sys
 
-PREFIX = "/interCACHE"
+PREFIX = "/nesco"
 
 USER_HOME = environ['HOME']
 MININDN_DIR = USER_HOME + '/mini-ndn'
-WORKFLOW1 = MININDN_DIR + '/workflows/4dag.json'
-WORKFLOW2 = MININDN_DIR + '/workflows/8dag.json'
-TOPOLOGY = MININDN_DIR + '/topologies/cabeee-3node.conf'
-#TOPOLOGY = MININDN_DIR + '/topologies/cabeee-3node-slow.conf'
+WORKFLOW = MININDN_DIR + '/workflows/20-linear.json'
+TOPOLOGY = MININDN_DIR + '/topologies/cabeee-20node-linear.conf'
 
 BIN_DIR = MININDN_DIR + '/dl/ndn-cxx/build/examples'
 
@@ -79,8 +77,27 @@ def run():
         ndn.start()
 
         info('Setting up routes manually in NFD\n')
-        #links = {"sensor":["rtr1"], "rtr1":["rtr2"], "rtr2":["rtr3"], "rtr3":["orch"], "orch":["user"]} # routes are directional! This is the wrong direction.
-        links = {"user":["rtr3"], "rtr3":["rtr2"], "rtr2":["rtr1"], "rtr1":["sensor"]}
+        links = {   "sensor":["rtr1"],
+                    "rtr1":["rtr2"],
+                    "rtr2":["rtr3"],
+                    "rtr3":["rtr4"],
+                    "rtr4":["rtr5"],
+                    "rtr5":["rtr6"],
+                    "rtr6":["rtr7"],
+                    "rtr7":["rtr8"],
+                    "rtr8":["rtr9"],
+                    "rtr9":["rtr10"],
+                    "rtr10":["rtr11"],
+                    "rtr11":["rtr12"],
+                    "rtr12":["rtr13"],
+                    "rtr13":["rtr14"],
+                    "rtr14":["rtr15"],
+                    "rtr15":["rtr16"],
+                    "rtr16":["rtr17"],
+                    "rtr17":["rtr18"],
+                    "rtr18":["rtr19"],
+                    "rtr19":["rtr20"],
+                    "rtr20":["user"]}
         for first in links:
             for second in links[first]:
                 host1 = ndn.net[first]
@@ -130,14 +147,26 @@ def run():
         grh = NdnRoutingHelper(ndn.net, ndn.args.faceType, ndn.args.routingType)
         # For all host, pass ndn.net.hosts or a list, [ndn.net['a'], ..] or [ndn.net.hosts[0],.]
         grh.addOrigin([ndn.net['sensor']], [PREFIX + "/sensor"])
-        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/service1"])
-        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/service2"])
-        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service3"])
-        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service4"])
-        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/service5"])
-        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/service6"])
-        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service7"])
-        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service8"])
+        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/serviceL1"])
+        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/serviceL2"])
+        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/serviceL3"])
+        grh.addOrigin([ndn.net['rtr4']], [PREFIX + "/serviceL4"])
+        grh.addOrigin([ndn.net['rtr5']], [PREFIX + "/serviceL5"])
+        grh.addOrigin([ndn.net['rtr6']], [PREFIX + "/serviceL6"])
+        grh.addOrigin([ndn.net['rtr7']], [PREFIX + "/serviceL7"])
+        grh.addOrigin([ndn.net['rtr8']], [PREFIX + "/serviceL8"])
+        grh.addOrigin([ndn.net['rtr9']], [PREFIX + "/serviceL9"])
+        grh.addOrigin([ndn.net['rtr10']], [PREFIX + "/serviceL10"])
+        grh.addOrigin([ndn.net['rtr11']], [PREFIX + "/serviceL11"])
+        grh.addOrigin([ndn.net['rtr12']], [PREFIX + "/serviceL12"])
+        grh.addOrigin([ndn.net['rtr13']], [PREFIX + "/serviceL13"])
+        grh.addOrigin([ndn.net['rtr14']], [PREFIX + "/serviceL14"])
+        grh.addOrigin([ndn.net['rtr15']], [PREFIX + "/serviceL15"])
+        grh.addOrigin([ndn.net['rtr16']], [PREFIX + "/serviceL16"])
+        grh.addOrigin([ndn.net['rtr17']], [PREFIX + "/serviceL17"])
+        grh.addOrigin([ndn.net['rtr18']], [PREFIX + "/serviceL18"])
+        grh.addOrigin([ndn.net['rtr19']], [PREFIX + "/serviceL19"])
+        grh.addOrigin([ndn.net['rtr20']], [PREFIX + "/serviceL20"])
         grh.calculateNPossibleRoutes()
 
         ''' 
@@ -149,23 +178,23 @@ def run():
            '/ndn/orch-site/orch' not in routesFromSensor or \
            '/ndn/user-site/user' not in routesFromSensor:
             info("Route addition failed\n")
-        routesToPrefix = ndn.net['rtr1'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr1'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['rtr2'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr2'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['rtr3'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr3'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['orch'].cmd("nfdc fib | grep '/interCACHE'")
-        if '/interCACHE' not in routesToPrefix:
+        routesToPrefix = ndn.net['orch'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
@@ -218,61 +247,59 @@ def run():
 
     # SET UP THE FORWARDERS
     # run the cabeee-dag-forwarder-app application on all router nodes
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service1.log &'.format(PREFIX, "/service1")
-    ndn.net['rtr3'].cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service2.log &'.format(PREFIX, "/service2")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service1.log &'.format(PREFIX, "/serviceL1")
     ndn.net['rtr1'].cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service3.log &'.format(PREFIX, "/service3")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service2.log &'.format(PREFIX, "/serviceL2")
     ndn.net['rtr2'].cmd(cmd)
-    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service4.log &'.format(PREFIX, "/service4")
-    ndn.net['rtr2'].cmd(cmd)
-    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service5.log &'.format(PREFIX, "/service5")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service3.log &'.format(PREFIX, "/serviceL3")
     ndn.net['rtr3'].cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service6.log &'.format(PREFIX, "/service6")
-    ndn.net['rtr1'].cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service7.log &'.format(PREFIX, "/service7")
-    ndn.net['rtr2'].cmd(cmd)
-    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service8.log &'.format(PREFIX, "/service8")
-    ndn.net['rtr2'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service4.log &'.format(PREFIX, "/serviceL4")
+    ndn.net['rtr4'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service5.log &'.format(PREFIX, "/serviceL5")
+    ndn.net['rtr5'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service6.log &'.format(PREFIX, "/serviceL6")
+    ndn.net['rtr6'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service7.log &'.format(PREFIX, "/serviceL7")
+    ndn.net['rtr7'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service8.log &'.format(PREFIX, "/serviceL8")
+    ndn.net['rtr8'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service9.log &'.format(PREFIX, "/serviceL9")
+    ndn.net['rtr9'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service10.log &'.format(PREFIX, "/serviceL10")
+    ndn.net['rtr10'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service11.log &'.format(PREFIX, "/serviceL11")
+    ndn.net['rtr11'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service12.log &'.format(PREFIX, "/serviceL12")
+    ndn.net['rtr12'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service13.log &'.format(PREFIX, "/serviceL13")
+    ndn.net['rtr13'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service14.log &'.format(PREFIX, "/serviceL14")
+    ndn.net['rtr14'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service15.log &'.format(PREFIX, "/serviceL15")
+    ndn.net['rtr15'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service16.log &'.format(PREFIX, "/serviceL16")
+    ndn.net['rtr16'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service17.log &'.format(PREFIX, "/serviceL17")
+    ndn.net['rtr17'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service18.log &'.format(PREFIX, "/serviceL18")
+    ndn.net['rtr18'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service19.log &'.format(PREFIX, "/serviceL19")
+    ndn.net['rtr19'].cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service20.log &'.format(PREFIX, "/serviceL20")
+    ndn.net['rtr20'].cmd(cmd)
 
 
     # SET UP THE CONSUMER
     info('Starting Consumer App (after waiting one second for RIB updates to finish propagating)\n')
     sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
-    cmd = BIN_DIR + '/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW1, 0)
+    cmd = BIN_DIR + '/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW, 0)
     #cmd = BIN_DIR + '/cabeee-custom-app-consumer > cabeee_consumer.log &'
     #cmd = BIN_DIR + '/cabeee-custom-app-consumer > cabeee_consumer.log'
     #cmd = BIN_DIR + '/cabeee-custom-app-consumer &'
     #cmd = BIN_DIR + '/cabeee-custom-app-consumer'
     consumer = ndn.net['user']
     consumer.cmd(cmd)
-
-
-
-    sleep(2) # give enough time for the consumer to receive the final service result, so that everything is cached before starting the second consumer.
-
-    #FOR SECOND CONSUMER - we need to generate an interest that gets logged so that the packet counter script will reset the counters (consumer 1 packets should not be counted)
-    # for this, we need a new app to generate this interest
-    cmd = BIN_DIR + '/cabeee-dag-orchestratorA-reset-app {} {} > cabeee_orchestratorA-reset.log &'.format(PREFIX, "/serviceOrchestration/reset")
-    ndn.net['user'].cmd(cmd)
-
-    sleep(1)
-
-    # SET UP THE CONSUMER2
-    info('Starting Consumer2 App (after waiting one second for RIB updates to finish propagating)\n')
-    sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
-    # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
-    cmd = BIN_DIR + '/cabeee-custom-app-consumer2 {} {} {} > cabeee_consumer2.log &'.format(PREFIX, WORKFLOW2, 0)
-    #cmd = BIN_DIR + '/cabeee-custom-app-consumer2 > cabeee_consumer2.log &'
-    #cmd = BIN_DIR + '/cabeee-custom-app-consumer2 > cabeee_consumer2.log'
-    #cmd = BIN_DIR + '/cabeee-custom-app-consumer2 &'
-    #cmd = BIN_DIR + '/cabeee-custom-app-consumer2'
-    consumer2 = ndn.net['user']
-    consumer2.cmd(cmd)
 
 
     sleep(1)
