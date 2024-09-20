@@ -19,7 +19,7 @@
 			"/service8": 1
 		},
 		"/service8": {
-			"/consumer2": 0
+			"/consumer": 0
 		}
 	}
 }

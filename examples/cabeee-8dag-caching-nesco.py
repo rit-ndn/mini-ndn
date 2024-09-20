@@ -48,7 +48,7 @@ PREFIX = "/nesco"
 
 USER_HOME = environ['HOME']
 MININDN_DIR = USER_HOME + '/mini-ndn'
-WORKFLOW1 = MININDN_DIR + '/workflows/4dag.json'
+WORKFLOW1 = MININDN_DIR + '/workflows/4dag-cache.json'
 WORKFLOW2 = MININDN_DIR + '/workflows/8dag.json'
 TOPOLOGY = MININDN_DIR + '/topologies/cabeee-3node.conf'
 #TOPOLOGY = MININDN_DIR + '/topologies/cabeee-3node-slow.conf'
@@ -239,17 +239,17 @@ def run():
     ndn.net['rtr2'].cmd(cmd)
 
 
-    # SET UP THE CONSUMER
-    info('Starting Consumer App (after waiting one second for RIB updates to finish propagating)\n')
-    sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
+    # SET UP THE CONSUMER2
+    info('Starting Consumer2 App (after waiting one second for RIB updates to finish propagating)\n')
+    sleep(1) # wait so that we don't start the consumer2 until all RIB updates have propagated
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
-    cmd = BIN_DIR + '/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW1, 0)
-    #cmd = BIN_DIR + '/cabeee-custom-app-consumer > cabeee_consumer.log &'
-    #cmd = BIN_DIR + '/cabeee-custom-app-consumer > cabeee_consumer.log'
-    #cmd = BIN_DIR + '/cabeee-custom-app-consumer &'
-    #cmd = BIN_DIR + '/cabeee-custom-app-consumer'
-    consumer = ndn.net['user']
-    consumer.cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-custom-app-consumer2 {} {} {} > cabeee_consumer2.log &'.format(PREFIX, WORKFLOW1, 0)
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer2 > cabeee_consumer2.log &'
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer2 > cabeee_consumer2.log'
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer2 &'
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer2'
+    consumer2 = ndn.net['user']
+    consumer2.cmd(cmd)
 
 
 
@@ -262,17 +262,17 @@ def run():
 
     sleep(1)
 
-    # SET UP THE CONSUMER2
-    info('Starting Consumer2 App (after waiting one second for RIB updates to finish propagating)\n')
+    # SET UP THE CONSUMER
+    info('Starting Consumer App (after waiting one second for RIB updates to finish propagating)\n')
     sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
-    cmd = BIN_DIR + '/cabeee-custom-app-consumer2 {} {} {} > cabeee_consumer2.log &'.format(PREFIX, WORKFLOW2, 0)
-    #cmd = BIN_DIR + '/cabeee-custom-app-consumer2 > cabeee_consumer2.log &'
-    #cmd = BIN_DIR + '/cabeee-custom-app-consumer2 > cabeee_consumer2.log'
-    #cmd = BIN_DIR + '/cabeee-custom-app-consumer2 &'
-    #cmd = BIN_DIR + '/cabeee-custom-app-consumer2'
-    consumer2 = ndn.net['user']
-    consumer2.cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW2, 0)
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer > cabeee_consumer.log &'
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer > cabeee_consumer.log'
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer &'
+    #cmd = BIN_DIR + '/cabeee-custom-app-consumer'
+    consumer = ndn.net['user']
+    consumer.cmd(cmd)
 
 
     sleep(1)

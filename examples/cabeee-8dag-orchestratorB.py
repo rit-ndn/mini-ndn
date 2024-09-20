@@ -244,13 +244,13 @@ def run():
     ndn.net['user'].cmd(cmd)
 
 
-    # SET UP THE CONSUMER2
-    info('Starting Consumer2 App (after waiting one second for RIB updates to finish propagating)\n')
+    # SET UP THE CONSUMER
+    info('Starting Consumer App (after waiting one second for RIB updates to finish propagating)\n')
     sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
-    cmd = BIN_DIR + '/cabeee-custom-app-consumer2 {} {} {} > cabeee_consumer2.log &'.format(PREFIX, WORKFLOW, 2)
-    consumer2 = ndn.net['user']
-    consumer2.cmd(cmd)
+    cmd = BIN_DIR + '/cabeee-custom-app-consumer {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW, 2)
+    consumer = ndn.net['user']
+    consumer.cmd(cmd)
 
 
     sleep(1)
