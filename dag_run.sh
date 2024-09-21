@@ -9,6 +9,9 @@
 
 set -e
 
+
+numSamples=20
+
 MININDN_HOME="$HOME/mini-ndn"
 
 script_dir="$MININDN_HOME/examples"
@@ -71,53 +74,59 @@ for script in "${scripts[@]}"
 do
 	echo "Example: $script"
 
-	now="$(date -Iseconds)"
+	for sample in $(seq 1 $numSamples);
+	do
+		now="$(date -Iseconds)"
 
-	minindn_hash="$(git -C "$MININDN_HOME" rev-parse HEAD)"
-	ndncxx_hash="$(git -C "$MININDN_HOME/dl/ndn-cxx" rev-parse HEAD)"
-	nfd_hash="$(git -C "$MININDN_HOME/dl/NFD" rev-parse HEAD)"
-	nlsr_hash="$(git -C "$MININDN_HOME/dl/NLSR" rev-parse HEAD)"
+		minindn_hash="$(git -C "$MININDN_HOME" rev-parse HEAD)"
+		ndncxx_hash="$(git -C "$MININDN_HOME/dl/ndn-cxx" rev-parse HEAD)"
+		nfd_hash="$(git -C "$MININDN_HOME/dl/NFD" rev-parse HEAD)"
+		nlsr_hash="$(git -C "$MININDN_HOME/dl/NLSR" rev-parse HEAD)"
 
-	# these sed scripts depend on the order in which the logs are printed
+		# these sed scripts depend on the order in which the logs are printed
 
-	echo "Running..."
-	packets=$( \
-		sudo -E python "$script_dir/$script" |& tee "$example_log" | sed -n \
-		-e 's/^Interest Packets Generated: \([0-9]*\) interests$/\1,/p' \
-		-e 's/^Data Packets Generated: \([0-9]*\) data$/\1,/p' \
-		-e 's/^Interest Packets Transmitted: \([0-9]*\) interests$/\1,/p' \
-		-e 's/^Data Packets Transmitted: \([0-9]*\) data/\1,/p' \
-		| tr -d '\n' \
-	)
+		echo "   Running sample #${sample}..."
+		packets=$( \
+			sudo -E python "$script_dir/$script" |& tee "$example_log" | sed -n \
+			-e 's/^Interest Packets Generated: \([0-9]*\) interests$/\1,/p' \
+			-e 's/^Data Packets Generated: \([0-9]*\) data$/\1,/p' \
+			-e 's/^Interest Packets Transmitted: \([0-9]*\) interests$/\1,/p' \
+			-e 's/^Data Packets Transmitted: \([0-9]*\) data/\1,/p' \
+			| tr -d '\n' \
+		)
 
-	echo "Parsing logs..."
-	interest_gen="$(echo "$packets" | cut -d',' -f1)"
-	data_gen="$(echo "$packets" | cut -d',' -f2)"
-	interest_trans="$(echo "$packets" | cut -d',' -f3)"
-	data_trans="$(echo "$packets" | cut -d',' -f4)"
+		echo "   Parsing logs..."
+		interest_gen="$(echo "$packets" | cut -d',' -f1)"
+		data_gen="$(echo "$packets" | cut -d',' -f2)"
+		interest_trans="$(echo "$packets" | cut -d',' -f3)"
+		data_trans="$(echo "$packets" | cut -d',' -f4)"
 
-	consumer_parse=$( \
-		sed -n \
-		-e 's/^\s*The final answer is: \([0-9]*\)$/\1,/p' \
-		-e 's/^\s*Service Latency: \([0-9\.]*\) seconds.$/\1,/p' \
-		"$consumer_log" \
-		| tr -d '\n' \
-	)
+		consumer_parse=$( \
+			sed -n \
+			-e 's/^\s*The final answer is: \([0-9]*\)$/\1,/p' \
+			-e 's/^\s*Service Latency: \([0-9\.]*\) seconds.$/\1,/p' \
+			"$consumer_log" \
+			| tr -d '\n' \
+		)
 
-	result="$(echo "$consumer_parse" | cut -d',' -f1)"
-	latency="$(echo "$consumer_parse" | cut -d',' -f2)"
+		result="$(echo "$consumer_parse" | cut -d',' -f1)"
+		latency="$(echo "$consumer_parse" | cut -d',' -f2)"
 
-	row="$script, $interest_gen, $data_gen, $interest_trans, $data_trans, $latency, $result, $now, $minindn_hash, $ndncxx_hash, $nfd_hash, $nlsr_hash"
+		row="$script, $interest_gen, $data_gen, $interest_trans, $data_trans, $latency, $result, $now, $minindn_hash, $ndncxx_hash, $nfd_hash, $nlsr_hash"
 
-	echo "Dumping to csv..."
-	line_num="$(grep -n -F "$script," "$csv_out" | cut -d: -f1 | head -1)"
-	if [ -n "$line_num" ]; then
-		sed --in-place -e "${line_num}c\\$row" "$csv_out"
-	else
+		echo "   Dumping to csv..."
+		# replace existing line
+		#line_num="$(grep -n -F "$script," "$csv_out" | cut -d: -f1 | head -1)"
+		#if [ -n "$line_num" ]; then
+			#sed --in-place -e "${line_num}c\\$row" "$csv_out"
+		#else
+			#echo "$row" >> "$csv_out"
+		#fi
+		# don't replace, just add this run to the bottom of the file
 		echo "$row" >> "$csv_out"
-	fi
 
-	echo ""
+		echo ""
+	done
 done
 
 echo "All examples ran"
