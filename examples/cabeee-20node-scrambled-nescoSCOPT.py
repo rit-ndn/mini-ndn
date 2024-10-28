@@ -120,7 +120,7 @@ def run():
         info('Adding IP routes to NFD\n')
         #info('Starting NFD on nodes\n')
         #nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="DEBUG")
-        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="NONE")
+        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
         info('Starting NLSR on nodes\n')
         nlsrs = AppManager(ndn, ndn.net.hosts, Nlsr)
 
@@ -144,7 +144,7 @@ def run():
         # configure and start nfd on each node
         info("Configuring NFD\n")
         #nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="DEBUG")
-        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="NONE")
+        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
 
         info('Adding static routes to NFD\n')
         grh = NdnRoutingHelper(ndn.net, ndn.args.faceType, ndn.args.routingType)
@@ -217,7 +217,7 @@ def run():
         info('Adding IP routes to NFD\n')
         #info('Starting NFD on nodes\n')
         #nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="DEBUG")
-        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="NONE")
+        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
         info('Starting NLSR on nodes\n')
         nlsrs = AppManager(ndn, ndn.net.hosts, Nlsr)
 

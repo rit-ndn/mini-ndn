@@ -46,6 +46,11 @@ scripts=(
 #"cabeee-20linear-orchestratorB.py"
 #"cabeee-20linear-nesco.py"
 #"cabeee-20linear-nescoSCOPT.py"
+# 20 Scramble (new hosting using 3node topology)
+#TODO###"cabeee-20scramble-orchestratorA.py"
+#TODO###"cabeee-20scramble-orchestratorB.py"
+#TODO###"cabeee-20scramble-nesco.py"
+#TODO###"cabeee-20scramble-nescoSCOPT.py"
 # 20-Node Linear
 #"cabeee-20node-linear-orchestratorA.py"
 #"cabeee-20node-linear-orchestratorB.py"
