@@ -44,7 +44,7 @@ from os import environ
 
 import sys
 
-PREFIX = "/interCACHE"
+PREFIX = "/nesco"
 
 USER_HOME = environ['HOME']
 MININDN_DIR = USER_HOME + '/mini-ndn'
@@ -119,7 +119,8 @@ def run():
 
         info('Adding IP routes to NFD\n')
         #info('Starting NFD on nodes\n')
-        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="DEBUG")
+        #nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="DEBUG")
+        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
         info('Starting NLSR on nodes\n')
         nlsrs = AppManager(ndn, ndn.net.hosts, Nlsr)
 
@@ -142,12 +143,37 @@ def run():
 
         # configure and start nfd on each node
         info("Configuring NFD\n")
-        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="DEBUG")
+        #nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="DEBUG")
+        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
 
         info('Adding static routes to NFD\n')
         grh = NdnRoutingHelper(ndn.net, ndn.args.faceType, ndn.args.routingType)
         # For all host, pass ndn.net.hosts or a list, [ndn.net['a'], ..] or [ndn.net.hosts[0],.]
         grh.addOrigin([ndn.net['sensor']], [PREFIX + "/sensor"])
+
+        '''
+        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/serviceL20"])
+        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/serviceL18"])
+        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/serviceL16"])
+        grh.addOrigin([ndn.net['rtr4']], [PREFIX + "/serviceL14"])
+        grh.addOrigin([ndn.net['rtr5']], [PREFIX + "/serviceL12"])
+        grh.addOrigin([ndn.net['rtr6']], [PREFIX + "/serviceL9"])
+        grh.addOrigin([ndn.net['rtr7']], [PREFIX + "/serviceL7"])
+        grh.addOrigin([ndn.net['rtr8']], [PREFIX + "/serviceL4"])
+        grh.addOrigin([ndn.net['rtr9']], [PREFIX + "/serviceL2"])
+        grh.addOrigin([ndn.net['rtr10']], [PREFIX + "/serviceL3"])
+        grh.addOrigin([ndn.net['rtr11']], [PREFIX + "/serviceL6"])
+        grh.addOrigin([ndn.net['rtr12']], [PREFIX + "/serviceL8"])
+        grh.addOrigin([ndn.net['rtr13']], [PREFIX + "/serviceL11"])
+        grh.addOrigin([ndn.net['rtr14']], [PREFIX + "/serviceL13"])
+        grh.addOrigin([ndn.net['rtr15']], [PREFIX + "/serviceL15"])
+        grh.addOrigin([ndn.net['rtr16']], [PREFIX + "/serviceL17"])
+        grh.addOrigin([ndn.net['rtr17']], [PREFIX + "/serviceL19"])
+        grh.addOrigin([ndn.net['rtr18']], [PREFIX + "/serviceL1"])
+        grh.addOrigin([ndn.net['rtr19']], [PREFIX + "/serviceL5"])
+        grh.addOrigin([ndn.net['rtr20']], [PREFIX + "/serviceL10"])
+        '''
+
         grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/serviceL20"])
         grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/serviceL18"])
         grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/serviceL16"])
@@ -214,7 +240,8 @@ def run():
         # NOTE: this method is also used in traffic_generator.py, pcap_logging_experiment.py, and consumer-producer.py
         info('Adding IP routes to NFD\n')
         #info('Starting NFD on nodes\n')
-        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="DEBUG")
+        #nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="DEBUG")
+        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
         info('Starting NLSR on nodes\n')
         nlsrs = AppManager(ndn, ndn.net.hosts, Nlsr)
 
