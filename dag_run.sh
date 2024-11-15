@@ -10,47 +10,47 @@
 set -e
 
 
-numSamples=5
+numSamples=1
 
 MININDN_HOME="$HOME/mini-ndn"
 
 script_dir="$MININDN_HOME/examples"
 scripts=(
 # 4 DAG
-#"cabeee-4dag-orchestratorA.py"
-#"cabeee-4dag-orchestratorB.py"
-#"cabeee-4dag-nesco.py"
-#"cabeee-4dag-nescoSCOPT.py"
+"cabeee-4dag-orchestratorA.py"
+"cabeee-4dag-orchestratorB.py"
+"cabeee-4dag-nesco.py"
+"cabeee-4dag-nescoSCOPT.py"
 # 8 DAG
-#"cabeee-8dag-orchestratorA.py"
-#"cabeee-8dag-orchestratorB.py"
-#"cabeee-8dag-nesco.py"
-#"cabeee-8dag-nescoSCOPT.py"
+"cabeee-8dag-orchestratorA.py"
+"cabeee-8dag-orchestratorB.py"
+"cabeee-8dag-nesco.py"
+"cabeee-8dag-nescoSCOPT.py"
 # 8 DAG w/ caching
-#"cabeee-8dag-caching-orchestratorA.py"
-#"cabeee-8dag-caching-orchestratorB.py"
-#"cabeee-8dag-caching-nesco.py"
-#"cabeee-8dag-caching-nescoSCOPT.py"
+"cabeee-8dag-caching-orchestratorA.py"
+"cabeee-8dag-caching-orchestratorB.py"
+"cabeee-8dag-caching-nesco.py"
+"cabeee-8dag-caching-nescoSCOPT.py"
 # 20 Parallel (new hosting using 3node topology)
-#BROKEN###"cabeee-20parallel-orchestratorA.py"
-#BROKEN###"cabeee-20parallel-orchestratorB.py"
-#BROKEN###"cabeee-20parallel-nesco.py"
-#BROKEN###"cabeee-20parallel-nescoSCOPT.py"
+"cabeee-20parallel-orchestratorA.py"
+"cabeee-20parallel-orchestratorB.py"
+"cabeee-20parallel-nesco.py"
+"cabeee-20parallel-nescoSCOPT.py"
 # 20 Sensor (new hosting using 3node topology)
-#BROKEN###"cabeee-20sensor-orchestratorA.py"
-#BROKEN###"cabeee-20sensor-orchestratorB.py"
-#BROKEN###"cabeee-20sensor-nesco.py"
-#BROKEN###"cabeee-20sensor-nescoSCOPT.py"
+"cabeee-20sensor-orchestratorA.py"
+"cabeee-20sensor-orchestratorB.py"
+"cabeee-20sensor-nesco.py"
+"cabeee-20sensor-nescoSCOPT.py"
 # 20 Linear (new hosting using 3node topology)
-#"cabeee-20linear-orchestratorA.py"
-#"cabeee-20linear-orchestratorB.py"
-#"cabeee-20linear-nesco.py"
-#"cabeee-20linear-nescoSCOPT.py"
-# 20 Scramble (new hosting using 3node topology)
-#TODO###"cabeee-20scramble-orchestratorA.py"
-#TODO###"cabeee-20scramble-orchestratorB.py"
-#TODO###"cabeee-20scramble-nesco.py"
-#TODO###"cabeee-20scramble-nescoSCOPT.py"
+"cabeee-20linear-orchestratorA.py"
+"cabeee-20linear-orchestratorB.py"
+"cabeee-20linear-nesco.py"
+"cabeee-20linear-nescoSCOPT.py"
+# 20 Scrambled (new hosting using 3node topology)
+"cabeee-20scrambled-orchestratorA.py"
+"cabeee-20scrambled-orchestratorB.py"
+"cabeee-20scrambled-nesco.py"
+"cabeee-20scrambled-nescoSCOPT.py"
 # 20-Node Linear
 #"cabeee-20node-linear-orchestratorA.py"
 #"cabeee-20node-linear-orchestratorB.py"
@@ -67,8 +67,8 @@ scripts=(
 #"cabeee-20sensor-parallel-nesco.py"
 #"cabeee-20sensor-parallel-nescoSCOPT.py"
 # 20-Node Scrambled
-"cabeee-20node-scrambled-nesco.py"
-"cabeee-20node-scrambled-nescoSCOPT.py"
+#"cabeee-20node-scrambled-nesco.py"
+#"cabeee-20node-scrambled-nescoSCOPT.py"
 # Misc
 #"cabeee-chunks.py"
 )

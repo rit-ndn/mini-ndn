@@ -44,15 +44,15 @@ from os import environ
 
 import sys
 
-PREFIX = "/nescoSCOPT" # use the shortcutOPT which parallelizes the workflow if nodes host upstream services
+PREFIX = "/nescoSCOPT"
 
 USER_HOME = environ['HOME']
 MININDN_DIR = USER_HOME + '/mini-ndn'
-WORKFLOW = MININDN_DIR + '/workflows/8dag.json'
+WORKFLOW = MININDN_DIR + '/workflows/20-linear.json'
 TOPOLOGY = MININDN_DIR + '/topologies/cabeee-3node.conf'
-#TOPOLOGY = MININDN_DIR + '/topologies/cabeee-3node-slow.conf'
 
 BIN_DIR = MININDN_DIR + '/dl/ndn-cxx/build/examples'
+
 
 def run():
     Minindn.cleanUp()
@@ -78,8 +78,10 @@ def run():
         ndn.start()
 
         info('Setting up routes manually in NFD\n')
-        #links = {"sensor":["rtr1"], "rtr1":["rtr2"], "rtr2":["rtr3"], "rtr3":["orch"], "orch":["user"]} # routes are directional! This is the wrong direction.
-        links = {"user":["rtr3"], "rtr3":["rtr2"], "rtr2":["rtr1"], "rtr1":["sensor"]}
+        links = {   "sensor":["rtr1"],
+                    "rtr1":["rtr2"],
+                    "rtr2":["rtr3"],
+                    "rtr3":["user"]}
         for first in links:
             for second in links[first]:
                 host1 = ndn.net[first]
@@ -101,6 +103,7 @@ def run():
         info('Adding IP routes to NFD\n')
         #info('Starting NFD on nodes\n')
         nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
+        #nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
         info('Starting NLSR on nodes\n')
         nlsrs = AppManager(ndn, ndn.net.hosts, Nlsr)
 
@@ -124,19 +127,35 @@ def run():
         # configure and start nfd on each node
         info("Configuring NFD\n")
         nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
+        #nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
 
         info('Adding static routes to NFD\n')
         grh = NdnRoutingHelper(ndn.net, ndn.args.faceType, ndn.args.routingType)
         # For all host, pass ndn.net.hosts or a list, [ndn.net['a'], ..] or [ndn.net.hosts[0],.]
         grh.addOrigin([ndn.net['sensor']], [PREFIX + "/sensor"])
-        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/service1"])
-        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/service2"])
-        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service3"])
-        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service4"])
-        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/service5"])
-        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/service6"])
-        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service7"])
-        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service8"])
+
+        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/serviceL1"])
+        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/serviceL4"])
+        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/serviceL8"])
+        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/serviceL12"])
+        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/serviceL14"])
+        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/serviceL16"])
+        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/serviceL18"])
+        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/serviceL20"])
+
+        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/serviceL2"])
+        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/serviceL5"])
+        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/serviceL7"])
+        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/serviceL9"])
+        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/serviceL11"])
+        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/serviceL13"])
+
+        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/serviceL3"])
+        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/serviceL6"])
+        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/serviceL10"])
+        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/serviceL15"])
+        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/serviceL17"])
+        grh.addOrigin([ndn.net['rtr3']], [PREFIX + "/serviceL19"])
         grh.calculateNPossibleRoutes()
 
         ''' 
@@ -148,23 +167,23 @@ def run():
            '/ndn/orch-site/orch' not in routesFromSensor or \
            '/ndn/user-site/user' not in routesFromSensor:
             info("Route addition failed\n")
-        routesToPrefix = ndn.net['rtr1'].cmd("nfdc fib | grep '/nescoSCOPT'")
-        if '/nescoSCOPT' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr1'].cmd("nfdc fib | grep '/interCACHE'")
+        if '/interCACHE' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['rtr2'].cmd("nfdc fib | grep '/nescoSCOPT'")
-        if '/nescoSCOPT' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr2'].cmd("nfdc fib | grep '/interCACHE'")
+        if '/interCACHE' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['rtr3'].cmd("nfdc fib | grep '/nescoSCOPT'")
-        if '/nescoSCOPT' not in routesToPrefix:
+        routesToPrefix = ndn.net['rtr3'].cmd("nfdc fib | grep '/interCACHE'")
+        if '/interCACHE' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
-        routesToPrefix = ndn.net['orch'].cmd("nfdc fib | grep '/nescoSCOPT'")
-        if '/nescoSCOPT' not in routesToPrefix:
+        routesToPrefix = ndn.net['orch'].cmd("nfdc fib | grep '/interCACHE'")
+        if '/interCACHE' not in routesToPrefix:
             info("Missing route to advertised prefix, Route addition failed\n")
             ndn.net.stop()
             sys.exit(1)
@@ -184,6 +203,7 @@ def run():
         info('Adding IP routes to NFD\n')
         #info('Starting NFD on nodes\n')
         nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
+        #nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
         info('Starting NLSR on nodes\n')
         nlsrs = AppManager(ndn, ndn.net.hosts, Nlsr)
 
@@ -209,7 +229,7 @@ def run():
     producer.cmd(cmd)
     
     # or one-liner
-    #ndn.net['sensor'].cmd(MININDN_HOME + "/examples/apps/dist/cabeee-custom-app-producer")
+    #ndn.net['sensor'].cmd(BIN_DIR + "/cabeee-custom-app-producer")
 
 
     sleep(1)
@@ -217,25 +237,66 @@ def run():
 
     # SET UP THE FORWARDERS
     # run the cabeee-dag-forwarder-app application on all router nodes
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service1.log &'.format(PREFIX, "/service1")
-    ndn.net['rtr3'].cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service2.log &'.format(PREFIX, "/service2")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service1.log &'.format(PREFIX, "/serviceL1")
     ndn.net['rtr1'].cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service3.log &'.format(PREFIX, "/service3")
-    ndn.net['rtr2'].cmd(cmd)
     sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service4.log &'.format(PREFIX, "/service4")
-    ndn.net['rtr2'].cmd(cmd)
-    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service5.log &'.format(PREFIX, "/service5")
-    ndn.net['rtr3'].cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service6.log &'.format(PREFIX, "/service6")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service4.log &'.format(PREFIX, "/serviceL4")
     ndn.net['rtr1'].cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service7.log &'.format(PREFIX, "/service7")
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service8.log &'.format(PREFIX, "/serviceL8")
+    ndn.net['rtr1'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service12.log &'.format(PREFIX, "/serviceL12")
+    ndn.net['rtr1'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service14.log &'.format(PREFIX, "/serviceL14")
+    ndn.net['rtr1'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service16.log &'.format(PREFIX, "/serviceL16")
+    ndn.net['rtr1'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service18.log &'.format(PREFIX, "/serviceL18")
+    ndn.net['rtr1'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service20.log &'.format(PREFIX, "/serviceL20")
+    ndn.net['rtr1'].cmd(cmd)
+
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service2.log &'.format(PREFIX, "/serviceL2")
     ndn.net['rtr2'].cmd(cmd)
     sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
-    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service8.log &'.format(PREFIX, "/service8")
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service5.log &'.format(PREFIX, "/serviceL5")
     ndn.net['rtr2'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service7.log &'.format(PREFIX, "/serviceL7")
+    ndn.net['rtr2'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service9.log &'.format(PREFIX, "/serviceL9")
+    ndn.net['rtr2'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service11.log &'.format(PREFIX, "/serviceL11")
+    ndn.net['rtr2'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service13.log &'.format(PREFIX, "/serviceL13")
+    ndn.net['rtr2'].cmd(cmd)
+
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service3.log &'.format(PREFIX, "/serviceL3")
+    ndn.net['rtr3'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service6.log &'.format(PREFIX, "/serviceL6")
+    ndn.net['rtr3'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service10.log &'.format(PREFIX, "/serviceL10")
+    ndn.net['rtr3'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service15.log &'.format(PREFIX, "/serviceL15")
+    ndn.net['rtr3'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service17.log &'.format(PREFIX, "/serviceL17")
+    ndn.net['rtr3'].cmd(cmd)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    cmd = BIN_DIR + '/cabeee-dag-forwarder-app {} {} > cabeee_forwarder_service19.log &'.format(PREFIX, "/serviceL19")
+    ndn.net['rtr3'].cmd(cmd)
+
 
 
     # SET UP THE CONSUMER
@@ -267,6 +328,6 @@ def run():
     MergeNFDLogs.mergeAllLogs()
 
 if __name__ == '__main__':
-    setLogLevel("info")
-    #setLogLevel("debug")
+    setLogLevel("debug")
+    #setLogLevel("info")
     run()
