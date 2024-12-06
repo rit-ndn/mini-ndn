@@ -10,7 +10,7 @@
 set -e
 
 
-numSamples=1
+numSamples=20
 
 MININDN_HOME="$HOME/mini-ndn"
 
@@ -51,6 +51,8 @@ scripts=(
 "cabeee-20scrambled-orchestratorB.py"
 "cabeee-20scrambled-nesco.py"
 "cabeee-20scrambled-nescoSCOPT.py"
+
+
 # 20-Node Linear
 #"cabeee-20node-linear-orchestratorA.py"
 #"cabeee-20node-linear-orchestratorB.py"
