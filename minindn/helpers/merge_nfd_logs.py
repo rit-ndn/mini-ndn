@@ -95,6 +95,50 @@ class MergeNFDLogs(object):
         return lines
 
     @staticmethod
+    def calculate_average_processing_time_NFD(output_file_path, keyword):
+        """Calculates the average of the values following the specified keyword."""
+        total = 0
+        count = 0
+        with open(output_file_path, 'r', encoding='utf-8') as file:
+            for line in file:
+                if keyword in line:
+                    # Extract the value following "interestProcessingTime: "
+                    parts = line.split(f"{keyword}: ", 1)
+                    if len(parts) > 1:
+                        try:
+                            value = float(parts[1].strip().split()[0])
+                            total += value
+                            count += 1
+                        except ValueError:
+                            continue  # Ignore lines with invalid values
+        total /= 1000000000 # value is reported in nano-seconds, so convert to seconds
+        return total / count if count > 0 else 0
+
+    @staticmethod
+    def calculate_average_processing_time_NDNCXX(directory_path, keyword):
+        """Calculates the average of the values following the keyword in non-nfd.log files."""
+        total = 0
+        count = 0
+        for root, _, files in os.walk(directory_path):
+            for file_name in files:
+                if file_name.endswith('.log') and file_name != 'nfd.log':
+                    file_path = os.path.join(root, file_name)
+                    with open(file_path, 'r', encoding='utf-8') as file:
+                        for line in file:
+                            if keyword in line:
+                                # Extract the value following the keyword
+                                parts = line.split(f"{keyword}: ", 1)
+                                if len(parts) > 1:
+                                    try:
+                                        value = float(parts[1].strip().split()[0])
+                                        total += value
+                                        count += 1
+                                    except ValueError:
+                                        continue  # Ignore lines with invalid values
+        total /= 1000000000 # value is reported in nano-seconds, so convert to seconds
+        return total / count if count > 0 else 0
+
+    @staticmethod
     def write_sorted_lines_to_file(lines, output_file_path):
         # Sort lines alphabetically
         sorted_lines = sorted(lines)
@@ -158,5 +202,19 @@ class MergeNFDLogs(object):
         print(f"Data Packets Transmitted: {count} data")
 
         print("")
+
+        # Calculate average interest processing time in NFD
+        keyword = 'interestProcessingTimeNFD'
+        averageNFD = MergeNFDLogs.calculate_average_processing_time_NFD(output_file_path, keyword)
+        print(f"Average NFD interest processing time: {averageNFD:.6f} seconds")
+
+        # Calculate average interest processing time in ndn-cxx
+        keyword = 'interestProcessingTimeNDN-CXX'
+        averageNDNCXX = MergeNFDLogs.calculate_average_processing_time_NDNCXX(directory_path, keyword)
+        print(f"Average ndn-cxx interest processing time: {averageNDNCXX:.6f} seconds")
+
+        avInterestProcessingTime = averageNFD + averageNDNCXX
+
+        print(f"Average interest processing time (total): {avInterestProcessingTime:.6f} seconds")
 
         return None
