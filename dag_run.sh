@@ -10,7 +10,7 @@
 set -e
 
 
-numSamples=1
+numSamples=20
 
 MININDN_HOME="$HOME/mini-ndn"
 NDNCXX_DIR="$HOME/mini-ndn/dl/ndn-cxx/run_scripts"
@@ -82,47 +82,47 @@ scripts=(
 
 declare -a scenarios=(
 # 4 DAG
-"cabeee-4dag-orchestratorA.py orchA 4dag.json 4dag.hosting topo-cabeee-3node.txt"
-"cabeee-4dag-orchestratorB.py orchB 4dag.json 4dag.hosting topo-cabeee-3node.txt"
-"cabeee-4dag-nesco.py nesco 4dag.json 4dag.hosting topo-cabeee-3node.txt"
-"cabeee-4dag-nescoSCOPT.py nescoSCOPT 4dag.json 4dag.hosting topo-cabeee-3node.txt"
+"cabeee-4dag-orchestratorA.py orchA 4dag.json 4dag.hosting topo-cabeee-3node.json"
+"cabeee-4dag-orchestratorB.py orchB 4dag.json 4dag.hosting topo-cabeee-3node.json"
+"cabeee-4dag-nesco.py nesco 4dag.json 4dag.hosting topo-cabeee-3node.json"
+"cabeee-4dag-nescoSCOPT.py nescoSCOPT 4dag.json 4dag.hosting topo-cabeee-3node.json"
 # 8 DAG
-"cabeee-8dag-orchestratorA.py orchA 8dag.json 8dag.hosting topo-cabeee-3node.txt"
-"cabeee-8dag-orchestratorB.py orchB 8dag.json 8dag.hosting topo-cabeee-3node.txt"
-"cabeee-8dag-nesco.py nesco 8dag.json 8dag.hosting topo-cabeee-3node.txt"
-"cabeee-8dag-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting topo-cabeee-3node.txt"
+"cabeee-8dag-orchestratorA.py orchA 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-orchestratorB.py orchB 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-nesco.py nesco 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting topo-cabeee-3node.json"
 # 8 DAG w/ caching
-"cabeee-8dag-caching-orchestratorA.py orchA 8dag.json 8dag.hosting topo-cabeee-3node.txt"
-"cabeee-8dag-caching-orchestratorB.py orchB 8dag.json 8dag.hosting topo-cabeee-3node.txt"
-"cabeee-8dag-caching-nesco.py nesco 8dag.json 8dag.hosting topo-cabeee-3node.txt"
-"cabeee-8dag-caching-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting topo-cabeee-3node.txt"
+"cabeee-8dag-caching-orchestratorA.py orchA 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-caching-orchestratorB.py orchB 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-caching-nesco.py nesco 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-caching-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting topo-cabeee-3node.json"
 # 20 Parallel (using 3node topology)
-"cabeee-20parallel-orchestratorA.py orchA 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.txt"
-"cabeee-20parallel-orchestratorB.py orchB 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.txt"
-"cabeee-20parallel-nesco.py nesco 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.txt"
-"cabeee-20parallel-nescoSCOPT.py nescoSCOPT 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.txt"
+"cabeee-20parallel-orchestratorA.py orchA 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20parallel-orchestratorB.py orchB 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20parallel-nesco.py nesco 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20parallel-nescoSCOPT.py nescoSCOPT 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
 # 20 Sensor (using 3node topology)
-"cabeee-20sensor-orchestratorA.py orchA 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.txt"
-"cabeee-20sensor-orchestratorB.py orchB 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.txt"
-"cabeee-20sensor-nesco.py nesco 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.txt"
-"cabeee-20sensor-nescoSCOPT.py nescoSCOPT 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.txt"
+"cabeee-20sensor-orchestratorA.py orchA 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20sensor-orchestratorB.py orchB 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20sensor-nesco.py nesco 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20sensor-nescoSCOPT.py nescoSCOPT 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
 # 20 Linear (using 3node topology)
-"cabeee-20linear-orchestratorA.py orchA 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.txt"
-"cabeee-20linear-orchestratorB.py orchB 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.txt"
-"cabeee-20linear-nesco.py nesco 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.txt"
-"cabeee-20linear-nescoSCOPT.py nescoSCOPT 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.txt"
+"cabeee-20linear-orchestratorA.py orchA 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20linear-orchestratorB.py orchB 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20linear-nesco.py nesco 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20linear-nescoSCOPT.py nescoSCOPT 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
 # 20 Scramble (using 3node topology)
-"cabeee-20scrambled-orchestratorA.py orchA 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.txt"
-"cabeee-20scrambled-orchestratorB.py orchB 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.txt"
-"cabeee-20scrambled-nesco.py nesco 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.txt"
-"cabeee-20scrambled-nescoSCOPT.py nescoSCOPT 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.txt"
+"cabeee-20scrambled-orchestratorA.py orchA 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20scrambled-orchestratorB.py orchB 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20scrambled-nesco.py nesco 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20scrambled-nescoSCOPT.py nescoSCOPT 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
 )
 
 
 example_log="$MININDN_HOME/example.log"
 consumer_log="/tmp/minindn/user/cabeee_consumer.log"
 csv_out="$MININDN_HOME/perf-results-emulation_withCPM.csv"
-header="Example, Interest Packets Generated, Data Packets Generated, Interest Packets Transmitted, Data Packets Transmitted, Service Latency, Avg Interest Processing, CPM, CPM-t_exec, Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
+header="Example, Interest Packets Generated, Data Packets Generated, Interest Packets Transmitted, Data Packets Transmitted, Service Latency(s), Avg Interest Processing(s), CPM, CPM-t_exec(ns), Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
 
 if [ ! -f "$csv_out" ]; then
 	echo "$header" > "$csv_out"
@@ -193,14 +193,24 @@ do
 		result="$(echo "$consumer_parse" | cut -d',' -f1)"
 		latency="$(echo "$consumer_parse" | cut -d',' -f2)"
 
+#		cpm=$( \
+#			python3 ${NDNCXX_DIR}/critical-path-metric.py -type ${type} -workflow ${wf} -hosting ${hosting} -topology ${topo} | sed -n \
+#			-e 's/^metric is \([0-9]*\)/\1/p' \
+#			| tr -d '\n' \
+#		)
+#		cpm_t=$( \
+#			python3 ${NDNCXX_DIR}/critical-path-metric.py -type ${type} -workflow ${wf} -hosting ${hosting} -topology ${topo} | sed -n \
+#			-e 's/^time is \([0-9]*\)/\1/p' \
+#			| tr -d '\n' \
+#		)
 		cpm=$( \
-			python3 ${NDNCXX_DIR}/critical-path-metric.py -type ${type} -workflow ${wf} -hosting ${hosting} -topology ${topo} | sed -n \
-			-e 's/^metric is \([0-9]*\)/\1/p' \
+			dl/CPM/cpm --scheme ${type} --workflow ${wf} --hosting ${hosting} --topology ${topo} | sed -n \
+			-e 's/^metric: \([0-9]*\)/\1/p' \
 			| tr -d '\n' \
 		)
 		cpm_t=$( \
-			python3 ${NDNCXX_DIR}/critical-path-metric.py -type ${type} -workflow ${wf} -hosting ${hosting} -topology ${topo} | sed -n \
-			-e 's/^time is \([0-9]*\)/\1/p' \
+			dl/CPM/cpm --scheme ${type} --workflow ${wf} --hosting ${hosting} --topology ${topo} | sed -n \
+			-e 's/^time: \([0-9]*\) ns/\1/p' \
 			| tr -d '\n' \
 		)
 
