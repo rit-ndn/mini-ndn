@@ -23,27 +23,27 @@ script_dir="$MININDN_HOME/examples"
 
 declare -a scenarios=(
 	# 20 Sensor (using 3node topology)
-	#"cabeee-intervals-20sensor-orchestratorA.py orchA 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20sensor-orchestratorB.py orchB 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
+	"cabeee-intervals-20sensor-orchestratorA.py orchA 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
+####"cabeee-intervals-20sensor-orchestratorB.py orchB 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
 	"cabeee-intervals-20sensor-nesco.py nesco 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20sensor-nescoSCOPT.py nescoSCOPT 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
+	"cabeee-intervals-20sensor-nescoSCOPT.py nescoSCOPT 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
 	# 20 Linear (using 3node topology)
-	#"cabeee-intervals-20linear-orchestratorA.py orchA 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20linear-orchestratorB.py orchB 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20linear-nesco.py nesco 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20linear-nescoSCOPT.py nescoSCOPT 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+	"cabeee-intervals-20linear-orchestratorA.py orchA 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+####"cabeee-intervals-20linear-orchestratorB.py orchB 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+	"cabeee-intervals-20linear-nesco.py nesco 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+	"cabeee-intervals-20linear-nescoSCOPT.py nescoSCOPT 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
 	# 20 Scramble (using 3node topology)
-	#"cabeee-intervals-20scrambled-orchestratorA.py orchA 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20scrambled-orchestratorB.py orchB 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20scrambled-nesco.py nesco 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20scrambled-nescoSCOPT.py nescoSCOPT 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+	"cabeee-intervals-20scrambled-orchestratorA.py orchA 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+####"cabeee-intervals-20scrambled-orchestratorB.py orchB 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+	"cabeee-intervals-20scrambled-nesco.py nesco 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+	"cabeee-intervals-20scrambled-nescoSCOPT.py nescoSCOPT 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
 )
 
 
 example_log="$MININDN_HOME/example.log"
 consumer_log="/tmp/minindn/user/cabeee_consumer.log"
 csv_out="$MININDN_HOME/perf-results-emulation_intervals.csv"
-header="Example, Interest Packets Generated, Data Packets Generated, Interest Packets Transmitted, Data Packets Transmitted, Service Latency(s), Avg Interest Processing(s), CPM, CPM-t_exec(ns), Min Service Latency (us), Low Quartile Service Latency (us), Avg Service Latency (us), High Quartile Service Latency (us), Max Service Latency (us), Total Service Latency(us), Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
+header="Example, Interest Packets Generated, Data Packets Generated, Interest Packets Transmitted, Data Packets Transmitted, Service Latency(s), Avg Interest Processing(s), CPM, CPM-t_exec(ns), Min Service Latency (s), Low Quartile Service Latency (s), Avg Service Latency (s), High Quartile Service Latency (s), Max Service Latency (s), Total Service Latency(s), Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
 
 if [ ! -f "$csv_out" ]; then
 	echo "$header" > "$csv_out"

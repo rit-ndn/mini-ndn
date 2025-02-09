@@ -97,10 +97,10 @@ declare -a scenarios=(
 "cabeee-8dag-caching-nesco.py nesco 8dag.json 8dag.hosting topo-cabeee-3node.json"
 "cabeee-8dag-caching-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting topo-cabeee-3node.json"
 # 20 Parallel (using 3node topology)
-"cabeee-20parallel-orchestratorA.py orchA 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20parallel-orchestratorB.py orchB 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20parallel-nesco.py nesco 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20parallel-nescoSCOPT.py nescoSCOPT 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
+#"cabeee-20parallel-orchestratorA.py orchA 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
+#"cabeee-20parallel-orchestratorB.py orchB 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
+#"cabeee-20parallel-nesco.py nesco 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
+#"cabeee-20parallel-nescoSCOPT.py nescoSCOPT 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
 # 20 Sensor (using 3node topology)
 "cabeee-20sensor-orchestratorA.py orchA 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
 "cabeee-20sensor-orchestratorB.py orchB 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"

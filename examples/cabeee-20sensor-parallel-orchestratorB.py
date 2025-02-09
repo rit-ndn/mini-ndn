@@ -276,64 +276,64 @@ def run():
     info('Starting Producer App\n')
     # runs in the background so that it is non-blocking
     # App input is the service PREFIX
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor1")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor1", 9000, 0, 100, 1000)
     producer = ndn.net['sensor1']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor2")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor2", 9000, 0, 100, 1000)
     producer = ndn.net['sensor2']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor3")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor3", 9000, 0, 100, 1000)
     producer = ndn.net['sensor3']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor4")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor4", 9000, 0, 100, 1000)
     producer = ndn.net['sensor4']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor5")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor5", 9000, 0, 100, 1000)
     producer = ndn.net['sensor5']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor6")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor6", 9000, 0, 100, 1000)
     producer = ndn.net['sensor6']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor7")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor7", 9000, 0, 100, 1000)
     producer = ndn.net['sensor7']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor8")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor8", 9000, 0, 100, 1000)
     producer = ndn.net['sensor8']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor9")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor9", 9000, 0, 100, 1000)
     producer = ndn.net['sensor9']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor10")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor10", 9000, 0, 100, 1000)
     producer = ndn.net['sensor10']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor11")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor11", 9000, 0, 100, 1000)
     producer = ndn.net['sensor11']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor12")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor12", 9000, 0, 100, 1000)
     producer = ndn.net['sensor12']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor13")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor13", 9000, 0, 100, 1000)
     producer = ndn.net['sensor13']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor14")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor14", 9000, 0, 100, 1000)
     producer = ndn.net['sensor14']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor15")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor15", 9000, 0, 100, 1000)
     producer = ndn.net['sensor15']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor16")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor16", 9000, 0, 100, 1000)
     producer = ndn.net['sensor16']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor17")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor17", 9000, 0, 100, 1000)
     producer = ndn.net['sensor17']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor18")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor18", 9000, 0, 100, 1000)
     producer = ndn.net['sensor18']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor19")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor19", 9000, 0, 100, 1000)
     producer = ndn.net['sensor19']
     producer.cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor20")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor20", 9000, 0, 100, 1000)
     producer = ndn.net['sensor20']
     producer.cmd(cmd)
     

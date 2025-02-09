@@ -38,6 +38,7 @@ from minindn.apps.nlsr import Nlsr
 from minindn.helpers.ip_routing_helper import IPRoutingHelper
 from minindn.helpers.merge_nfd_logs import MergeNFDLogs
 from minindn.util import copyExistentFile
+#from minindn.apps.tshark import Tshark # for generating pCap files
 
 from time import sleep
 from os import environ
@@ -78,6 +79,9 @@ def run():
         ndn = Minindn(topoFile=TOPOLOGY)
         ndn.start()
 
+        #info('Starting tshark logging on nodes to create pCap files\n')
+        #tshark = AppManager(ndn, ndn.net.hosts, Tshark, logFolder="./log/", singleLogFile=True)
+
         info('Setting up routes manually in NFD\n')
         #links = {"sensor":["rtr1"], "rtr1":["rtr2"], "rtr2":["rtr3"], "rtr3":["orch"], "orch":["user"]} # routes are directional! This is the wrong direction.
         #links = {"user":["orch"], "orch":["rtr3"], "rtr3":["rtr2"], "rtr2":["rtr1"], "rtr1":["sensor"]}
@@ -99,6 +103,9 @@ def run():
 
         ndn = Minindn(topoFile=TOPOLOGY)
         ndn.start()
+
+        #info('Starting tshark logging on nodes to create pCap files\n')
+        #tshark = AppManager(ndn, ndn.net.hosts, Tshark, logFolder="./log/", singleLogFile=True)
 
         info('Adding IP routes to NFD\n')
         #info('Starting NFD on nodes\n')
@@ -122,6 +129,9 @@ def run():
 
         ndn = Minindn(parser=parser, topoFile=TOPOLOGY)
         ndn.start()
+
+        #info('Starting tshark logging on nodes to create pCap files\n')
+        #tshark = AppManager(ndn, ndn.net.hosts, Tshark, logFolder="./log/", singleLogFile=True)
 
         # configure and start nfd on each node
         info("Configuring NFD\n")
@@ -178,6 +188,9 @@ def run():
         ndn = Minindn(topoFile=TOPOLOGY)
         ndn.start()
 
+        #info('Starting tshark logging on nodes to create pCap files\n')
+        #tshark = AppManager(ndn, ndn.net.hosts, Tshark, logFolder="./log/", singleLogFile=True)
+
         # NOTE: this method is also used in traffic_generator.py, pcap_logging_experiment.py, and consumer-producer.py
         info('Adding IP routes to NFD\n')
         #info('Starting NFD on nodes\n')
@@ -198,7 +211,8 @@ def run():
 
     # choice 1: (runs in the background so that it is non-blocking)
     # App input is the service PREFIX
-    cmd = PRODUCER_BIN + ' {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor")
+    #cmd = PRODUCER_BIN + ' {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor")
+    cmd = PRODUCER_BIN + ' {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor", 9000, 0, 100, 1000)
     #cmd = PRODUCER_BIN + ' {} {} > cabeee_producer.log &'.format(PREFIX, "/service4")
     producer = ndn.net['sensor']
     producer.cmd(cmd)

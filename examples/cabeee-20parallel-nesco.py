@@ -218,7 +218,7 @@ def run():
 
     # choice 1: (runs in the background so that it is non-blocking)
     # App input is the service PREFIX
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor")
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor", 9000, 0, 100, 1000)
     producer = ndn.net['sensor']
     producer.cmd(cmd)
     
