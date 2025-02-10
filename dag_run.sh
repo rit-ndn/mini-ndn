@@ -13,9 +13,10 @@ set -e
 numSamples=20
 
 MININDN_HOME="$HOME/mini-ndn"
-NDNCXX_DIR="$HOME/mini-ndn/dl/ndn-cxx/run_scripts"
+NDNCXX_DIR="$HOME/mini-ndn/dl/ndn-cxx/run_scripts_hardware"
 WORKFLOW_DIR="$NDNCXX_DIR/workflows"
 TOPOLOGY_DIR="$NDNCXX_DIR/topologies"
+CPM_DIR="$MININDN_HOME/dl/CPM"
 
 
 script_dir="$MININDN_HOME/examples"
@@ -204,12 +205,12 @@ do
 #			| tr -d '\n' \
 #		)
 		cpm=$( \
-			dl/CPM/cpm --scheme ${type} --workflow ${wf} --hosting ${hosting} --topology ${topo} | sed -n \
+			${CPM_DIR}/cpm --scheme ${type} --workflow ${wf} --hosting ${hosting} --topology ${topo} | sed -n \
 			-e 's/^metric: \([0-9]*\)/\1/p' \
 			| tr -d '\n' \
 		)
 		cpm_t=$( \
-			dl/CPM/cpm --scheme ${type} --workflow ${wf} --hosting ${hosting} --topology ${topo} | sed -n \
+			${CPM_DIR}/cpm --scheme ${type} --workflow ${wf} --hosting ${hosting} --topology ${topo} | sed -n \
 			-e 's/^time: \([0-9]*\) ns/\1/p' \
 			| tr -d '\n' \
 		)
