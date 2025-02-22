@@ -161,7 +161,12 @@ def run():
 
         # configure and start nfd on each node
         info("Configuring NFD\n")
-        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
+        #nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
+        nfds = AppManager(ndn, [ndn.net['sensor']], Nfd, logLevel="INFO", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['rtr1']], Nfd, logLevel="INFO", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr2']], Nfd, logLevel="INFO", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr3']], Nfd, logLevel="INFO", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['user']], Nfd, logLevel="INFO", csSize=0)
 
         info('Adding static routes to NFD\n')
         grh = NdnRoutingHelper(ndn.net, ndn.args.faceType, ndn.args.routingType)
