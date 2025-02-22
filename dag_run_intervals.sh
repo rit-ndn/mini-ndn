@@ -158,14 +158,14 @@ do
 
 		echo "   Dumping to csv..."
 		# replace existing line
-		#line_num="$(grep -n -F "$script," "$csv_out" | cut -d: -f1 | head -1)"
-		#if [ -n "$line_num" ]; then
-			#sed --in-place -e "${line_num}c\\$row" "$csv_out"
-		#else
-			#echo "$row" >> "$csv_out"
-		#fi
+		line_num="$(grep -n -F "$script," "$csv_out" | cut -d: -f1 | head -1)"
+		if [ -n "$line_num" ]; then
+			sed --in-place -e "${line_num}c\\$row" "$csv_out"
+		else
+			echo "$row" >> "$csv_out"
+		fi
 		# don't replace, just add this run to the bottom of the file
-		echo "$row" >> "$csv_out"
+		#echo "$row" >> "$csv_out"
 
 		echo ""
 	done
