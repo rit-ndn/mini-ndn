@@ -37,11 +37,6 @@ scripts=(
 #"cabeee-8dag-caching-orchestratorB.py"
 #"cabeee-8dag-caching-nesco.py"
 #"cabeee-8dag-caching-nescoSCOPT.py"
-# 20 Parallel (new hosting using 3node topology)
-#"cabeee-20parallel-orchestratorA.py"
-#"cabeee-20parallel-orchestratorB.py"
-#"cabeee-20parallel-nesco.py"
-#"cabeee-20parallel-nescoSCOPT.py"
 # 20 Sensor (new hosting using 3node topology)
 #"cabeee-20sensor-orchestratorA.py"
 #"cabeee-20sensor-orchestratorB.py"
@@ -52,13 +47,23 @@ scripts=(
 #"cabeee-20linear-orchestratorB.py"
 #"cabeee-20linear-nesco.py"
 #"cabeee-20linear-nescoSCOPT.py"
+# 20 Reuse (new hosting using 3node topology)
+#"cabeee-20reuse-orchestratorA.py"
+#"cabeee-20reuse-orchestratorB.py"
+#"cabeee-20reuse-nesco.py"
+#"cabeee-20reuse-nescoSCOPT.py"
+
+
 # 20 Scrambled (new hosting using 3node topology)
 #"cabeee-20scrambled-orchestratorA.py"
 #"cabeee-20scrambled-orchestratorB.py"
 #"cabeee-20scrambled-nesco.py"
 #"cabeee-20scrambled-nescoSCOPT.py"
-
-
+# 20 Parallel (new hosting using 3node topology)
+#"cabeee-20parallel-orchestratorA.py"
+#"cabeee-20parallel-orchestratorB.py"
+#"cabeee-20parallel-nesco.py"
+#"cabeee-20parallel-nescoSCOPT.py"
 # 20-Node Linear
 #"cabeee-20node-linear-orchestratorA.py"
 #"cabeee-20node-linear-orchestratorB.py"
@@ -97,11 +102,6 @@ declare -a scenarios=(
 "cabeee-8dag-caching-orchestratorB.py orchB 8dag.json 8dag.hosting topo-cabeee-3node.json"
 "cabeee-8dag-caching-nesco.py nesco 8dag.json 8dag.hosting topo-cabeee-3node.json"
 "cabeee-8dag-caching-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting topo-cabeee-3node.json"
-# 20 Parallel (using 3node topology)
-#"cabeee-20parallel-orchestratorA.py orchA 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20parallel-orchestratorB.py orchB 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20parallel-nesco.py nesco 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20parallel-nescoSCOPT.py nescoSCOPT 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
 # 20 Sensor (using 3node topology)
 "cabeee-20sensor-orchestratorA.py orchA 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
 "cabeee-20sensor-orchestratorB.py orchB 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
@@ -112,17 +112,30 @@ declare -a scenarios=(
 "cabeee-20linear-orchestratorB.py orchB 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
 "cabeee-20linear-nesco.py nesco 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
 "cabeee-20linear-nescoSCOPT.py nescoSCOPT 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+# 20 Reuse (using 3node topology)
+"cabeee-20reuse-orchestratorA.py orchA 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20reuse-orchestratorB.py orchB 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20reuse-nesco.py nesco 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20reuse-nescoSCOPT.py nescoSCOPT 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
+
+
+
 # 20 Scramble (using 3node topology)
-"cabeee-20scrambled-orchestratorA.py orchA 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20scrambled-orchestratorB.py orchB 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20scrambled-nesco.py nesco 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20scrambled-nescoSCOPT.py nescoSCOPT 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+#"cabeee-20scrambled-orchestratorA.py orchA 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+#"cabeee-20scrambled-orchestratorB.py orchB 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+#"cabeee-20scrambled-nesco.py nesco 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+#"cabeee-20scrambled-nescoSCOPT.py nescoSCOPT 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+# 20 Parallel (using 3node topology)
+#"cabeee-20parallel-orchestratorA.py orchA 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
+#"cabeee-20parallel-orchestratorB.py orchB 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
+#"cabeee-20parallel-nesco.py nesco 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
+#"cabeee-20parallel-nescoSCOPT.py nescoSCOPT 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
 )
 
 
 example_log="$MININDN_HOME/example.log"
 consumer_log="/tmp/minindn/user/cabeee_consumer.log"
-csv_out="$MININDN_HOME/perf-results-emulation_withCPM.csv"
+csv_out="$MININDN_HOME/perf-results-emulation.csv"
 header="Example, Interest Packets Generated, Data Packets Generated, Interest Packets Transmitted, Data Packets Transmitted, Service Latency(s), Avg Interest Processing(s), CPM, CPM-t_exec(ns), Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
 
 if [ ! -f "$csv_out" ]; then

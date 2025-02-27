@@ -1,0 +1,96 @@
+{	"dag": {
+		"/sensor1": {
+			"/serviceP1": 0
+		},
+		"/sensor2": {
+			"/serviceP2": 0
+		},
+		"/sensor3": {
+			"/serviceP3": 0
+		},
+
+
+		"/sensor4": {
+			"/serviceP4": 0
+		},
+		"/sensor5": {
+			"/serviceP5": 0
+		},
+		"/sensor6": {
+			"/serviceP6": 0
+		},
+
+
+		"/serviceP1": {
+			"/serviceP22": 0
+		},
+		"/serviceP2": {
+			"/serviceP22": 1
+		},
+		"/serviceP3": {
+			"/serviceP22": 2
+		},
+
+
+		"/serviceP4": {
+			"/serviceP23": 0
+		},
+		"/serviceP5": {
+			"/serviceP23": 1
+		},
+		"/serviceP6": {
+			"/serviceP23": 2
+		},
+
+
+
+		"/sensorL": {
+			"/serviceL1": 0
+		},
+		"/serviceL1": {
+			"/serviceL2": 0
+		},
+		"/serviceL2": {
+			"/serviceL3": 0
+		},
+		"/serviceL3": {
+			"/serviceL4": 0
+		},
+		"/serviceL4": {
+			"/serviceL5": 0
+		},
+		"/serviceL5": {
+			"/serviceL6": 0
+		},
+		"/serviceL6": {
+			"/serviceL7": 0
+		},
+		"/serviceL7": {
+			"/serviceL8": 0
+		},
+		"/serviceL8": {
+			"/serviceL9": 0
+		},
+		"/serviceL9": {
+			"/serviceL10": 0
+		},
+
+
+
+		"/serviceP22": {
+			"/serviceR1": 0
+		},
+		"/serviceP23": {
+			"/serviceR1": 1
+		},
+		"/serviceL10": {
+			"/serviceR1": 2
+		},
+
+
+
+		"/serviceR1": {
+			"/consumer": 0
+		}
+	}
+}

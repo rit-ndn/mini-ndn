@@ -33,11 +33,19 @@ declare -a scenarios=(
 ####"cabeee-intervals-20linear-orchestratorB.py orchB 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
 	"cabeee-intervals-20linear-nesco.py nesco 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
 	"cabeee-intervals-20linear-nescoSCOPT.py nescoSCOPT 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+	# 20 Reuse (using 3node topology)
+	"cabeee-intervals-20reuse-orchestratorA.py orchA 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
+####"cabeee-intervals-20reuse-orchestratorB.py orchB 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
+	"cabeee-intervals-20reuse-nesco.py nesco 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
+	"cabeee-intervals-20reuse-nescoSCOPT.py nescoSCOPT 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
+
+
+
 	# 20 Scramble (using 3node topology)
-	"cabeee-intervals-20scrambled-orchestratorA.py orchA 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+	#"cabeee-intervals-20scrambled-orchestratorA.py orchA 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
 ####"cabeee-intervals-20scrambled-orchestratorB.py orchB 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-	"cabeee-intervals-20scrambled-nesco.py nesco 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-	"cabeee-intervals-20scrambled-nescoSCOPT.py nescoSCOPT 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+	#"cabeee-intervals-20scrambled-nesco.py nesco 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+	#"cabeee-intervals-20scrambled-nescoSCOPT.py nescoSCOPT 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
 )
 
 

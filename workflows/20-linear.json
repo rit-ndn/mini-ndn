@@ -1,5 +1,5 @@
 {	"dag": {
-		"/sensor": {
+		"/sensorL": {
 			"/serviceL1": 0
 		},
 		"/serviceL1": {

@@ -133,7 +133,7 @@ def run():
         info('Adding static routes to NFD\n')
         grh = NdnRoutingHelper(ndn.net, ndn.args.faceType, ndn.args.routingType)
         # For all host, pass ndn.net.hosts or a list, [ndn.net['a'], ..] or [ndn.net.hosts[0],.]
-        grh.addOrigin([ndn.net['sensor']], [PREFIX + "/sensor"])
+        grh.addOrigin([ndn.net['sensor']], [PREFIX + "/sensorL"])
         grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/serviceL1"])
         grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/serviceL2"])
         grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/serviceL3"])
@@ -221,7 +221,7 @@ def run():
     info('Starting Producer App\n')
     # runs in the background so that it is non-blocking
     # App input is the service PREFIX
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor", 200, 0, 100, 1000)
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensorL", 200, 0, 100, 1000)
     producer = ndn.net['sensor']
     producer.cmd(cmd)
     
