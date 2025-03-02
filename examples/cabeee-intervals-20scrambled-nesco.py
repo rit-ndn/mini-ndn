@@ -306,7 +306,7 @@ def run():
     info('Starting Consumer App (after waiting one second for RIB updates to finish propagating)\n')
     sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
-    cmd = BIN_DIR + '/cabeee-custom-app-consumer-poisson {} {} {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW, 0, 10, 100)
+    cmd = BIN_DIR + '/cabeee-custom-app-consumer-poisson {} {} {} {} {} {} > cabeee_consumer.log &'.format(PREFIX, "/consumer", WORKFLOW, 0, 10, 100)
     #cmd = BIN_DIR + '/cabeee-custom-app-consumer > cabeee_consumer.log &'
     #cmd = BIN_DIR + '/cabeee-custom-app-consumer > cabeee_consumer.log'
     #cmd = BIN_DIR + '/cabeee-custom-app-consumer &'
