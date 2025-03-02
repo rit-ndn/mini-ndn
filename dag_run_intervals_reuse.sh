@@ -24,9 +24,9 @@ script_dir="$MININDN_HOME/examples"
 
 declare -a scenarios=(
 	# 20 Reuse (Abilene topology)
-	#"cabeee-intervals-20reuse-orchestratorA.py orchA 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
+	"cabeee-intervals-20reuse-orchestratorA.py orchA 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
 ####"cabeee-intervals-20reuse-orchestratorB.py orchB 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
-	#"cabeee-intervals-20reuse-nesco.py nesco 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
+	"cabeee-intervals-20reuse-nesco.py nesco 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
 	"cabeee-intervals-20reuse-nescoSCOPT.py nescoSCOPT 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
 )
 
