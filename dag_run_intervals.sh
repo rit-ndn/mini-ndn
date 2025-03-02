@@ -33,34 +33,28 @@ declare -a scenarios=(
 ####"cabeee-intervals-20linear-orchestratorB.py orchB 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
 	"cabeee-intervals-20linear-nesco.py nesco 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
 	"cabeee-intervals-20linear-nescoSCOPT.py nescoSCOPT 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-	# 20 Reuse (using 3node topology)
-	"cabeee-intervals-20reuse-orchestratorA.py orchA 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
-####"cabeee-intervals-20reuse-orchestratorB.py orchB 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
-	"cabeee-intervals-20reuse-nesco.py nesco 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
-	"cabeee-intervals-20reuse-nescoSCOPT.py nescoSCOPT 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
-
-
-
 	# 20 Scramble (using 3node topology)
-	#"cabeee-intervals-20scrambled-orchestratorA.py orchA 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+	"cabeee-intervals-20scrambled-orchestratorA.py orchA 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
 ####"cabeee-intervals-20scrambled-orchestratorB.py orchB 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20scrambled-nesco.py nesco 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20scrambled-nescoSCOPT.py nescoSCOPT 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+	"cabeee-intervals-20scrambled-nesco.py nesco 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+	"cabeee-intervals-20scrambled-nescoSCOPT.py nescoSCOPT 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
 )
 
 
 example_log="$MININDN_HOME/example.log"
 consumer_log="/tmp/minindn/user/cabeee_consumer.log"
 csv_out="$MININDN_HOME/perf-results-emulation_intervals.csv"
-header="Example, Interest Packets Generated, Data Packets Generated, Interest Packets Transmitted, Data Packets Transmitted, Service Latency(s), Avg Interest Processing(s), CPM, CPM-t_exec(ns), Min Service Latency(s), Low Quartile Service Latency(s), Mid Quartile Service Latency(s), High Quartile Service Latency(s), Max Service Latency(s), Total Service Latency(s), Avg Service Latency(s), Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
+header="Example, Min Service Latency(s), Low Quartile Service Latency(s), Mid Quartile Service Latency(s), High Quartile Service Latency(s), Max Service Latency(s), Total Service Latency(s), Avg Service Latency(s), Requests Fulfilled, Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
 
 if [ ! -f "$csv_out" ]; then
+	echo "Creating csv..."
 	echo "$header" > "$csv_out"
 elif ! grep -q -F "$header" "$csv_out"; then
-	mv "$csv_out" "$csv_out.bak"
 	echo "Overwriting csv..."
+	mv "$csv_out" "$csv_out.bak"
 	echo "$header" > "$csv_out"
 else
+	echo "Updating csv..."
 	cp "$csv_out" "$csv_out.bak"
 fi
 
@@ -94,43 +88,20 @@ do
 
 		echo "   Running sample #${sample}..."
 		sudo rm -rf /tmp/minindn/*
-		packets=$( \
-			sudo -E python "$script_dir/$script" |& tee "$example_log" | sed -n \
-			-e 's/^Interest Packets Generated: \([0-9]*\) interests$/\1,/p' \
-			-e 's/^Data Packets Generated: \([0-9]*\) data$/\1,/p' \
-			-e 's/^Interest Packets Transmitted: \([0-9]*\) interests$/\1,/p' \
-			-e 's/^Data Packets Transmitted: \([0-9]*\) data/\1,/p' \
-			-e 's/^Average interest processing time (total): \([0-9]*\.[0-9]*\) seconds/\1,/p' \
-			| tr -d '\n' \
-		)
+		sudo -E python "$script_dir/$script" |& tee "$example_log"
 
 		echo "   Parsing logs..."
-		interest_gen="$(echo "$packets" | cut -d',' -f1)"
-		data_gen="$(echo "$packets" | cut -d',' -f2)"
-		interest_trans="$(echo "$packets" | cut -d',' -f3)"
-		data_trans="$(echo "$packets" | cut -d',' -f4)"
-		# python scripts go through log files (all devices) and get the average for NDF and average for ndn-cxx to process interests. They add up both averages, and report them
-		interest_processing="$(echo "$packets" | cut -d',' -f5)"
-
-		consumer_parse=$( \
-			sed -n \
-			-e 's/^\s*The final answer is: \([0-9]*\)$/\1,/p' \
-			"$consumer_log" \
-			| tr -d '\n' \
-		)
-		result="$(echo "$consumer_parse" | cut -d',' -f1)"
-
-
-
 		latencies=$( \
-			python process_nfd_logs_intervals.py | sed -n \
-			-e 's/^\s*min latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*low latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*mid latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*high latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*max latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*total latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*avg latency: \([0-9\.]*\) seconds$/\1,/p' \
+			python process_nfd_logs_intervals.py "$consumer_log" | sed -n \
+			-e 's/^\s*consumer min latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumer low latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumer mid latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumer high latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumer max latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumer total latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumer avg latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumer requests fulfilled: \([0-9\.]*\) total requests$/\1,/p' \
+			-e 's/^\s*consumer Final answer: \([0-9\.]*\) numerical$/\1,/p' \
 			| tr -d '\n' \
 		)
 		min_latency="$(echo "$latencies" | cut -d',' -f1)"
@@ -140,29 +111,12 @@ do
 		max_latency="$(echo "$latencies" | cut -d',' -f5)"
 		total_latency="$(echo "$latencies" | cut -d',' -f6)"
 		avg_latency="$(echo "$latencies" | cut -d',' -f7)"
+		requests_fulfilled="$(echo "$latencies" | cut -d',' -f8)"
+		final_answer="$(echo "$latencies" | cut -d',' -f9)"
 
-#		cpm=$( \
-#			python3 ${NDNCXX_DIR}/critical-path-metric.py -type ${type} -workflow ${wf} -hosting ${hosting} -topology ${topo} | sed -n \
-#			-e 's/^metric is \([0-9]*\)/\1/p' \
-#			| tr -d '\n' \
-#		)
-#		cpm_t=$( \
-#			python3 ${NDNCXX_DIR}/critical-path-metric.py -type ${type} -workflow ${wf} -hosting ${hosting} -topology ${topo} | sed -n \
-#			-e 's/^time is \([0-9]*\)/\1/p' \
-#			| tr -d '\n' \
-#		)
-		cpm=$( \
-			${CPM_DIR}/cpm --scheme ${type} --workflow ${wf} --hosting ${hosting} --topology ${topo} | sed -n \
-			-e 's/^metric: \([0-9]*\)/\1/p' \
-			| tr -d '\n' \
-		)
-		cpm_t=$( \
-			${CPM_DIR}/cpm --scheme ${type} --workflow ${wf} --hosting ${hosting} --topology ${topo} | sed -n \
-			-e 's/^time: \([0-9]*\) ns/\1/p' \
-			| tr -d '\n' \
-		)
 
-		row="$script, $interest_gen, $data_gen, $interest_trans, $data_trans, $latency, $interest_processing, $cpm, $cpm_t, $min_latency, $low_latency, $mid_latency, $high_latency, $max_latency, $total_latency, $avg_latency, $result, $now, $minindn_hash, $ndncxx_hash, $nfd_hash, $nlsr_hash"
+
+		row="$script, $min_latency, $low_latency, $mid_latency, $high_latency, $max_latency, $total_latency, $avg_latency, $requests_fulfilled, $final_answer, $now, $minindn_hash, $ndncxx_hash, $nfd_hash, $nlsr_hash"
 
 		echo "   Dumping to csv..."
 		# replace existing line

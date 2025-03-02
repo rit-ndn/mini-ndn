@@ -24,28 +24,10 @@ script_dir="$MININDN_HOME/examples"
 
 declare -a scenarios=(
 	# 20 Reuse (Abilene topology)
-	"cabeee-intervals-20reuse-orchestratorA.py orchA 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
+	#"cabeee-intervals-20reuse-orchestratorA.py orchA 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
 ####"cabeee-intervals-20reuse-orchestratorB.py orchB 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
-	"cabeee-intervals-20reuse-nesco.py nesco 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
+	#"cabeee-intervals-20reuse-nesco.py nesco 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
 	"cabeee-intervals-20reuse-nescoSCOPT.py nescoSCOPT 20-reuse.json 20-reuse-inAbilene.hosting topo-cabeee-Abilene.json"
-
-
-
-	# 20 Sensor (using 3node topology)
-	#"cabeee-intervals-20sensor-orchestratorA.py orchA 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
-####"cabeee-intervals-20sensor-orchestratorB.py orchB 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20sensor-nesco.py nesco 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20sensor-nescoSCOPT.py nescoSCOPT 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
-	# 20 Linear (using 3node topology)
-	#"cabeee-intervals-20linear-orchestratorA.py orchA 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-####"cabeee-intervals-20linear-orchestratorB.py orchB 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20linear-nesco.py nesco 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20linear-nescoSCOPT.py nescoSCOPT 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-	# 20 Scramble (using 3node topology)
-	#"cabeee-intervals-20scrambled-orchestratorA.py orchA 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-####"cabeee-intervals-20scrambled-orchestratorB.py orchB 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20scrambled-nesco.py nesco 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-	#"cabeee-intervals-20scrambled-nescoSCOPT.py nescoSCOPT 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
 )
 
 
@@ -57,13 +39,18 @@ csv_out="$MININDN_HOME/perf-results-emulation_intervals_reuse.csv"
 header="Scenario/Scheme, Scenario, Min Service Latency(s), Low Quartile Service Latency(s), Mid Quartile Service Latency(s), High Quartile Service Latency(s), Max Service Latency(s), Total Service Latency(s), Avg Service Latency(s), Requests Fulfilled, Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
 
 if [ ! -f "$csv_out" ]; then
+	echo "Creating csv..."
 	echo "$header" > "$csv_out"
 elif ! grep -q -F "$header" "$csv_out"; then
-	mv "$csv_out" "$csv_out.bak"
 	echo "Overwriting csv..."
+	mv "$csv_out" "$csv_out.bak"
 	echo "$header" > "$csv_out"
 else
-	cp "$csv_out" "$csv_out.bak"
+	#echo "Updating csv..."
+	#cp "$csv_out" "$csv_out.bak"
+	echo "Overwriting csv..."
+	mv "$csv_out" "$csv_out.bak"
+	echo "$header" > "$csv_out"
 fi
 
 #for script in "${scripts[@]}"
@@ -100,7 +87,7 @@ do
 
 		echo "   Parsing logs..."
 		latencies=$( \
-			python process_nfd_logs_intervals_reuse.py "$reuse_scenario_log" | sed -n \
+			python process_nfd_logs_intervals.py "$reuse_scenario_log" | sed -n \
 			-e 's/^\s*consumerR min latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerR low latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerR mid latency: \([0-9\.]*\) seconds$/\1,/p' \
@@ -124,7 +111,7 @@ do
 
 
 		latencies=$( \
-			python process_nfd_logs_intervals_reuse.py "$linear_scenario_log" | sed -n \
+			python process_nfd_logs_intervals.py "$linear_scenario_log" | sed -n \
 			-e 's/^\s*consumerL min latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerL low latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerL mid latency: \([0-9\.]*\) seconds$/\1,/p' \
@@ -148,7 +135,7 @@ do
 
 
 		latencies=$( \
-			python process_nfd_logs_intervals_reuse.py "$sensor_scenario_log" | sed -n \
+			python process_nfd_logs_intervals.py "$sensor_scenario_log" | sed -n \
 			-e 's/^\s*consumerS min latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerS low latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerS mid latency: \([0-9\.]*\) seconds$/\1,/p' \

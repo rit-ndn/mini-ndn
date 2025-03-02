@@ -139,13 +139,18 @@ csv_out="$MININDN_HOME/perf-results-emulation.csv"
 header="Example, Interest Packets Generated, Data Packets Generated, Interest Packets Transmitted, Data Packets Transmitted, Service Latency(s), Avg Interest Processing(s), CPM, CPM-t_exec(ns), Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
 
 if [ ! -f "$csv_out" ]; then
+	echo "Creating csv..."
 	echo "$header" > "$csv_out"
 elif ! grep -q -F "$header" "$csv_out"; then
-	mv "$csv_out" "$csv_out.bak"
 	echo "Overwriting csv..."
+	mv "$csv_out" "$csv_out.bak"
 	echo "$header" > "$csv_out"
 else
-	cp "$csv_out" "$csv_out.bak"
+	#echo "Updating csv..."
+	#cp "$csv_out" "$csv_out.bak"
+	echo "Overwriting csv..."
+	mv "$csv_out" "$csv_out.bak"
+	echo "$header" > "$csv_out"
 fi
 
 #for script in "${scripts[@]}"
