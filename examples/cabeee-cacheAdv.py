@@ -1,0 +1,301 @@
+# -*- Mode:python; c-file-style:"gnu"; indent-tabs-mode:nil -*- */
+#
+# Copyright (C) 2015-2021, The University of Memphis,
+#                          Arizona Board of Regents,
+#                          Regents of the University of California.
+#
+# This file is part of Mini-NDN.
+# See AUTHORS.md for a complete list of Mini-NDN authors and contributors.
+#
+# Mini-NDN is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Mini-NDN is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Mini-NDN, e.g., in COPYING.md file.
+# If not, see <http://www.gnu.org/licenses/>.
+
+#from subprocess import PIPE
+import subprocess
+
+from mininet.log import setLogLevel, info
+from mininet.topo import Topo
+
+from minindn.minindn import Minindn
+from minindn.apps.app_manager import AppManager
+from minindn.util import MiniNDNCLI, getPopen
+from minindn.apps.nfd import Nfd
+from minindn.helpers.nfdc import Nfdc
+from minindn.helpers.ndn_routing_helper import NdnRoutingHelper
+import argparse
+from minindn.apps.nlsr import Nlsr
+from minindn.helpers.ip_routing_helper import IPRoutingHelper
+from minindn.helpers.merge_nfd_logs import MergeNFDLogs
+from minindn.util import copyExistentFile
+#from minindn.apps.tshark import Tshark # for generating pCap files
+
+from time import sleep
+from os import environ
+
+import sys
+
+PREFIX = "/nesco"
+
+USER_HOME = environ['HOME']
+MININDN_DIR = USER_HOME + '/mini-ndn'
+WORKFLOW = MININDN_DIR + '/workflows/1dag.json'
+TOPOLOGY = MININDN_DIR + '/topologies/cabeee-3node-cacheAdv.conf'
+
+BIN_DIR = MININDN_DIR + '/dl/ndn-cxx/build/examples'
+FORWARDER_BIN = BIN_DIR + '/cabeee-dag-forwarder-app'
+CSUPDATER_BIN = BIN_DIR + '/cabeee-custom-app-csUpdater'
+PRODUCER_BIN = BIN_DIR + '/cabeee-custom-app-producer'
+CONSUMER_BIN = BIN_DIR + '/cabeee-custom-app-consumer'
+
+def run():
+    Minindn.cleanUp()
+    Minindn.verifyDependencies()
+
+    MergeNFDLogs.deleteAllLogs()
+
+
+    """
+    There are multiple ways of setting up routes in Mini-NDN
+    refer: https://minindn.memphis.edu/experiment.html#routing-options
+    """
+    routeOption = 1 # NOTE: routeOption 2 using the routing helper currently does not support run-time advertisement, so we cannot use it!
+
+
+    if routeOption == 0:
+        # OPTION 0
+        # set up routes manually. The important bit to note here is the use of the Nfdc command
+
+        ndn = Minindn(topoFile=TOPOLOGY)
+        ndn.start()
+
+        #info('Starting tshark logging on nodes to create pCap files\n')
+        #tshark = AppManager(ndn, ndn.net.hosts, Tshark, logFolder="./log/", singleLogFile=True)
+
+        info('Setting up routes manually in NFD\n')
+        #links = {"sensor":["rtr1"], "rtr1":["rtr2"], "rtr2":["rtr3"], "rtr3":["orch"], "orch":["user"]} # routes are directional! This is the wrong direction.
+        #links = {"user":["orch"], "orch":["rtr3"], "rtr3":["rtr2"], "rtr2":["rtr1"], "rtr1":["sensor"]}
+        links = {"user":["rtr3"], "rtr3":["rtr2"], "rtr2":["rtr1"], "rtr1":["sensor"]}
+        for first in links:
+            for second in links[first]:
+                host1 = ndn.net[first]
+                host2 = ndn.net[second]
+                interface = host2.connectionsTo(host1)[0][0]
+                interface_ip = interface.IP()
+                Nfdc.createFace(host1, interface_ip)
+                Nfdc.registerRoute(host1, PREFIX, interface_ip, cost=0)
+
+        sleep(1)
+
+    if routeOption == 1:
+        # OPTION 1
+        # set up routes using Link State Routing (NLSR).
+
+        ndn = Minindn(topoFile=TOPOLOGY)
+        ndn.start()
+
+        #info('Starting tshark logging on nodes to create pCap files\n')
+        #tshark = AppManager(ndn, ndn.net.hosts, Tshark, logFolder="./log/", singleLogFile=True)
+
+        # configure and start nfd on each node
+        info("Configuring NFD\n")
+        #nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
+        nfds = AppManager(ndn, [ndn.net['sensor']], Nfd, logLevel="DEBUG", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['rtr1']], Nfd, logLevel="DEBUG", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['rtr2']], Nfd, logLevel="DEBUG", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr3']], Nfd, logLevel="DEBUG", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['user']], Nfd, logLevel="DEBUG", csSize=0)
+        info('Starting NLSR on nodes\n')
+        nlsrs = AppManager(ndn, ndn.net.hosts, Nlsr)
+
+        sleep(40)
+
+    if routeOption == 2:
+        # OPTION 2
+        # use static routing as used in static_routing_experiment.py
+
+
+        info("NOTE: mini-NDN routing helper currently does not support run-time advertisement!!! Please pick another routing method.\n")
+    
+        # the following parser came from static_routing_experiment.py
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--face-type', dest='faceType', default='udp', choices=['udp', 'tcp'])
+        parser.add_argument('--routing', dest='routingType', default='link-state',
+                            choices=['link-state', 'hr', 'dry'],
+                            help='''Choose routing type, dry = link-state is used
+                                    but hr is calculated for comparision.''')
+
+        ndn = Minindn(parser=parser, topoFile=TOPOLOGY)
+        ndn.start()
+
+        #info('Starting tshark logging on nodes to create pCap files\n')
+        #tshark = AppManager(ndn, ndn.net.hosts, Tshark, logFolder="./log/", singleLogFile=True)
+
+        # configure and start nfd on each node
+        info("Configuring NFD\n")
+        #nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
+        nfds = AppManager(ndn, [ndn.net['sensor']], Nfd, logLevel="INFO", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['rtr1']], Nfd, logLevel="INFO", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['rtr2']], Nfd, logLevel="INFO", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr3']], Nfd, logLevel="INFO", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['user']], Nfd, logLevel="INFO", csSize=0)
+
+        info('Adding static routes to NFD\n')
+        grh = NdnRoutingHelper(ndn.net, ndn.args.faceType, ndn.args.routingType)
+        # For all host, pass ndn.net.hosts or a list, [ndn.net['a'], ..] or [ndn.net.hosts[0],.]
+        grh.addOrigin([ndn.net['sensor']], [PREFIX + "/sensor"])
+        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/service1"])
+        grh.calculateNPossibleRoutes()
+
+        ''' 
+        #PREFIX is advertised from node "sensor", it should be reachable from all other nodes.
+        routesFromSensor = ndn.net['sensor'].cmd("nfdc route | grep -v '/localhost/nfd'")
+        if '/ndn/rtr1-site/rtr1' not in routesFromSensor or \
+           '/ndn/rtr2-site/rtr2' not in routesFromSensor or \
+           '/ndn/rtr3-site/rtr3' not in routesFromSensor or \
+           '/ndn/orch-site/orch' not in routesFromSensor or \
+           '/ndn/user-site/user' not in routesFromSensor:
+            info("Route addition failed\n")
+        routesToPrefix = ndn.net['rtr1'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
+            info("Missing route to advertised prefix, Route addition failed\n")
+            ndn.net.stop()
+            sys.exit(1)
+        routesToPrefix = ndn.net['rtr2'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
+            info("Missing route to advertised prefix, Route addition failed\n")
+            ndn.net.stop()
+            sys.exit(1)
+        routesToPrefix = ndn.net['rtr3'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
+            info("Missing route to advertised prefix, Route addition failed\n")
+            ndn.net.stop()
+            sys.exit(1)
+        routesToPrefix = ndn.net['orch'].cmd("nfdc fib | grep '/nesco'")
+        if '/nesco' not in routesToPrefix:
+            info("Missing route to advertised prefix, Route addition failed\n")
+            ndn.net.stop()
+            sys.exit(1)
+        ''' 
+        info('Route addition to NFD completed\n')
+
+        sleep(1)
+
+    if routeOption == 3:
+        # OPTION 3
+        # use IP routing as used in ip_rounting_experiment.py
+
+        ndn = Minindn(topoFile=TOPOLOGY)
+        ndn.start()
+
+        #info('Starting tshark logging on nodes to create pCap files\n')
+        #tshark = AppManager(ndn, ndn.net.hosts, Tshark, logFolder="./log/", singleLogFile=True)
+
+        # NOTE: this method is also used in traffic_generator.py, pcap_logging_experiment.py, and consumer-producer.py
+        info('Adding IP routes to NFD\n')
+        #info('Starting NFD on nodes\n')
+        nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
+        info('Starting NLSR on nodes\n')
+        nlsrs = AppManager(ndn, ndn.net.hosts, Nlsr)
+
+        # Calculate all routes for IP routing
+        IPRoutingHelper.calcAllRoutes(ndn.net)
+        info("IP routes configured\n")
+
+        sleep(90)
+
+
+    # SET UP THE PRODUCER
+    info('Starting Producer App\n')
+   
+
+    # choice 1: (runs in the background so that it is non-blocking)
+    # App input is the service PREFIX
+    #cmd = PRODUCER_BIN + ' {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor")
+    cmd = PRODUCER_BIN + ' {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor", 9000, 0, 100, 1000)
+    #cmd = PRODUCER_BIN + ' {} {} > cabeee_producer.log &'.format(PREFIX, "/service4")
+    producer = ndn.net['sensor']
+    producer.cmd(cmd)
+    ndn.net['sensor'].cmd('nlsrc advertise {}/sensor'.format(PREFIX))
+    
+    # or one-liner
+    #ndn.net['sensor'].cmd("/home/cabeee/mini-ndn/examples/apps/dist/cabeee-custom-app-producer")
+
+
+    sleep(1)
+
+
+    # SET UP THE FORWARDERS
+    # run the cabeee-dag-forwarder-app application on all router nodes
+    cmd = FORWARDER_BIN + ' {} {} > cabeee_forwarder_service1.log &'.format(PREFIX, "/service1")
+    ndn.net['rtr1'].cmd(cmd)
+    ndn.net['rtr1'].cmd('nlsrc advertise {}/service1'.format(PREFIX))
+    #sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+
+    # SET UP THE CONTENT STORE UPDATERS
+    # run the cabeee-custom-app-csUpdater application on all router nodes that will perform caching, so that they can advertise their content periodically
+    cmd = CSUPDATER_BIN + ' {} > cabeee_csUpdater.log &'.format(PREFIX)
+    ndn.net['rtr2'].cmd(cmd)
+    #sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+
+
+    # SET UP THE CONSUMER
+    info('Starting Consumer1 App (after waiting one second for RIB updates to finish propagating)\n')
+    sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
+
+    # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
+    cmd = CONSUMER_BIN + ' {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW, 0)
+    #cmd = CONSUMER_BIN + ' > cabeee_consumer.log &'
+    #cmd = CONSUMER_BIN + ' > cabeee_consumer.log'
+    #cmd = CONSUMER_BIN + ' &'
+    #cmd = CONSUMER_BIN + ''
+    consumer = ndn.net['rtr3']
+    consumer.cmd(cmd)
+
+
+    sleep(2) # give enough time for the consumer to receive the final service result, so that everything is cached before starting the second consumer.
+
+    # recalculate routes now that we have cached content (didn't work)
+    sleep(1)
+    #todo: how to trigger update routing?
+    sleep(1)
+
+    #sleep(90)
+
+
+    # SET UP THE SECOND CONSUMER
+    info('Starting Consumer2 App (after waiting one second for RIB updates to finish propagating)\n')
+    sleep(1) # wait so that we don't start the consumer until all RIB updates have propagated
+
+    # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
+    cmd = CONSUMER_BIN + ' {} {} {} > cabeee_consumer.log &'.format(PREFIX, WORKFLOW, 0)
+    #cmd = CONSUMER_BIN + ' > cabeee_consumer.log &'
+    #cmd = CONSUMER_BIN + ' > cabeee_consumer.log'
+    #cmd = CONSUMER_BIN + ' &'
+    #cmd = CONSUMER_BIN + ''
+    consumer = ndn.net['user']
+    consumer.cmd(cmd)
+
+    sleep(1)
+
+    info("\nExperiment Completed!\n")
+    MiniNDNCLI(ndn.net)
+    ndn.stop()
+
+    # concatenate every node's log/nfd.log file to a single one. Keep timestamp, add node name. Sort by timestamp!
+    MergeNFDLogs.mergeAllLogs()
+
+if __name__ == '__main__':
+    setLogLevel("info")
+    #setLogLevel("debug")
+    run()
