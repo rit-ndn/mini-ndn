@@ -69,7 +69,7 @@ def run():
     There are multiple ways of setting up routes in Mini-NDN
     refer: https://minindn.memphis.edu/experiment.html#routing-options
     """
-    routeOption = 1 # NOTE: routeOption 2 using the routing helper currently does not support run-time advertisement, so we cannot use it!
+    routeOption = 2 # NOTE: routeOption 2 using the routing helper currently does not support run-time advertisement, so we cannot use it!
 
 
     if routeOption == 0:
@@ -144,17 +144,19 @@ def run():
         # configure and start nfd on each node
         info("Configuring NFD\n")
         #nfds = AppManager(ndn, ndn.net.hosts, Nfd, logLevel="INFO")
-        nfds = AppManager(ndn, [ndn.net['sensor']], Nfd, logLevel="INFO", csSize=0)
-        nfds = AppManager(ndn, [ndn.net['rtr1']], Nfd, logLevel="INFO", csSize=0)
-        nfds = AppManager(ndn, [ndn.net['rtr2']], Nfd, logLevel="INFO", csSize=1000)
-        nfds = AppManager(ndn, [ndn.net['rtr3']], Nfd, logLevel="INFO", csSize=0)
-        nfds = AppManager(ndn, [ndn.net['user']], Nfd, logLevel="INFO", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['sensor']], Nfd, logLevel="DEBUG", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['rtr1']], Nfd, logLevel="DEBUG", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['rtr2']], Nfd, logLevel="DEBUG", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr3']], Nfd, logLevel="DEBUG", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['user']], Nfd, logLevel="DEBUG", csSize=0)
 
         info('Adding static routes to NFD\n')
         grh = NdnRoutingHelper(ndn.net, ndn.args.faceType, ndn.args.routingType)
         # For all host, pass ndn.net.hosts or a list, [ndn.net['a'], ..] or [ndn.net.hosts[0],.]
         grh.addOrigin([ndn.net['sensor']], [PREFIX + "/sensor"])
         grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/service1"])
+        grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/csUpdate"])
+        #grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service1/params-sha256=b11a48b8384e652ea726efb193902553c97041a52670bb25b5f2c19bb15a8af3"])
         grh.calculateNPossibleRoutes()
 
         ''' 
@@ -246,7 +248,7 @@ def run():
     # run the cabeee-custom-app-csUpdater application on all router nodes that will perform caching, so that they can advertise their content periodically
     cmd = CSUPDATER_BIN + ' {} > cabeee_csUpdater.log &'.format(PREFIX)
     ndn.net['rtr2'].cmd(cmd)
-    #sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
+    sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
 
 
     # SET UP THE CONSUMER
@@ -267,7 +269,9 @@ def run():
 
     # recalculate routes now that we have cached content (didn't work)
     sleep(1)
-    #todo: how to trigger update routing?
+    # TODO: can we trigger routing update dynamically at run-time?
+    #grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service1/params-sha256=b11a48b8384e652ea726efb193902553c97041a52670bb25b5f2c19bb15a8af3"])
+    #grh.calculateNPossibleRoutes()
     sleep(1)
 
     #sleep(90)
