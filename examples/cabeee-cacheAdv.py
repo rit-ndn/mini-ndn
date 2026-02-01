@@ -157,6 +157,13 @@ def run():
         grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/service1"])
         grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/csUpdate"])
         #grh.addOrigin([ndn.net['rtr2']], [PREFIX + "/service1/params-sha256=b11a48b8384e652ea726efb193902553c97041a52670bb25b5f2c19bb15a8af3"])
+
+
+        grh.addOrigin([ndn.net['rtr1']], [PREFIX + "/csUpdate"])
+        Nfdc.setStrategy(host, [PREFIX + "/sensor"], Nfdc.STRATEGY_BEST_ROUTE)
+        Nfdc.setStrategy(host, [PREFIX + "/service1"], Nfdc.STRATEGY_BEST_ROUTE)
+        Nfdc.setStrategy(host, [PREFIX + "/csUpdate"], Nfdc.STRATEGY_MULTICAST)
+
         grh.calculateNPossibleRoutes()
 
         ''' 
