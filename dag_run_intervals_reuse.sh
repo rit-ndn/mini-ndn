@@ -35,7 +35,7 @@ example_log="$MININDN_HOME/example.log"
 sensor_scenario_log="/tmp/minindn/rtr-e1a/cabeee_consumer_20sensor.log"
 linear_scenario_log="/tmp/minindn/rtr-h1a/cabeee_consumer_20linear.log"
 reuse_scenario_log="/tmp/minindn/rtr-f2a/cabeee_consumer_20reuse.log"
-csv_out="$MININDN_HOME/perf-results-emulation_intervals_reuse.csv"
+csv_out="$MININDN_HOME/perf-results-emulation_intervals2_reuse.csv"
 header="Scenario/Scheme, Scenario, Min Service Latency(s), Low Quartile Service Latency(s), Mid Quartile Service Latency(s), High Quartile Service Latency(s), Max Service Latency(s), Total Service Latency(s), Avg Service Latency(s), Requests Fulfilled, Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
 
 if [ ! -f "$csv_out" ]; then
@@ -86,29 +86,29 @@ do
 		sudo -E python "$script_dir/$script" |& tee "$example_log"
 
 		echo "   Parsing logs..."
+
 		latencies=$( \
-			python process_nfd_logs_intervals.py "$reuse_scenario_log" | sed -n \
-			-e 's/^\s*consumerR min latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerR low latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerR mid latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerR high latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerR max latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerR total latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerR avg latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerR requests fulfilled: \([0-9\.]*\) total requests$/\1,/p' \
-			-e 's/^\s*consumerR Final answer: \([0-9\.]*\) numerical$/\1,/p' \
+			python process_nfd_logs_intervals.py "$sensor_scenario_log" | sed -n \
+			-e 's/^\s*consumerS min latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerS low latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerS mid latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerS high latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerS max latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerS total latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerS avg latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerS requests fulfilled: \([0-9\.]*\) total requests$/\1,/p' \
+			-e 's/^\s*consumerS Final answer: \([0-9\.]*\) numerical$/\1,/p' \
 			| tr -d '\n' \
 		)
-		reuse_min_latency="$(echo "$latencies" | cut -d',' -f1)"
-		reuse_low_latency="$(echo "$latencies" | cut -d',' -f2)"
-		reuse_mid_latency="$(echo "$latencies" | cut -d',' -f3)"
-		reuse_high_latency="$(echo "$latencies" | cut -d',' -f4)"
-		reuse_max_latency="$(echo "$latencies" | cut -d',' -f5)"
-		reuse_total_latency="$(echo "$latencies" | cut -d',' -f6)"
-		reuse_avg_latency="$(echo "$latencies" | cut -d',' -f7)"
-		reuse_requests_fulfilled="$(echo "$latencies" | cut -d',' -f8)"
-		reuse_final_answer="$(echo "$latencies" | cut -d',' -f9)"
-
+		sensor_min_latency="$(echo "$latencies" | cut -d',' -f1)"
+		sensor_low_latency="$(echo "$latencies" | cut -d',' -f2)"
+		sensor_mid_latency="$(echo "$latencies" | cut -d',' -f3)"
+		sensor_high_latency="$(echo "$latencies" | cut -d',' -f4)"
+		sensor_max_latency="$(echo "$latencies" | cut -d',' -f5)"
+		sensor_total_latency="$(echo "$latencies" | cut -d',' -f6)"
+		sensor_avg_latency="$(echo "$latencies" | cut -d',' -f7)"
+		sensor_requests_fulfilled="$(echo "$latencies" | cut -d',' -f8)"
+		sensor_final_answer="$(echo "$latencies" | cut -d',' -f9)"
 
 		latencies=$( \
 			python process_nfd_logs_intervals.py "$linear_scenario_log" | sed -n \
@@ -133,29 +133,28 @@ do
 		linear_requests_fulfilled="$(echo "$latencies" | cut -d',' -f8)"
 		linear_final_answer="$(echo "$latencies" | cut -d',' -f9)"
 
-
 		latencies=$( \
-			python process_nfd_logs_intervals.py "$sensor_scenario_log" | sed -n \
-			-e 's/^\s*consumerS min latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerS low latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerS mid latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerS high latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerS max latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerS total latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerS avg latency: \([0-9\.]*\) seconds$/\1,/p' \
-			-e 's/^\s*consumerS requests fulfilled: \([0-9\.]*\) total requests$/\1,/p' \
-			-e 's/^\s*consumerS Final answer: \([0-9\.]*\) numerical$/\1,/p' \
+			python process_nfd_logs_intervals.py "$reuse_scenario_log" | sed -n \
+			-e 's/^\s*consumerR min latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerR low latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerR mid latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerR high latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerR max latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerR total latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerR avg latency: \([0-9\.]*\) seconds$/\1,/p' \
+			-e 's/^\s*consumerR requests fulfilled: \([0-9\.]*\) total requests$/\1,/p' \
+			-e 's/^\s*consumerR Final answer: \([0-9\.]*\) numerical$/\1,/p' \
 			| tr -d '\n' \
 		)
-		sensor_min_latency="$(echo "$latencies" | cut -d',' -f1)"
-		sensor_low_latency="$(echo "$latencies" | cut -d',' -f2)"
-		sensor_mid_latency="$(echo "$latencies" | cut -d',' -f3)"
-		sensor_high_latency="$(echo "$latencies" | cut -d',' -f4)"
-		sensor_max_latency="$(echo "$latencies" | cut -d',' -f5)"
-		sensor_total_latency="$(echo "$latencies" | cut -d',' -f6)"
-		sensor_avg_latency="$(echo "$latencies" | cut -d',' -f7)"
-		sensor_requests_fulfilled="$(echo "$latencies" | cut -d',' -f8)"
-		sensor_final_answer="$(echo "$latencies" | cut -d',' -f9)"
+		reuse_min_latency="$(echo "$latencies" | cut -d',' -f1)"
+		reuse_low_latency="$(echo "$latencies" | cut -d',' -f2)"
+		reuse_mid_latency="$(echo "$latencies" | cut -d',' -f3)"
+		reuse_high_latency="$(echo "$latencies" | cut -d',' -f4)"
+		reuse_max_latency="$(echo "$latencies" | cut -d',' -f5)"
+		reuse_total_latency="$(echo "$latencies" | cut -d',' -f6)"
+		reuse_avg_latency="$(echo "$latencies" | cut -d',' -f7)"
+		reuse_requests_fulfilled="$(echo "$latencies" | cut -d',' -f8)"
+		reuse_final_answer="$(echo "$latencies" | cut -d',' -f9)"
 
 
 		row1="$script, 20-sensor, $sensor_min_latency, $sensor_low_latency, $sensor_mid_latency, $sensor_high_latency, $sensor_max_latency, $sensor_total_latency, $sensor_avg_latency, $sensor_requests_fulfilled, $sensor_final_answer, $now, $minindn_hash, $ndncxx_hash, $nfd_hash, $nlsr_hash"

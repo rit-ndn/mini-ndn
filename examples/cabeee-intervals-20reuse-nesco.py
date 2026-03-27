@@ -51,7 +51,7 @@ MININDN_DIR = USER_HOME + '/mini-ndn'
 WORKFLOW_20sensor = MININDN_DIR + '/workflows/20-sensor.json'
 WORKFLOW_20linear = MININDN_DIR + '/workflows/20-linear.json'
 WORKFLOW_20reuse = MININDN_DIR + '/workflows/20-reuse.json'
-TOPOLOGY = MININDN_DIR + '/topologies/cabeee-Abilene.conf'
+TOPOLOGY = MININDN_DIR + '/topologies/cabeee-Abilene2.conf'
 
 BIN_DIR = MININDN_DIR + '/dl/ndn-cxx/build/examples'
 
@@ -150,12 +150,26 @@ def run():
         nfds = AppManager(ndn, [ndn.net['rtr-f2']],     Nfd, logLevel="INFO", csSize=1000)
         nfds = AppManager(ndn, [ndn.net['rtr-f2a']],    Nfd, logLevel="INFO", csSize=0)
         nfds = AppManager(ndn, [ndn.net['rtr-g']],      Nfd, logLevel="INFO", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr-g1']],     Nfd, logLevel="INFO", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr-g1a']],    Nfd, logLevel="INFO", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['rtr-g1b']],    Nfd, logLevel="INFO", csSize=0)
         nfds = AppManager(ndn, [ndn.net['rtr-h']],      Nfd, logLevel="INFO", csSize=1000)
         nfds = AppManager(ndn, [ndn.net['rtr-h1']],     Nfd, logLevel="INFO", csSize=1000)
         nfds = AppManager(ndn, [ndn.net['rtr-h1a']],    Nfd, logLevel="INFO", csSize=0)
         nfds = AppManager(ndn, [ndn.net['rtr-i']],      Nfd, logLevel="INFO", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr-i1']],     Nfd, logLevel="INFO", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr-i1a']],    Nfd, logLevel="INFO", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['rtr-i1b']],    Nfd, logLevel="INFO", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['rtr-i2']],     Nfd, logLevel="INFO", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr-i2a']],    Nfd, logLevel="INFO", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['rtr-i2b']],    Nfd, logLevel="INFO", csSize=0)
         nfds = AppManager(ndn, [ndn.net['rtr-j']],      Nfd, logLevel="INFO", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr-j1']],     Nfd, logLevel="INFO", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr-j1a']],    Nfd, logLevel="INFO", csSize=0)
         nfds = AppManager(ndn, [ndn.net['rtr-k']],      Nfd, logLevel="INFO", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr-k1']],     Nfd, logLevel="INFO", csSize=1000)
+        nfds = AppManager(ndn, [ndn.net['rtr-k1a']],    Nfd, logLevel="INFO", csSize=0)
+        nfds = AppManager(ndn, [ndn.net['rtr-k1b']],    Nfd, logLevel="INFO", csSize=0)
 
         info('Adding static routes to NFD\n')
         grh = NdnRoutingHelper(ndn.net, ndn.args.faceType, ndn.args.routingType)
@@ -510,12 +524,78 @@ def run():
     cmd = BIN_DIR + '/cabeee-custom-app-consumer-poisson {} {} {} {} {} {} > cabeee_consumer_20sensor.log &'.format(PREFIX, "/consumerS", WORKFLOW_20sensor, 0, 10, 100)
     consumer = ndn.net['rtr-e1a']
     consumer.cmd(cmd)
+    consumer = ndn.net['rtr-g1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-g1b']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-i1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-i1b']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-i1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-i2b']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-k1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-k1b']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-j1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-h1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-f2a']
+    consumer.cmd(cmd)
 
     cmd = BIN_DIR + '/cabeee-custom-app-consumer-poisson {} {} {} {} {} {} > cabeee_consumer_20linear.log &'.format(PREFIX, "/consumerL", WORKFLOW_20linear, 0, 10, 100)
+    consumer = ndn.net['rtr-e1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-g1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-g1b']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-i1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-i1b']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-i1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-i2b']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-k1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-k1b']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-j1a']
+    consumer.cmd(cmd)
     consumer = ndn.net['rtr-h1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-f2a']
     consumer.cmd(cmd)
 
     cmd = BIN_DIR + '/cabeee-custom-app-consumer-poisson {} {} {} {} {} {} > cabeee_consumer_20reuse.log &'.format(PREFIX, "/consumerR", WORKFLOW_20reuse, 0, 10, 100)
+    consumer = ndn.net['rtr-e1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-g1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-g1b']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-i1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-i1b']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-i1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-i2b']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-k1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-k1b']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-j1a']
+    consumer.cmd(cmd)
+    consumer = ndn.net['rtr-h1a']
+    consumer.cmd(cmd)
     consumer = ndn.net['rtr-f2a']
     consumer.cmd(cmd)
 
