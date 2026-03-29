@@ -31,10 +31,34 @@ declare -a scenarios=(
 )
 
 
+
 example_log="$MININDN_HOME/example.log"
-sensor_scenario_log="/tmp/minindn/rtr-e1a/cabeee_consumer_20sensor.log"
-linear_scenario_log="/tmp/minindn/rtr-h1a/cabeee_consumer_20linear.log"
-reuse_scenario_log="/tmp/minindn/rtr-f2a/cabeee_consumer_20reuse.log"
+#sensor_scenario_log="/tmp/minindn/rtr-e1a/cabeee_consumer_20sensor.log"
+#sensor_scenario_log="/tmp/minindn/rtr-g1a/cabeee_consumer_20sensor.log"
+#sensor_scenario_log="/tmp/minindn/rtr-g1b/cabeee_consumer_20sensor.log"
+#sensor_scenario_log="/tmp/minindn/rtr-i1a/cabeee_consumer_20sensor.log"
+#sensor_scenario_log="/tmp/minindn/rtr-i1b/cabeee_consumer_20sensor.log"
+#sensor_scenario_log="/tmp/minindn/rtr-i2a/cabeee_consumer_20sensor.log"
+#sensor_scenario_log="/tmp/minindn/rtr-i2b/cabeee_consumer_20sensor.log"
+#sensor_scenario_log="/tmp/minindn/rtr-k1a/cabeee_consumer_20sensor.log"
+#sensor_scenario_log="/tmp/minindn/rtr-k1b/cabeee_consumer_20sensor.log"
+#sensor_scenario_log="/tmp/minindn/rtr-j1a/cabeee_consumer_20sensor.log"
+#sensor_scenario_log="/tmp/minindn/rtr-h1a/cabeee_consumer_20sensor.log"
+#sensor_scenario_log="/tmp/minindn/rtr-f2a/cabeee_consumer_20sensor.log"
+#linear_scenario_log="/tmp/minindn/rtr-h1a/cabeee_consumer_20linear.log"
+#reuse_scenario_log="/tmp/minindn/rtr-f2a/cabeee_consumer_20reuse.log"
+
+
+# Define the base directory and output folder for concatenating the logs
+BASE_DIR="/tmp/minindn"
+OUTPUT_DIR="./combined_logs"
+mkdir -p "$OUTPUT_DIR"
+# List of scenarios to process
+SCENARIO_LOGS=("20sensor" "20linear" "20reuse")
+
+
+
+
 csv_out="$MININDN_HOME/perf-results-emulation_intervals2_reuse.csv"
 header="Scenario/Scheme, Scenario, Min Service Latency(s), Low Quartile Service Latency(s), Mid Quartile Service Latency(s), High Quartile Service Latency(s), Max Service Latency(s), Total Service Latency(s), Avg Service Latency(s), Requests Fulfilled, Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
 
@@ -85,10 +109,18 @@ do
 		sudo rm -rf /tmp/minindn/*
 		sudo -E python "$script_dir/$script" |& tee "$example_log"
 
+		for scenario in "${SCENARIO_LOGS[@]}"; do
+    		echo "Merging $scenario logs..."
+    		# Use a wildcard (*) to match all router subdirectories
+    		# and concatenate them into a single file named after the scenario
+    		cat $BASE_DIR/rtr-*/cabeee_consumer_${scenario}.log > "$OUTPUT_DIR/combined_${scenario}.log"
+    		echo "Done. Created $OUTPUT_DIR/combined_${scenario}.log"
+		done
+
 		echo "   Parsing logs..."
 
 		latencies=$( \
-			python process_nfd_logs_intervals.py "$sensor_scenario_log" | sed -n \
+			python process_nfd_logs_intervals.py "$OUTPUT_DIR/combined_20sensor.log" | sed -n \
 			-e 's/^\s*consumerS min latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerS low latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerS mid latency: \([0-9\.]*\) seconds$/\1,/p' \
@@ -111,7 +143,7 @@ do
 		sensor_final_answer="$(echo "$latencies" | cut -d',' -f9)"
 
 		latencies=$( \
-			python process_nfd_logs_intervals.py "$linear_scenario_log" | sed -n \
+			python process_nfd_logs_intervals.py "$OUTPUT_DIR/combined_20linear.log" | sed -n \
 			-e 's/^\s*consumerL min latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerL low latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerL mid latency: \([0-9\.]*\) seconds$/\1,/p' \
@@ -134,7 +166,7 @@ do
 		linear_final_answer="$(echo "$latencies" | cut -d',' -f9)"
 
 		latencies=$( \
-			python process_nfd_logs_intervals.py "$reuse_scenario_log" | sed -n \
+			python process_nfd_logs_intervals.py "$OUTPUT_DIR/combined_20reuse.log" | sed -n \
 			-e 's/^\s*consumerR min latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerR low latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerR mid latency: \([0-9\.]*\) seconds$/\1,/p' \

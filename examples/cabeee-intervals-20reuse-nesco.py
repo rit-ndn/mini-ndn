@@ -522,82 +522,46 @@ def run():
 
     # App input is the main PREFIX, the workflow file, and the orchestration value (0, 1 or 2)
     cmd = BIN_DIR + '/cabeee-custom-app-consumer-poisson {} {} {} {} {} {} > cabeee_consumer_20sensor.log &'.format(PREFIX, "/consumerS", WORKFLOW_20sensor, 0, 10, 100)
-    consumer = ndn.net['rtr-e1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-g1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-g1b']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-i1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-i1b']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-i1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-i2b']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-k1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-k1b']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-j1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-h1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-f2a']
-    consumer.cmd(cmd)
+    ndn.net['rtr-e1a'].cmd(cmd)
+    ndn.net['rtr-g1a'].cmd(cmd)
+    ndn.net['rtr-g1b'].cmd(cmd)
+    ndn.net['rtr-i1a'].cmd(cmd)
+    ndn.net['rtr-i1b'].cmd(cmd)
+    ndn.net['rtr-i2a'].cmd(cmd)
+    ndn.net['rtr-i2b'].cmd(cmd)
+    ndn.net['rtr-k1a'].cmd(cmd)
+    ndn.net['rtr-k1b'].cmd(cmd)
+    ndn.net['rtr-j1a'].cmd(cmd)
+    ndn.net['rtr-h1a'].cmd(cmd)
+    ndn.net['rtr-f2a'].cmd(cmd)
 
     cmd = BIN_DIR + '/cabeee-custom-app-consumer-poisson {} {} {} {} {} {} > cabeee_consumer_20linear.log &'.format(PREFIX, "/consumerL", WORKFLOW_20linear, 0, 10, 100)
-    consumer = ndn.net['rtr-e1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-g1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-g1b']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-i1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-i1b']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-i1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-i2b']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-k1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-k1b']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-j1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-h1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-f2a']
-    consumer.cmd(cmd)
+    ndn.net['rtr-e1a'].cmd(cmd)
+    ndn.net['rtr-g1a'].cmd(cmd)
+    ndn.net['rtr-g1b'].cmd(cmd)
+    ndn.net['rtr-i1a'].cmd(cmd)
+    ndn.net['rtr-i1b'].cmd(cmd)
+    ndn.net['rtr-i2a'].cmd(cmd)
+    ndn.net['rtr-i2b'].cmd(cmd)
+    ndn.net['rtr-k1a'].cmd(cmd)
+    ndn.net['rtr-k1b'].cmd(cmd)
+    ndn.net['rtr-j1a'].cmd(cmd)
+    ndn.net['rtr-h1a'].cmd(cmd)
+    ndn.net['rtr-f2a'].cmd(cmd)
 
     cmd = BIN_DIR + '/cabeee-custom-app-consumer-poisson {} {} {} {} {} {} > cabeee_consumer_20reuse.log &'.format(PREFIX, "/consumerR", WORKFLOW_20reuse, 0, 10, 100)
-    consumer = ndn.net['rtr-e1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-g1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-g1b']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-i1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-i1b']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-i1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-i2b']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-k1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-k1b']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-j1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-h1a']
-    consumer.cmd(cmd)
-    consumer = ndn.net['rtr-f2a']
-    consumer.cmd(cmd)
+    ndn.net['rtr-e1a'].cmd(cmd)
+    ndn.net['rtr-g1a'].cmd(cmd)
+    ndn.net['rtr-g1b'].cmd(cmd)
+    ndn.net['rtr-i1a'].cmd(cmd)
+    ndn.net['rtr-i1b'].cmd(cmd)
+    ndn.net['rtr-i2a'].cmd(cmd)
+    ndn.net['rtr-i2b'].cmd(cmd)
+    ndn.net['rtr-k1a'].cmd(cmd)
+    ndn.net['rtr-k1b'].cmd(cmd)
+    ndn.net['rtr-j1a'].cmd(cmd)
+    ndn.net['rtr-h1a'].cmd(cmd)
+    ndn.net['rtr-f2a'].cmd(cmd)
 
     sleep(50)
 
