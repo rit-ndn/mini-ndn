@@ -1,0 +1,48 @@
+{	"dag": {
+        "/sensor": {
+            "/service6": 0,
+            "/service5": 0,
+            "/service9": 0,
+            "/service7": 0,
+            "/service8": 0,
+            "/service4": 0,
+            "/service1": 0,
+            "/service2": 0,
+            "/service0": 0,
+            "/service3": 0
+        },
+        "/service0": {
+            "/aggregator": 0
+        },
+        "/service9": {
+            "/aggregator": 1
+        },
+        "/service8": {
+            "/aggregator": 2
+        },
+        "/service7": {
+            "/aggregator": 3
+        },
+        "/service6": {
+            "/aggregator": 4
+        },
+        "/service5": {
+            "/aggregator": 5
+        },
+        "/service4": {
+            "/aggregator": 6
+        },
+        "/service3": {
+            "/aggregator": 7
+        },
+        "/service2": {
+            "/aggregator": 8
+        },
+        "/service1": {
+            "/aggregator": 9
+        },
+        "/aggregator": {
+            "/consumer": 0
+        }
+    }
+}

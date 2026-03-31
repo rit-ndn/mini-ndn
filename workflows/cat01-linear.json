@@ -1,0 +1,41 @@
+{	"dag": {
+	    "/sensor": {
+            "/service8": 0,
+            "/service0": 0
+        },
+        "/service0": {
+            "/service1": 0
+        },
+        "/service8": {
+            "/service1": 1
+        },
+        "/service1": {
+            "/service2": 0
+        },
+        "/service2": {
+            "/service3": 0,
+            "/service9": 0
+        },
+        "/service3": {
+            "/service4": 0
+        },
+        "/service9": {
+            "/service4": 1
+        },
+        "/service4": {
+            "/service5": 0
+        },
+        "/service5": {
+            "/service6": 0
+        },
+        "/service6": {
+            "/service7": 0
+        },
+        "/service7": {
+            "/aggregator": 0
+        },
+        "/aggregator": {
+            "/consumer": 0
+        }
+    }
+}

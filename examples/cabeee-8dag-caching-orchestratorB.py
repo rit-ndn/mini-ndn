@@ -212,7 +212,8 @@ def run():
     info('Starting Producer App\n')
     # runs in the background so that it is non-blocking
     # App input is the service PREFIX
-    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor", 9000, 0, 100, 1000)
+    makespanNS = 0 # for now we don't use any CPU to run the services.
+    cmd = BIN_DIR + '/cabeee-custom-app-producer {} {} {} {} {} {} {} > cabeee_producer.log &'.format(PREFIX, "/sensor", 9000, 0, 100, 1000, makespanNS)
     producer = ndn.net['sensor']
     producer.cmd(cmd)
     
@@ -222,24 +223,25 @@ def run():
 
     # SET UP THE SERVICES
     # run the cabeee-dag-serviceB-app application on all router nodes
-    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service1.log &'.format(PREFIX, "/service1")
+    makespanNS = 0 # for now we don't use any CPU to run the services.
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} {} > cabeee_serviceB_service1.log &'.format(PREFIX, "/service1", makespanNS)
     ndn.net['rtr3'].cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service2.log &'.format(PREFIX, "/service2")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} {} > cabeee_serviceB_service2.log &'.format(PREFIX, "/service2", makespanNS)
     ndn.net['rtr1'].cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service3.log &'.format(PREFIX, "/service3")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} {} > cabeee_serviceB_service3.log &'.format(PREFIX, "/service3", makespanNS)
     ndn.net['rtr2'].cmd(cmd)
     sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
-    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service4.log &'.format(PREFIX, "/service4")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} {} > cabeee_serviceB_service4.log &'.format(PREFIX, "/service4", makespanNS)
     ndn.net['rtr2'].cmd(cmd)
     sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
-    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service5.log &'.format(PREFIX, "/service5")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} {} > cabeee_serviceB_service5.log &'.format(PREFIX, "/service5", makespanNS)
     ndn.net['rtr3'].cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service6.log &'.format(PREFIX, "/service6")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} {} > cabeee_serviceB_service6.log &'.format(PREFIX, "/service6", makespanNS)
     ndn.net['rtr1'].cmd(cmd)
-    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service7.log &'.format(PREFIX, "/service7")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} {} > cabeee_serviceB_service7.log &'.format(PREFIX, "/service7", makespanNS)
     ndn.net['rtr2'].cmd(cmd)
     sleep(1) # wait so that we don't start two applications on the same node at the same time (RIB update messages can get messed up, and only one service will properly register FIB)
-    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} > cabeee_serviceB_service8.log &'.format(PREFIX, "/service8")
+    cmd = BIN_DIR + '/cabeee-dag-serviceB-app {} {} {} > cabeee_serviceB_service8.log &'.format(PREFIX, "/service8", makespanNS)
     ndn.net['rtr2'].cmd(cmd)
 
 
