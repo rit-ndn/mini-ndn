@@ -10,7 +10,7 @@
 set -e
 
 
-numSamples=1
+numSamples=20
 
 MININDN_HOME="$HOME/mini-ndn"
 NDNCXX_DIR="$HOME/mini-ndn/dl/ndn-cxx/run_scripts_hardware"
@@ -88,35 +88,35 @@ scripts=(
 
 declare -a scenarios=(
 # 4 DAG
-#"cabeee-4dag-orchestratorA.py orchA 4dag.json 4dag.hosting topo-cabeee-3node.json"
-#"cabeee-4dag-orchestratorB.py orchB 4dag.json 4dag.hosting topo-cabeee-3node.json"
-#"cabeee-4dag-nesco.py nesco 4dag.json 4dag.hosting topo-cabeee-3node.json"
-#"cabeee-4dag-nescoSCOPT.py nescoSCOPT 4dag.json 4dag.hosting topo-cabeee-3node.json"
+"cabeee-4dag-orchestratorA.py orchA 4dag.json 4dag.hosting topo-cabeee-3node.json"
+"cabeee-4dag-orchestratorB.py orchB 4dag.json 4dag.hosting topo-cabeee-3node.json"
+"cabeee-4dag-nesco.py nesco 4dag.json 4dag.hosting topo-cabeee-3node.json"
+"cabeee-4dag-nescoSCOPT.py nescoSCOPT 4dag.json 4dag.hosting topo-cabeee-3node.json"
 # 8 DAG
-#"cabeee-8dag-orchestratorA.py orchA 8dag.json 8dag.hosting topo-cabeee-3node.json"
-#"cabeee-8dag-orchestratorB.py orchB 8dag.json 8dag.hosting topo-cabeee-3node.json"
-#"cabeee-8dag-nesco.py nesco 8dag.json 8dag.hosting topo-cabeee-3node.json"
-#"cabeee-8dag-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-orchestratorA.py orchA 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-orchestratorB.py orchB 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-nesco.py nesco 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting topo-cabeee-3node.json"
 # 8 DAG w/ caching
-#"cabeee-8dag-caching-orchestratorA.py orchA 8dag.json 8dag.hosting topo-cabeee-3node.json"
-#"cabeee-8dag-caching-orchestratorB.py orchB 8dag.json 8dag.hosting topo-cabeee-3node.json"
-#"cabeee-8dag-caching-nesco.py nesco 8dag.json 8dag.hosting topo-cabeee-3node.json"
-#"cabeee-8dag-caching-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-caching-orchestratorA.py orchA 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-caching-orchestratorB.py orchB 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-caching-nesco.py nesco 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-caching-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting topo-cabeee-3node.json"
 # 20 Sensor (using 3node topology)
-#"cabeee-20sensor-orchestratorA.py orchA 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20sensor-orchestratorB.py orchB 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20sensor-nesco.py nesco 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20sensor-nescoSCOPT.py nescoSCOPT 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20sensor-orchestratorA.py orchA 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20sensor-orchestratorB.py orchB 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20sensor-nesco.py nesco 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20sensor-nescoSCOPT.py nescoSCOPT 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
 # 20 Linear (using 3node topology)
-#"cabeee-20linear-orchestratorA.py orchA 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20linear-orchestratorB.py orchB 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20linear-nesco.py nesco 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20linear-nescoSCOPT.py nescoSCOPT 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20linear-orchestratorA.py orchA 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20linear-orchestratorB.py orchB 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20linear-nesco.py nesco 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20linear-nescoSCOPT.py nescoSCOPT 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
 # 20 Reuse (using 3node topology)
-#"cabeee-20reuse-orchestratorA.py orchA 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20reuse-orchestratorB.py orchB 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20reuse-nesco.py nesco 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20reuse-nescoSCOPT.py nescoSCOPT 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20reuse-orchestratorA.py orchA 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20reuse-orchestratorB.py orchB 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20reuse-nesco.py nesco 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20reuse-nescoSCOPT.py nescoSCOPT 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
 
 # Category 01 (multi-tiered_linear)
 "cabeee-cat01-mt_linear-orchestratorA.py orchA cat01-mt_linear.json cat01-mt_linear.hosting topo-cat01-mt_linear.json"
