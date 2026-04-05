@@ -1,0 +1,53 @@
+{	"routerHosting": {
+		"sensor": [
+			"/sensor1",
+			"/sensor2",
+			"/sensor3",
+			"/sensor4",
+			"/sensor5",
+			"/sensor6",
+			"/sensor7",
+			"/sensor8",
+			"/sensor9",
+			"/sensor10",
+			"/sensor11",
+			"/sensor12",
+			"/sensor13",
+			"/sensor14",
+			"/sensor15",
+			"/sensor16",
+			"/sensor17",
+			"/sensor18",
+			"/sensor19",
+			"/sensor20"
+		],
+		"rtr-2": [
+			"/serviceP1",
+			"/serviceP2",
+			"/serviceP3",
+			"/serviceP4",
+			"/serviceP5",
+			"/serviceP6",
+			"/serviceP7",
+			"/serviceP8",
+			"/serviceP9",
+			"/serviceP10",
+			"/serviceP11",
+			"/serviceP12",
+			"/serviceP13",
+			"/serviceP14",
+			"/serviceP15",
+			"/serviceP16",
+			"/serviceP17",
+			"/serviceP18",
+			"/serviceP19",
+			"/serviceP20"
+		],
+		"rtr-3": [
+			"/serviceP21"
+		],
+		"user": [
+			"/consumer"
+		]
+	}
+}

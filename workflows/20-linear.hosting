@@ -1,0 +1,69 @@
+{	"routerHosting": {
+		"sensor": [
+			"/sensor"
+		],
+		"rtr-1": [
+			"/serviceL1"
+		],
+		"rtr-2": [
+			"/serviceL2"
+		],
+		"rtr-3": [
+			"/serviceL3"
+		],
+		"rtr-4": [
+			"/serviceL4"
+		],
+		"rtr-5": [
+			"/serviceL5"
+		],
+		"rtr-6": [
+			"/serviceL6"
+		],
+		"rtr-7": [
+			"/serviceL7"
+		],
+		"rtr-8": [
+			"/serviceL8"
+		],
+		"rtr-9": [
+			"/serviceL9"
+		],
+		"rtr-10": [
+			"/serviceL10"
+		],
+		"rtr-11": [
+			"/serviceL11"
+		],
+		"rtr-12": [
+			"/serviceL12"
+		],
+		"rtr-13": [
+			"/serviceL13"
+		],
+		"rtr-14": [
+			"/serviceL14"
+		],
+		"rtr-15": [
+			"/serviceL15"
+		],
+		"rtr-16": [
+			"/serviceL16"
+		],
+		"rtr-17": [
+			"/serviceL17"
+		],
+		"rtr-18": [
+			"/serviceL18"
+		],
+		"rtr-19": [
+			"/serviceL19"
+		],
+		"rtr-20": [
+			"/serviceL20"
+		],
+		"user": [
+			"/consumer"
+		]
+	}
+}

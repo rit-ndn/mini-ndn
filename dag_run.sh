@@ -10,12 +10,14 @@
 set -e
 
 
-numSamples=1
+numSamples=20
 
 MININDN_HOME="$HOME/mini-ndn"
 NDNCXX_DIR="$HOME/mini-ndn/dl/ndn-cxx/run_scripts_hardware"
-WORKFLOW_DIR="$NDNCXX_DIR/workflows"
-TOPOLOGY_DIR="$NDNCXX_DIR/topologies"
+#WORKFLOW_DIR="$NDNCXX_DIR/workflows"
+#TOPOLOGY_DIR="$NDNCXX_DIR/topologies"
+WORKFLOW_DIR="$MININDN_HOME/workflows"
+TOPOLOGY_DIR="$MININDN_HOME/topologies"
 CPM_DIR="$HOME/CPM"
 
 
@@ -88,69 +90,69 @@ scripts=(
 
 declare -a scenarios=(
 # 4 DAG
-"cabeee-4dag-orchestratorA.py orchA 4dag.json 4dag.hosting topo-cabeee-3node.json"
-"cabeee-4dag-orchestratorB.py orchB 4dag.json 4dag.hosting topo-cabeee-3node.json"
-"cabeee-4dag-nesco.py nesco 4dag.json 4dag.hosting topo-cabeee-3node.json"
-"cabeee-4dag-nescoSCOPT.py nescoSCOPT 4dag.json 4dag.hosting topo-cabeee-3node.json"
+"cabeee-4dag-orchestratorA.py orchA 4dag.json 4dag.hosting cabeee-3node.json"
+"cabeee-4dag-orchestratorB.py orchB 4dag.json 4dag.hosting cabeee-3node.json"
+"cabeee-4dag-nesco.py nesco 4dag.json 4dag.hosting cabeee-3node.json"
+"cabeee-4dag-nescoSCOPT.py nescoSCOPT 4dag.json 4dag.hosting cabeee-3node.json"
 # 8 DAG
-"cabeee-8dag-orchestratorA.py orchA 8dag.json 8dag.hosting topo-cabeee-3node.json"
-"cabeee-8dag-orchestratorB.py orchB 8dag.json 8dag.hosting topo-cabeee-3node.json"
-"cabeee-8dag-nesco.py nesco 8dag.json 8dag.hosting topo-cabeee-3node.json"
-"cabeee-8dag-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-orchestratorA.py orchA 8dag.json 8dag.hosting cabeee-3node.json"
+"cabeee-8dag-orchestratorB.py orchB 8dag.json 8dag.hosting cabeee-3node.json"
+"cabeee-8dag-nesco.py nesco 8dag.json 8dag.hosting cabeee-3node.json"
+"cabeee-8dag-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting cabeee-3node.json"
 # 8 DAG w/ caching
-"cabeee-8dag-caching-orchestratorA.py orchA 8dag.json 8dag.hosting topo-cabeee-3node.json"
-"cabeee-8dag-caching-orchestratorB.py orchB 8dag.json 8dag.hosting topo-cabeee-3node.json"
-"cabeee-8dag-caching-nesco.py nesco 8dag.json 8dag.hosting topo-cabeee-3node.json"
-"cabeee-8dag-caching-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting topo-cabeee-3node.json"
+"cabeee-8dag-caching-orchestratorA.py orchA 8dag.json 8dag.hosting cabeee-3node.json"
+"cabeee-8dag-caching-orchestratorB.py orchB 8dag.json 8dag.hosting cabeee-3node.json"
+"cabeee-8dag-caching-nesco.py nesco 8dag.json 8dag.hosting cabeee-3node.json"
+"cabeee-8dag-caching-nescoSCOPT.py nescoSCOPT 8dag.json 8dag.hosting cabeee-3node.json"
 # 20 Sensor (using 3node topology)
-"cabeee-20sensor-orchestratorA.py orchA 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20sensor-orchestratorB.py orchB 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20sensor-nesco.py nesco 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20sensor-nescoSCOPT.py nescoSCOPT 20-sensor.json 20-sensor-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20sensor-orchestratorA.py orchA 20-sensor.json 20-sensor-in3node.hosting cabeee-3node.json"
+"cabeee-20sensor-orchestratorB.py orchB 20-sensor.json 20-sensor-in3node.hosting cabeee-3node.json"
+"cabeee-20sensor-nesco.py nesco 20-sensor.json 20-sensor-in3node.hosting cabeee-3node.json"
+"cabeee-20sensor-nescoSCOPT.py nescoSCOPT 20-sensor.json 20-sensor-in3node.hosting cabeee-3node.json"
 # 20 Linear (using 3node topology)
-"cabeee-20linear-orchestratorA.py orchA 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20linear-orchestratorB.py orchB 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20linear-nesco.py nesco 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20linear-nescoSCOPT.py nescoSCOPT 20-linear.json 20-linear-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20linear-orchestratorA.py orchA 20-linear.json 20-linear-in3node.hosting cabeee-3node.json"
+"cabeee-20linear-orchestratorB.py orchB 20-linear.json 20-linear-in3node.hosting cabeee-3node.json"
+"cabeee-20linear-nesco.py nesco 20-linear.json 20-linear-in3node.hosting cabeee-3node.json"
+"cabeee-20linear-nescoSCOPT.py nescoSCOPT 20-linear.json 20-linear-in3node.hosting cabeee-3node.json"
 # 20 Reuse (using 3node topology)
-"cabeee-20reuse-orchestratorA.py orchA 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20reuse-orchestratorB.py orchB 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20reuse-nesco.py nesco 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
-"cabeee-20reuse-nescoSCOPT.py nescoSCOPT 20-reuse.json 20-reuse-in3node.hosting topo-cabeee-3node.json"
+"cabeee-20reuse-orchestratorA.py orchA 20-reuse.json 20-reuse-in3node.hosting cabeee-3node.json"
+"cabeee-20reuse-orchestratorB.py orchB 20-reuse.json 20-reuse-in3node.hosting cabeee-3node.json"
+"cabeee-20reuse-nesco.py nesco 20-reuse.json 20-reuse-in3node.hosting cabeee-3node.json"
+"cabeee-20reuse-nescoSCOPT.py nescoSCOPT 20-reuse.json 20-reuse-in3node.hosting cabeee-3node.json"
 
 # Category 01 (multi-tiered_linear)
-"cabeee-cat01-mt_linear-orchestratorA.py orchA cat01-mt_linear.json cat01-mt_linear.hosting topo-cat01-mt_linear.json"
-"cabeee-cat01-mt_linear-orchestratorB.py orchB cat01-mt_linear.json cat01-mt_linear.hosting topo-cat01-mt_linear.json"
-"cabeee-cat01-mt_linear-nesco.py nesco cat01-mt_linear.json cat01-mt_linear.hosting topo-cat01-mt_linear.json"
-"cabeee-cat01-mt_linear-nescoSCOPT.py nescoSCOPT cat01-mt_linear.json cat01-mt_linear.hosting topo-cat01-mt_linear.json"
+"cabeee-cat01-mt_linear-orchestratorA.py orchA cat01-linear.json cat01-mt-linear.hosting cabeee-cat01-multi_tier.json"
+"cabeee-cat01-mt_linear-orchestratorB.py orchB cat01-linear.json cat01-mt-linear.hosting cabeee-cat01-multi_tier.json"
+"cabeee-cat01-mt_linear-nesco.py nesco cat01-linear.json cat01-mt-linear.hosting cabeee-cat01-multi_tier.json"
+"cabeee-cat01-mt_linear-nescoSCOPT.py nescoSCOPT cat01-linear.json cat01-mt-linear.hosting cabeee-cat01-multi_tier.json"
 # Category 02 (star-of-stars_map-reduce)
-"cabeee-cat02-sos_mr-orchestratorA.py orchA cat02-sos_mr.json cat02-sos_mr.hosting topo-cat02-sos_mr.json"
-"cabeee-cat02-sos_mr-orchestratorB.py orchB cat02-sos_mr.json cat02-sos_mr.hosting topo-cat02-sos_mr.json"
-"cabeee-cat02-sos_mr-nesco.py nesco cat02-sos_mr.json cat02-sos_mr.hosting topo-cat02-sos_mr.json"
-"cabeee-cat02-sos_mr-nescoSCOPT.py nescoSCOPT cat02-sos_mr.json cat02-sos_mr.hosting topo-cat02-sos_mr.json"
+"cabeee-cat02-sos_mr-orchestratorA.py orchA cat02-map_reduce.json cat02-sos-map_reduce.hosting cabeee-cat02-star_of_stars.json"
+"cabeee-cat02-sos_mr-orchestratorB.py orchB cat02-map_reduce.json cat02-sos-map_reduce.hosting cabeee-cat02-star_of_stars.json"
+"cabeee-cat02-sos_mr-nesco.py nesco cat02-map_reduce.json cat02-sos-map_reduce.hosting cabeee-cat02-star_of_stars.json"
+"cabeee-cat02-sos_mr-nescoSCOPT.py nescoSCOPT cat02-map_reduce.json cat02-sos-map_reduce.hosting cabeee-cat02-star_of_stars.json"
 # Category 03 (mesh_map-reduce)
-"cabeee-cat03-mesh_mr-orchestratorA.py orchA cat03-mesh_mr.json cat03-mesh_mr.hosting topo-cat03-mesh_mr.json"
-"cabeee-cat03-mesh_mr-orchestratorB.py orchB cat03-mesh_mr.json cat03-mesh_mr.hosting topo-cat03-mesh_mr.json"
-"cabeee-cat03-mesh_mr-nesco.py nesco cat03-mesh_mr.json cat03-mesh_mr.hosting topo-cat03-mesh_mr.json"
-"cabeee-cat03-mesh_mr-nescoSCOPT.py nescoSCOPT cat03-mesh_mr.json cat03-mesh_mr.hosting topo-cat03-mesh_mr.json"
+"cabeee-cat03-mesh_mr-orchestratorA.py orchA cat03-map_reduce.json cat03-mesh-map_reduce.hosting cabeee-cat03-mesh.json"
+"cabeee-cat03-mesh_mr-orchestratorB.py orchB cat03-map_reduce.json cat03-mesh-map_reduce.hosting cabeee-cat03-mesh.json"
+"cabeee-cat03-mesh_mr-nesco.py nesco cat03-map_reduce.json cat03-mesh-map_reduce.hosting cabeee-cat03-mesh.json"
+"cabeee-cat03-mesh_mr-nescoSCOPT.py nescoSCOPT cat03-map_reduce.json cat03-mesh-map_reduce.hosting cabeee-cat03-mesh.json"
 # Category 04 (mesh_wavefront)
-"cabeee-cat04-mesh_wf-orchestratorA.py orchA cat04-mesh_wf.json cat04-mesh_wf.hosting topo-cat04-mesh_wf.json"
-"cabeee-cat04-mesh_wf-orchestratorB.py orchB cat04-mesh_wf.json cat04-mesh_wf.hosting topo-cat04-mesh_wf.json"
-"cabeee-cat04-mesh_wf-nesco.py nesco cat04-mesh_wf.json cat04-mesh_wf.hosting topo-cat04-mesh_wf.json"
-"cabeee-cat04-mesh_wf-nescoSCOPT.py nescoSCOPT cat04-mesh_wf.json cat04-mesh_wf.hosting topo-cat04-mesh_wf.json"
+"cabeee-cat04-mesh_wf-orchestratorA.py orchA cat04-wavefront.json cat04-mesh-wavefront.hosting cabeee-cat04-mesh.json"
+"cabeee-cat04-mesh_wf-orchestratorB.py orchB cat04-wavefront.json cat04-mesh-wavefront.hosting cabeee-cat04-mesh.json"
+"cabeee-cat04-mesh_wf-nesco.py nesco cat04-wavefront.json cat04-mesh-wavefront.hosting cabeee-cat04-mesh.json"
+"cabeee-cat04-mesh_wf-nescoSCOPT.py nescoSCOPT cat04-wavefront.json cat04-mesh-wavefront.hosting cabeee-cat04-mesh.json"
 
 
 
 # 20 Scramble (using 3node topology)
-#"cabeee-20scrambled-orchestratorA.py orchA 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20scrambled-orchestratorB.py orchB 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20scrambled-nesco.py nesco 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20scrambled-nescoSCOPT.py nescoSCOPT 20-linear.json 20-scramble-in3node.hosting topo-cabeee-3node.json"
+#"cabeee-20scrambled-orchestratorA.py orchA 20-linear.json 20-scramble-in3node.hosting cabeee-3node.json"
+#"cabeee-20scrambled-orchestratorB.py orchB 20-linear.json 20-scramble-in3node.hosting cabeee-3node.json"
+#"cabeee-20scrambled-nesco.py nesco 20-linear.json 20-scramble-in3node.hosting cabeee-3node.json"
+#"cabeee-20scrambled-nescoSCOPT.py nescoSCOPT 20-linear.json 20-scramble-in3node.hosting cabeee-3node.json"
 # 20 Parallel (using 3node topology)
-#"cabeee-20parallel-orchestratorA.py orchA 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20parallel-orchestratorB.py orchB 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20parallel-nesco.py nesco 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
-#"cabeee-20parallel-nescoSCOPT.py nescoSCOPT 20-parallel.json 20-parallel-in3node.hosting topo-cabeee-3node.json"
+#"cabeee-20parallel-orchestratorA.py orchA 20-parallel.json 20-parallel-in3node.hosting cabeee-3node.json"
+#"cabeee-20parallel-orchestratorB.py orchB 20-parallel.json 20-parallel-in3node.hosting cabeee-3node.json"
+#"cabeee-20parallel-nesco.py nesco 20-parallel.json 20-parallel-in3node.hosting cabeee-3node.json"
+#"cabeee-20parallel-nescoSCOPT.py nescoSCOPT 20-parallel.json 20-parallel-in3node.hosting cabeee-3node.json"
 )
 
 

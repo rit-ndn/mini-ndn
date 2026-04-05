@@ -1,0 +1,42 @@
+{ "routerHosting": {
+    "user": [
+      "/consumer"
+    ],
+    "sensor0": [
+      "/sensor"
+    ],
+    "rtr11": [
+      "/service7"
+    ],
+    "sensor0": [
+      "/service5"
+    ],
+    "rtr14": [
+      "/service2"
+    ],
+    "rtr8": [
+      "/service1"
+    ],
+    "rtr2": [
+      "/service6"
+    ],
+    "rtr3": [
+      "/service4"
+    ],
+    "rtr7": [
+      "/service3"
+    ],
+    "rtr4": [
+      "/service0"
+    ],
+    "rtr0": [
+      "/service8"
+    ],
+    "rtr7": [
+      "/aggregator"
+    ],
+    "rtr15": [
+      "/service9"
+    ]
+  }
+}

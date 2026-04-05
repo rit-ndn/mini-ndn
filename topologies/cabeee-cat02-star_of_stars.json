@@ -1,0 +1,268 @@
+{
+  "router": [
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr3"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr15"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr8"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr13"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr5"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr2"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr1"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr6"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr11"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "user"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr7"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr12"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "sensor0"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr9"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr14"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr4"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr0"
+    },
+    {
+      "comment": "NA",
+      "y": 0,
+      "x": 0,
+      "cs-size": 0,
+      "node": "rtr10"
+    }
+  ],
+  "link": [
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr3",
+      "to": "user"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr2",
+      "to": "rtr10"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr1",
+      "to": "rtr9"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr2",
+      "to": "rtr4"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr2",
+      "to": "rtr8"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr0",
+      "to": "rtr2"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr2",
+      "to": "rtr6"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr0",
+      "to": "rtr1"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr1",
+      "to": "rtr15"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr1",
+      "to": "rtr11"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr1",
+      "to": "rtr5"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr1",
+      "to": "rtr7"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr2",
+      "to": "rtr12"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr4",
+      "to": "sensor0"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr1",
+      "to": "rtr13"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr2",
+      "to": "rtr14"
+    },
+    {
+      "capacity": "10Mbps",
+      "metric": "1",
+      "delay": "1ms",
+      "queue": "100000",
+      "from": "rtr1",
+      "to": "rtr3"
+    }
+  ]
+}
