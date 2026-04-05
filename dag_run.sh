@@ -10,13 +10,13 @@
 set -e
 
 
-numSamples=20
+numSamples=1
 
 MININDN_HOME="$HOME/mini-ndn"
 NDNCXX_DIR="$HOME/mini-ndn/dl/ndn-cxx/run_scripts_hardware"
 WORKFLOW_DIR="$NDNCXX_DIR/workflows"
 TOPOLOGY_DIR="$NDNCXX_DIR/topologies"
-CPM_DIR="$MININDN_HOME/dl/CPM"
+CPM_DIR="$HOME/CPM"
 
 
 script_dir="$MININDN_HOME/examples"
@@ -205,7 +205,7 @@ do
 		echo "   Running sample #${sample}..."
 		sudo rm -rf /tmp/minindn/*
 		packets=$( \
-			sudo -E python "$script_dir/$script" |& tee "$example_log" | sed -n \
+			sudo -E python3 "$script_dir/$script" |& tee "$example_log" | sed -n \
 			-e 's/^Interest Packets Generated: \([0-9]*\) interests$/\1,/p' \
 			-e 's/^Data Packets Generated: \([0-9]*\) data$/\1,/p' \
 			-e 's/^Interest Packets Transmitted: \([0-9]*\) interests$/\1,/p' \

@@ -16,7 +16,7 @@ MININDN_HOME="$HOME/mini-ndn"
 NDNCXX_DIR="$HOME/mini-ndn/dl/ndn-cxx/run_scripts_hardware"
 WORKFLOW_DIR="$NDNCXX_DIR/workflows"
 TOPOLOGY_DIR="$NDNCXX_DIR/topologies"
-CPM_DIR="$MININDN_HOME/dl/CPM"
+CPM_DIR="$HOME/CPM"
 
 
 script_dir="$MININDN_HOME/examples"
@@ -107,7 +107,7 @@ do
 
 		echo "   Running sample #${sample}..."
 		sudo rm -rf /tmp/minindn/*
-		sudo -E python "$script_dir/$script" |& tee "$example_log"
+		sudo -E python3 "$script_dir/$script" |& tee "$example_log"
 
 		for scenario in "${SCENARIO_LOGS[@]}"; do
     		echo "Merging $scenario logs..."
@@ -120,7 +120,7 @@ do
 		echo "   Parsing logs..."
 
 		latencies=$( \
-			python process_nfd_logs_intervals.py "$OUTPUT_DIR/combined_20sensor.log" | sed -n \
+			python3 process_nfd_logs_intervals.py "$OUTPUT_DIR/combined_20sensor.log" | sed -n \
 			-e 's/^\s*consumerS min latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerS low latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerS mid latency: \([0-9\.]*\) seconds$/\1,/p' \
@@ -143,7 +143,7 @@ do
 		sensor_final_answer="$(echo "$latencies" | cut -d',' -f9)"
 
 		latencies=$( \
-			python process_nfd_logs_intervals.py "$OUTPUT_DIR/combined_20linear.log" | sed -n \
+			python3 process_nfd_logs_intervals.py "$OUTPUT_DIR/combined_20linear.log" | sed -n \
 			-e 's/^\s*consumerL min latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerL low latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerL mid latency: \([0-9\.]*\) seconds$/\1,/p' \
@@ -166,7 +166,7 @@ do
 		linear_final_answer="$(echo "$latencies" | cut -d',' -f9)"
 
 		latencies=$( \
-			python process_nfd_logs_intervals.py "$OUTPUT_DIR/combined_20reuse.log" | sed -n \
+			python3 process_nfd_logs_intervals.py "$OUTPUT_DIR/combined_20reuse.log" | sed -n \
 			-e 's/^\s*consumerR min latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerR low latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumerR mid latency: \([0-9\.]*\) seconds$/\1,/p' \

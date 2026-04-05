@@ -16,7 +16,7 @@ MININDN_HOME="$HOME/mini-ndn"
 NDNCXX_DIR="$HOME/mini-ndn/dl/ndn-cxx/run_scripts_hardware"
 WORKFLOW_DIR="$NDNCXX_DIR/workflows"
 TOPOLOGY_DIR="$NDNCXX_DIR/topologies"
-CPM_DIR="$MININDN_HOME/dl/CPM"
+CPM_DIR="$HOME/CPM"
 
 
 script_dir="$MININDN_HOME/examples"
@@ -88,11 +88,11 @@ do
 
 		echo "   Running sample #${sample}..."
 		sudo rm -rf /tmp/minindn/*
-		sudo -E python "$script_dir/$script" |& tee "$example_log"
+		sudo -E python3 "$script_dir/$script" |& tee "$example_log"
 
 		echo "   Parsing logs..."
 		latencies=$( \
-			python process_nfd_logs_intervals.py "$consumer_log" | sed -n \
+			python3 process_nfd_logs_intervals.py "$consumer_log" | sed -n \
 			-e 's/^\s*consumer min latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumer low latency: \([0-9\.]*\) seconds$/\1,/p' \
 			-e 's/^\s*consumer mid latency: \([0-9\.]*\) seconds$/\1,/p' \
