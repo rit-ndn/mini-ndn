@@ -1,0 +1,35 @@
+{	"routerHosting": {
+		"sensor": [
+			"/sensor"
+		],
+		"rtr-1": [
+			"/serviceL2",
+			"/serviceL6",
+			"/serviceL10",
+			"/serviceL14",
+			"/serviceL18"
+		],
+		"rtr-2": [
+			"/serviceL1",
+			"/serviceL3",
+			"/serviceL5",
+			"/serviceL7",
+			"/serviceL9",
+			"/serviceL11",
+			"/serviceL13",
+			"/serviceL15",
+			"/serviceL17",
+			"/serviceL19",
+		],
+		"rtr-3": [
+			"/serviceL4",
+			"/serviceL8",
+			"/serviceL12",
+			"/serviceL16",
+			"/serviceL20"
+		],
+		"user": [
+			"/consumer"
+		]
+	}
+}
