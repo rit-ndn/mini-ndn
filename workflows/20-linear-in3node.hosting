@@ -1,6 +1,6 @@
 {	"routerHosting": {
 		"sensor": [
-			"/sensor"
+			"/sensorL"
 		],
 		"rtr-1": [
 			"/serviceL2",

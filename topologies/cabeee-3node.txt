@@ -1,0 +1,51 @@
+# topo-cabeee-3node.txt
+# manually modified by cabeee
+# June 2023
+#
+#                  /------\
+#                  |sensor|
+#                  \------/
+#                   ^
+#                   |
+#     	           /
+#                 /
+#                /
+#               |
+#     	        v
+#	      /-------\        /-------\
+#	      | rtr-1 | <----> | rtr-2 |
+#         \-------/        \-------/
+#                            ^                      
+#		         	         |
+#		                    /
+#		                   /
+#                         / 
+#			             |      
+#                        v
+#			      /--------\
+#			      |  rtr-3 |
+#                 \--------/
+#                      ^
+#                      |
+#                      v
+#			      /--------\
+#			      |  user  |
+#                 \--------/
+#
+
+router
+
+#node	city	y	x	mpi-partition
+sensor	NA	80	0	1
+rtr-1	NA	60	20	1
+rtr-2	NA	60	-20	2
+rtr-3	NA	40	0	3
+user	NA	10	0	0
+
+link
+
+# from	    to		capacity	metric	delay	queue
+sensor	    rtr-1	10Mbps		1	1ms	100
+rtr-1	    rtr-2	10Mbps		1	1ms	100
+rtr-2	    rtr-3	10Mbps		1	1ms	100
+rtr-3	    user	10Mbps		1	1ms	100
