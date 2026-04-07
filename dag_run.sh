@@ -10,7 +10,7 @@
 set -e
 
 
-numSamples=20
+numSamples=1
 
 MININDN_HOME="$HOME/mini-ndn"
 NDNCXX_DIR="$HOME/mini-ndn/dl/ndn-cxx/run_scripts_hardware"
@@ -235,26 +235,50 @@ do
 		result="$(echo "$consumer_parse" | cut -d',' -f1)"
 		latency="$(echo "$consumer_parse" | cut -d',' -f2)"
 
-#		cpm=$( \
-#			python3 ${NDNCXX_DIR}/critical-path-metric.py -type ${type} -workflow ${wf} -hosting ${hosting} -topology ${topo} | sed -n \
-#			-e 's/^metric is \([0-9]*\)/\1/p' \
-#			| tr -d '\n' \
-#		)
-#		cpm_t=$( \
-#			python3 ${NDNCXX_DIR}/critical-path-metric.py -type ${type} -workflow ${wf} -hosting ${hosting} -topology ${topo} | sed -n \
-#			-e 's/^time is \([0-9]*\)/\1/p' \
-#			| tr -d '\n' \
-#		)
-		cpm=$( \
-			${CPM_DIR}/cpm --scheme ${type} --workflow ${wf} --hosting ${hosting} --topology ${topo} | sed -n \
-			-e 's/^metric: \([0-9]*\)/\1/p' \
-			| tr -d '\n' \
-		)
-		cpm_t=$( \
-			${CPM_DIR}/cpm --scheme ${type} --workflow ${wf} --hosting ${hosting} --topology ${topo} | sed -n \
-			-e 's/^time: \([0-9]*\) ns/\1/p' \
-			| tr -d '\n' \
-		)
+		if [[ "$type" == "orchA" || "$type" == "orchB" ]]; then
+			echo "Running CPM in python mode"
+			topo_txt="${topo%.json}.txt"
+
+    		set +e
+			cpm_output=$(python3 ${CPM_DIR}/critical-path-metric.py -type ${type} -workflow ${wf} -hosting ${hosting} -topology ${topo_txt} 2>&1)
+    		cpm_status=$?
+    		set -e
+
+    		echo $cpm_output
+
+    		if  [ $cpm_status -ne 0 ]; then
+        		echo "Warning: cpm failed with exit code $cpm_status on scenario $scenario"
+        		cpm=""
+        		cpm_t=""
+    		else
+        		cpm=$(echo "$cpm_output" | sed -n 's/^metric: \([0-9]*\)/\1/p' | tr -d '\n')
+        		cpm_t=$(echo "$cpm_output" | sed -n 's/^time: \([0-9]*\) ns/\1/p' | tr -d '\n')
+    		fi
+
+		elif [[ "$type" == "nesco" || "$type" == "nescoSCOPT" ]]; then
+			echo "Running CPM in CPP mode"
+
+    		set +e
+    		cpm_output=$("${CPM_DIR}/cpm" --scheme "$type" --workflow "$wf" --hosting "$hosting" --topology "$topo" 2>&1)
+    		cpm_status=$?
+    		set -e
+
+    		echo $cpm_output
+
+    		if  [ $cpm_status -ne 0 ]; then
+        		echo "Warning: cpm failed with exit code $cpm_status on scenario $scenario"
+        		cpm=""
+        		cpm_t=""
+    		else
+        		cpm=$(echo "$cpm_output" | sed -n 's/^metric: \([0-9]*\)/\1/p' | tr -d '\n')
+        		cpm_t=$(echo "$cpm_output" | sed -n 's/^time: \([0-9]*\) ns/\1/p' | tr -d '\n')
+    		fi
+
+		else
+			echo "Can't run CPM (type unknown)"
+			cpm=""
+			cpm_t=""
+		fi
 
 		row="$script, $interest_gen, $data_gen, $interest_trans, $data_trans, $latency, $interest_processing, $cpm, $cpm_t, $result, $now, $minindn_hash, $ndncxx_hash, $nfd_hash, $nlsr_hash"
 
