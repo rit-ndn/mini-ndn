@@ -3,16 +3,12 @@
       "/consumer"
     ],
     "sensor0": [
-      "/sensor"
-    ],
-    "rtr14": [
-      "/service8"
-    ],
-    "rtr14": [
-      "/service3"
-    ],
-    "sensor0": [
+      "/sensor",
       "/service7"
+    ],
+    "rtr14": [
+      "/service8",
+      "/service3"
     ],
     "rtr13": [
       "/service6"
@@ -21,22 +17,16 @@
       "/aggregator"
     ],
     "rtr10": [
-      "/service1"
-    ],
-    "rtr3": [
-      "/service4"
-    ],
-    "rtr9": [
-      "/service2"
-    ],
-    "rtr9": [
-      "/service0"
-    ],
-    "rtr10": [
+      "/service1",
       "/service5"
     ],
     "rtr3": [
+      "/service4",
       "/service9"
+    ],
+    "rtr9": [
+      "/service2",
+      "/service0"
     ]
   }
 }

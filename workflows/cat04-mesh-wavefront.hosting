@@ -3,13 +3,11 @@
       "/consumer"
     ],
     "sensor0": [
-      "/sensor"
+      "/sensor",
+      "/service5"
     ],
     "rtr11": [
       "/service7"
-    ],
-    "sensor0": [
-      "/service5"
     ],
     "rtr14": [
       "/service2"
@@ -24,16 +22,14 @@
       "/service4"
     ],
     "rtr7": [
-      "/service3"
+      "/service3",
+      "/aggregator"
     ],
     "rtr4": [
       "/service0"
     ],
     "rtr0": [
       "/service8"
-    ],
-    "rtr7": [
-      "/aggregator"
     ],
     "rtr15": [
       "/service9"
