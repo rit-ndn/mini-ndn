@@ -159,6 +159,12 @@ declare -a scenarios=(
 example_log="$MININDN_HOME/example.log"
 consumer_log="/tmp/minindn/user/cabeee_consumer.log"
 csv_out="$MININDN_HOME/perf-results-emulation.csv"
+# Split the path into base name and extension
+base="${csv_out%.*}"
+ext="${csv_out##*.}"
+# Re-assemble with the hostname
+csv_out="${base}_${HOSTNAME}.${ext}"
+
 header="Example, Interest Packets Generated, Data Packets Generated, Interest Packets Transmitted, Data Packets Transmitted, Service Latency(s), Avg Interest Processing(s), CPM, CPM-t_exec(ns), Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
 
 if [ ! -f "$csv_out" ]; then

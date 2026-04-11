@@ -60,6 +60,12 @@ SCENARIO_LOGS=("20sensor" "20linear" "20reuse")
 
 
 csv_out="$MININDN_HOME/perf-results-emulation_intervals2_reuse.csv"
+# Split the path into base name and extension
+base="${csv_out%.*}"
+ext="${csv_out##*.}"
+# Re-assemble with the hostname
+csv_out="${base}_${HOSTNAME}.${ext}"
+
 header="Scenario/Scheme, Scenario, Min Service Latency(s), Low Quartile Service Latency(s), Mid Quartile Service Latency(s), High Quartile Service Latency(s), Max Service Latency(s), Total Service Latency(s), Avg Service Latency(s), Requests Fulfilled, Final Result, Time, mini-ndn commit, ndn-cxx commit, NFD commit, NLSR commit"
 
 if [ ! -f "$csv_out" ]; then
